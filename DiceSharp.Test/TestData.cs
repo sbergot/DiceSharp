@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using DiceSharp.Contracts;
 using DiceSharp.Implementation;
@@ -86,7 +84,7 @@ namespace DiceSharp.Test
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 3 },
-                    Aggregation = null,
+                    Aggregation = AggregationType.Sum,
                     Filter = null,
                     SumBonus = new SumBonusExpression { Value = 2 }
                 }),
@@ -108,7 +106,7 @@ namespace DiceSharp.Test
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 3 },
-                    Aggregation = null,
+                    Aggregation = AggregationType.Sum,
                     Filter = null,
                     SumBonus = new SumBonusExpression { Value = -2 }
                 }),
@@ -130,7 +128,7 @@ namespace DiceSharp.Test
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 1 },
-                    Aggregation = null,
+                    Aggregation = AggregationType.Sum,
                     Filter = new FilterExpression { Type = FilterType.Equal, Scalar = 7 },
                     SumBonus = null
                 }),
@@ -143,11 +141,11 @@ namespace DiceSharp.Test
                 }
             ),
             (
-                "D6(top7)",
+                "D6 (top7)",
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 1 },
-                    Aggregation = null,
+                    Aggregation = AggregationType.Sum,
                     Filter = new FilterExpression { Type = FilterType.Top, Scalar = 7 },
                     SumBonus = null
                 }),
@@ -160,11 +158,11 @@ namespace DiceSharp.Test
                 }
             ),
             (
-                "D6| sum",
+                "D6 (sum)",
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 1 },
-                    Aggregation = new AggregateExpression { Type = AggregationType.Sum },
+                    Aggregation = AggregationType.Sum,
                     Filter = null,
                     SumBonus = null
                 }),
@@ -177,11 +175,11 @@ namespace DiceSharp.Test
                 }
             ),
             (
-                "D6|count",
+                "D6 (count)",
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 1 },
-                    Aggregation = new AggregateExpression { Type = AggregationType.Count },
+                    Aggregation = AggregationType.Count,
                     Filter = null,
                     SumBonus = null
                 }),
@@ -194,11 +192,11 @@ namespace DiceSharp.Test
                 }
             ),
             (
-                "D6 |min",
+                "D6 (min)",
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 1 },
-                    Aggregation = new AggregateExpression { Type = AggregationType.Min },
+                    Aggregation = AggregationType.Min,
                     Filter = null,
                     SumBonus = null
                 }),
@@ -211,11 +209,11 @@ namespace DiceSharp.Test
                 }
             ),
             (
-                "3D6(=4)| count",
+                "3D6(=4, count)",
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 3 },
-                    Aggregation = new AggregateExpression { Type = AggregationType.Count },
+                    Aggregation = AggregationType.Count,
                     Filter = new FilterExpression { Type = FilterType.Equal, Scalar = 4 },
                     SumBonus = null
                 }),
@@ -237,7 +235,7 @@ namespace DiceSharp.Test
                 Helpers.ToAst(new RichDiceExpression
                 {
                     Dices = new DiceExpression { Faces = 6, Number = 3 },
-                    Aggregation = null,
+                    Aggregation = AggregationType.Sum,
                     Filter = new FilterExpression { Type = FilterType.Top, Scalar = 1 },
                     SumBonus = null
                 }),

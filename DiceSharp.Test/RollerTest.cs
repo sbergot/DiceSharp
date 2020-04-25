@@ -11,9 +11,9 @@ namespace DiceSharp.Test
     {
         [Theory]
         [MemberData(nameof(Data))]
-        internal void CompileSuccess(string strProgram, List<Roll> expectedResult)
+        internal void RollSuccess(string strProgram, List<Roll> expectedResult)
         {
-            var roller = new Roller();
+            var roller = new Roller(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             roller.Random = new Random(0);
             var result = roller.Roll(strProgram);
             Helpers.CompareObjects(expectedResult, result);

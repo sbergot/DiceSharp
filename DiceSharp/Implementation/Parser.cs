@@ -64,6 +64,76 @@ namespace DiceSharp.Implementation
             }
         }
 
+        private static Parser<char, RichDiceExpression> ComplexDice
+        {
+            get
+            {
+                return Map(
+                    ComputeDiceExpression,
+                    Dice,
+                    SumBonus.Optional(),
+                    SkipWhitespaces.Then(OptionGroup).Optional()
+                );
+            }
+        }
+
+        private static RichDiceExpression ComputeDiceExpression(
+            DiceExpression diceExpr,
+            Maybe<SumBonusExpression> sumBonus,
+            Maybe<OptionGroupExpression> optionGroupExpr)
+        {
+            var result = new RichDiceExpression
+            {
+                Dices = diceExpr,
+                Aggregation = AggregationType.Sum,
+                Filter = null
+            };
+
+            if (sumBonus.HasValue)
+            {
+                result.SumBonus = sumBonus.Value;
+            }
+
+            if (optionGroupExpr.HasValue)
+            {
+                foreach (var option in optionGroupExpr.Value.Options)
+                {
+                    if (option is FilterExpression filter)
+                    {
+                        result.Filter = filter;
+                    }
+
+                    if (option is AggregateExpression aggregate)
+                    {
+                        result.Aggregation = aggregate.Type;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static Parser<char, OptionGroupExpression> OptionGroup
+        {
+            get
+            {
+                return Option
+                    .Separated(Char(',').Then(SkipWhitespaces))
+                    .Select(opts => new OptionGroupExpression { Options = opts.ToList() })
+                    .Between(Char('('), Char(')'));
+            }
+        }
+
+        private static Parser<char, OptionExpression> Option
+        {
+            get
+            {
+                return OneOf(
+                    Try(Filter).Cast<OptionExpression>(),
+                    Try(Aggregate).Cast<OptionExpression>());
+            }
+        }
+
         private static Parser<char, FilterExpression> Filter
         {
             get
@@ -78,11 +148,9 @@ namespace DiceSharp.Implementation
                 };
                 var type = OneOf(filterTypes.Keys.Select(String)).Select(s => filterTypes[s]);
                 return Map(
-                    (_1, t, n, _2) => new FilterExpression { Type = t, Scalar = n },
-                    Char('('),
+                    (t, n) => new FilterExpression { Type = t, Scalar = n },
                     type,
-                    Number,
-                    Char(')'));
+                    Number);
             }
         }
 
@@ -98,31 +166,7 @@ namespace DiceSharp.Implementation
                     { "min", AggregationType.Min },
                 };
                 var type = OneOf(aggreationTypes.Keys.Select(s => Try(String(s)))).Select(s => aggreationTypes[s]);
-                return SkipWhitespaces
-                    .Then(Char('|'))
-                    .Then(SkipWhitespaces)
-                    .Then(type)
-                    .Select(t => new AggregateExpression { Type = t });
-            }
-        }
-
-        private static Parser<char, RichDiceExpression> ComplexDice
-        {
-            get
-            {
-                return Map(
-                    (dice, sumBonus, filter, aggregation) => new RichDiceExpression
-                    {
-                        Dices = dice,
-                        Aggregation = aggregation.GetValueOrDefault(),
-                        Filter = filter.GetValueOrDefault(),
-                        SumBonus = sumBonus.GetValueOrDefault(),
-                    },
-                    Dice,
-                    SumBonus.Optional(),
-                    Filter.Optional(),
-                    Aggregate.Optional()
-                );
+                return type.Select(t => new AggregateExpression { Type = t });
             }
         }
     }

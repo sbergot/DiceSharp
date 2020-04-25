@@ -17,8 +17,8 @@ namespace DiceSharp.Test
         {
             var compiler = new Compiler();
             var program = compiler.Compile(ast);
-            var random = new Random(0);
-            var result = program(random);
+            var diceRoller = new DiceRoller(1000, new Random(0));
+            var result = program(diceRoller);
             Helpers.CompareObjects(expectedResult, result);
         }
 

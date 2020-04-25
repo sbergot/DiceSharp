@@ -8,40 +8,30 @@ namespace DiceSharp.Implementation
 {
     internal class Compiler
     {
-        internal Func<Random, IList<Roll>> Compile(Ast tree)
+        internal Func<DiceRoller, IList<Roll>> Compile(Ast tree)
         {
-            return (rand) =>
+            return (diceRoller) =>
             {
                 var statements = tree.Statements.OfType<ExpressionStatement>();
                 var expr = statements.Select(s => s.Expression).OfType<RichDiceExpression>();
-                return expr.Select(e => RollRichDices(e, rand)).ToList();
+                return expr.Select(e => RollRichDices(e, diceRoller)).ToList();
             };
         }
 
-        private Roll RollRichDices(RichDiceExpression expr, Random random)
+        private Roll RollRichDices(RichDiceExpression expr, DiceRoller diceRoller)
         {
             var dices = Enumerable.Range(0, expr.Dices.Number)
-                .Select(i => new Dice
-                {
-                    Result = RollDice(expr.Dices.Faces, random),
-                    Faces = expr.Dices.Faces,
-                    Valid = true,
-                })
+                .Select(i => diceRoller.Roll(expr.Dices.Faces))
                 .ToList();
 
             var filteredDices = FilterDices(dices, expr.Filter ?? new FilterExpression { Type = FilterType.None });
-            var aggrType = expr.Aggregation?.Type ?? AggregationType.Sum;
+            var aggrType = expr.Aggregation;
             var bonus = expr.SumBonus?.Value ?? 0;
             return new Roll
             {
                 Dices = filteredDices,
                 Result = ComputeResult(filteredDices, aggrType) + bonus
             };
-        }
-
-        private int RollDice(int faces, Random random)
-        {
-            return random.Next(1, faces);
         }
 
         private List<Dice> FilterDices(List<Dice> dices, FilterExpression filter)

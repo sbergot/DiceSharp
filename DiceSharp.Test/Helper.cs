@@ -23,6 +23,7 @@ namespace DiceSharp.Test
             var options = new JsonSerializerOptions();
             options.Converters.Add(new ConcreteTypeConverter<Statement>());
             options.Converters.Add(new ConcreteTypeConverter<Expression>());
+            options.Converters.Add(new ConcreteTypeConverter<OptionExpression>());
             options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
             var sa = JsonSerializer.Serialize(a, options);
             var sb = JsonSerializer.Serialize(b, options);
