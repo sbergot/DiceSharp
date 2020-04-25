@@ -1,9 +1,10 @@
-using Xunit;
-
-using DiceSharp.Implementation;
-using DiceSharp.Implementation.SyntaxTree;
 using System.Collections.Generic;
 using System.Linq;
+
+using Xunit;
+
+using DiceSharp.Implementation.SyntaxTree;
+using DiceSharp.Implementation.Parsing;
 
 namespace DiceSharp.Test
 {

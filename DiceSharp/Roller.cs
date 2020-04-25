@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DiceSharp.Contracts;
 using DiceSharp.Implementation;
+using DiceSharp.Implementation.Parsing;
 
 namespace DiceSharp
 {
