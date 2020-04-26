@@ -16,6 +16,13 @@ namespace DiceSharp.Test.TestCases
         }
 
         [Theory]
+        [ClassData(typeof(AssignTestData))]
+        internal void AssignCompileCase(TestVector test)
+        {
+            CompileSuccess(test);
+        }
+
+        [Theory]
         [ClassData(typeof(RichDiceTestData))]
         internal void RichDiceCompileCase(TestVector test)
         {

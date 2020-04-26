@@ -15,6 +15,13 @@ namespace DiceSharp.Test.TestCases
         }
 
         [Theory]
+        [ClassData(typeof(AssignTestData))]
+        internal void AssignParseCase(TestVector test)
+        {
+            ParsingSuccess(test);
+        }
+
+        [Theory]
         [ClassData(typeof(RichDiceTestData))]
         internal void RichDiceParseCase(TestVector test)
         {

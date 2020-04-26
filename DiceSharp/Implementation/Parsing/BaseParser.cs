@@ -7,7 +7,16 @@ namespace DiceSharp.Implementation.Parsing
     internal static class BaseParser
     {
         public static Parser<char, int> Number => Pidgin.Parser.AtLeastOnceString(Digit).Select(int.Parse);
-        public static Parser<char, string> Variable => Char('$').Then(LetterOrDigit.ManyString());
+
+        public static Parser<char, string> Variable
+        {
+            get
+            {
+                return Char('$')
+                    .Then(LetterOrDigit.Or(Char('_')).ManyString());
+            }
+        }
+
         public static Parser<char, Scalar> Scalar
         {
             get

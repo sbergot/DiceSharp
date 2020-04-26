@@ -16,6 +16,13 @@ namespace DiceSharp.Test.TestCases
         }
 
         [Theory]
+        [ClassData(typeof(AssignTestData))]
+        internal void AssignRollCase(TestVector test)
+        {
+            RollSuccess(test);
+        }
+
+        [Theory]
         [ClassData(typeof(RichDiceTestData))]
         internal void RichDiceRollCase(TestVector test)
         {

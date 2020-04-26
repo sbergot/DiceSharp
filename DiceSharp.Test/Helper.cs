@@ -7,12 +7,26 @@ namespace DiceSharp.Test
 {
     internal static class Helpers
     {
+        public static Ast AssignStmt(string varName, DiceDeclaration exp)
+        {
+            return new Ast
+            {
+                Statements = new List<Statement>
+                {
+                    new AssignementStatement {
+                        VariableName = varName,
+                        Expression = new RichDiceExpression { Dices = exp }
+                    }
+                }
+            };
+        }
+
         public static Ast ToAst(DiceDeclaration exp)
         {
             return ToAst(new RichDiceExpression { Dices = exp });
         }
 
-        public static Ast ToAst(RichDiceExpression exp)
+        public static Ast ToAst(Expression exp)
         {
             var statement = new ExpressionStatement { Expression = exp };
             return new Ast { Statements = new List<Statement> { statement } };
