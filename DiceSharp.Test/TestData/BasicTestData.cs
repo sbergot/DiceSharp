@@ -88,7 +88,7 @@ namespace DiceSharp.Test.TestData
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Sum,
                     Filter = null,
-                    SumBonus = new SumBonusExpression { Value = 2 }
+                    SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Plus }
                 }),
                 new List<Roll> {
                     new Roll
@@ -110,7 +110,7 @@ namespace DiceSharp.Test.TestData
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Sum,
                     Filter = null,
-                    SumBonus = new SumBonusExpression { Value = -2 }
+                    SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Minus }
                 }),
                 new List<Roll> {
                     new Roll

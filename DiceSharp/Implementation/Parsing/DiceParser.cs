@@ -20,18 +20,19 @@ namespace DiceSharp.Implementation.Parsing
             }
         }
 
-        public static Parser<char, SumBonusExpression> SumBonus
+        public static Parser<char, SumBonusDeclaration> SumBonus
         {
             get
             {
                 var operation = Char('+').Or(Char('-'));
                 return Map(
-                    (op, bonus) => new SumBonusExpression
+                    (op, bonus) => new SumBonusDeclaration
                     {
-                        Value = op == '+' ? bonus : -bonus,
+                        Scalar = bonus,
+                        Sign = op == '+' ? SignType.Plus : SignType.Minus,
                     },
                     operation,
-                    Number);
+                    BaseParser.Scalar);
             }
         }
     }

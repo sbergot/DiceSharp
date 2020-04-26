@@ -48,11 +48,23 @@ namespace DiceSharp.Implementation
                 expr.Filter ?? new FilterOption { Type = FilterType.None },
                 ctx.Variables);
             var aggrType = expr.Aggregation;
-            var bonus = expr.SumBonus?.Value ?? 0;
+            var bonus = expr.SumBonus != null
+                ? GetScalarValue(ctx.Variables, expr.SumBonus.Scalar) * GetSignFactor(expr.SumBonus.Sign)
+                : 0;
             return new Roll
             {
                 Dices = filteredDices,
                 Result = ComputeResult(filteredDices, aggrType) + bonus
+            };
+        }
+
+        private static int GetSignFactor(SignType sign)
+        {
+            return sign switch
+            {
+                SignType.Plus => 1,
+                SignType.Minus => -1,
+                _ => throw new InvalidOperationException()
             };
         }
 

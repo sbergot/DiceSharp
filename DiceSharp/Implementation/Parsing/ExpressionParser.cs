@@ -25,7 +25,7 @@ namespace DiceSharp.Implementation.Parsing
 
         private static RichDiceExpression ComputeDiceExpression(
             DiceDeclaration diceExpr,
-            Maybe<SumBonusExpression> sumBonus,
+            Maybe<SumBonusDeclaration> sumBonus,
             Maybe<OptionGroup> optionGroupExpr)
         {
             var result = new RichDiceExpression
