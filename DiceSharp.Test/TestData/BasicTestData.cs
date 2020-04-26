@@ -19,8 +19,8 @@ namespace DiceSharp.Test.TestData
                 new List<Roll> {
                     new Roll
                     {
-                        Dices = new List<Dice> { new Dice { Valid = true, Result = 4, Faces = 6 } },
-                        Result = 4,
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
+                        Result = 5,
                     }
                 }
             ),
@@ -32,11 +32,11 @@ namespace DiceSharp.Test.TestData
                     {
                         Dices = new List<Dice>
                         {
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
                             new Dice { Valid = true, Result = 5, Faces = 6 },
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
+                            new Dice { Valid = true, Result = 5, Faces = 6 },
+                            new Dice { Valid = true, Result = 5, Faces = 6 },
                         },
-                        Result = 13,
+                        Result = 15,
                     }
                 }
             ),
@@ -72,12 +72,12 @@ namespace DiceSharp.Test.TestData
                     {
                         Dices = new List<Dice>
                         {
-                            new Dice { Valid = true, Result = 2, Faces = 3 },
-                            new Dice { Valid = true, Result = 2, Faces = 3 },
+                            new Dice { Valid = true, Result = 3, Faces = 3 },
+                            new Dice { Valid = true, Result = 3, Faces = 3 },
                             new Dice { Valid = true, Result = 2, Faces = 3 },
                             new Dice { Valid = true, Result = 1, Faces = 3 },
                         },
-                        Result = 7,
+                        Result = 9,
                     }
                 }
             ),
@@ -95,11 +95,11 @@ namespace DiceSharp.Test.TestData
                     {
                         Dices = new List<Dice>
                         {
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
                             new Dice { Valid = true, Result = 5, Faces = 6 },
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
+                            new Dice { Valid = true, Result = 5, Faces = 6 },
+                            new Dice { Valid = true, Result = 5, Faces = 6 },
                         },
-                        Result = 15,
+                        Result = 17,
                     }
                 }
             ),
@@ -117,11 +117,11 @@ namespace DiceSharp.Test.TestData
                     {
                         Dices = new List<Dice>
                         {
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
                             new Dice { Valid = true, Result = 5, Faces = 6 },
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
+                            new Dice { Valid = true, Result = 5, Faces = 6 },
+                            new Dice { Valid = true, Result = 5, Faces = 6 },
                         },
-                        Result = 11,
+                        Result = 13,
                     }
                 }
             ),

@@ -53,6 +53,16 @@ namespace DiceSharp.Implementation.Parsing
                     {
                         result.Aggregation = aggregate.Type;
                     }
+
+                    if (option is NameOption name)
+                    {
+                        result.Name = name.Name;
+                    }
+
+                    if (option is ExplodingOption)
+                    {
+                        result.Exploding = true;
+                    }
                 }
             }
 

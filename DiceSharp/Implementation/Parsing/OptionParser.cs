@@ -26,8 +26,15 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
+                var nameoption = AnyCharExcept('"')
+                    .ManyString()
+                    .Between(Char('"'))
+                    .Select(s => new NameOption { Name = s } as Option);
+                var explodingOption = String("exp").ThenReturn(new ExplodingOption() as Option);
                 return OneOf(
                     Try(Filter).Cast<Option>(),
+                    Try(nameoption),
+                    Try(explodingOption),
                     Try(Aggregate).Cast<Option>());
             }
         }

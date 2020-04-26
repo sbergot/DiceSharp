@@ -19,7 +19,30 @@ namespace DiceSharp.Implementation
             Random = random;
         }
 
-        public Dice Roll(int faces)
+        public Dice Roll(int faces, bool exploding)
+        {
+            var roll = RollOnce(faces);
+            if (exploding)
+            {
+                var finalValue = ExplodeDice(roll.Faces, roll.Result, roll.Result);
+                roll.Result = finalValue;
+            }
+            return roll;
+        }
+
+        private int ExplodeDice(int faces, int lastResult, int total)
+        {
+            if (lastResult < faces)
+            {
+                return total;
+            }
+
+            var newResult = RollOnce(faces).Result;
+
+            return ExplodeDice(faces, newResult, total + newResult);
+        }
+
+        private Dice RollOnce(int faces)
         {
             if (RollNbr >= MaxRollNbr)
             {
@@ -28,11 +51,10 @@ namespace DiceSharp.Implementation
             RollNbr++;
             return new Dice
             {
-                Result = Random.Next(1, faces),
+                Result = Random.Next(1, faces + 1),
                 Faces = faces,
                 Valid = true,
             };
         }
-
     }
 }

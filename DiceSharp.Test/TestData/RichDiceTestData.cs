@@ -25,7 +25,7 @@ namespace DiceSharp.Test.TestData
                 new List<Roll> {
                     new Roll
                     {
-                        Dices = new List<Dice> { new Dice { Valid = false, Result = 4, Faces = 6 } },
+                        Dices = new List<Dice> { new Dice { Valid = false, Result = 5, Faces = 6 } },
                         Result = 0,
                     }
                 }
@@ -42,8 +42,8 @@ namespace DiceSharp.Test.TestData
                 new List<Roll> {
                     new Roll
                     {
-                        Dices = new List<Dice> { new Dice { Valid = true, Result = 4, Faces = 6 } },
-                        Result = 4,
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
+                        Result = 5,
                     }
                 }
             ),
@@ -59,8 +59,8 @@ namespace DiceSharp.Test.TestData
                 new List<Roll> {
                     new Roll
                     {
-                        Dices = new List<Dice> { new Dice { Valid = true, Result = 4, Faces = 6 } },
-                        Result = 4,
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
+                        Result = 5,
                     }
                 }
             ),
@@ -76,7 +76,7 @@ namespace DiceSharp.Test.TestData
                 new List<Roll> {
                     new Roll
                     {
-                        Dices = new List<Dice> { new Dice { Valid = true, Result = 4, Faces = 6 } },
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 1,
                     }
                 }
@@ -93,8 +93,8 @@ namespace DiceSharp.Test.TestData
                 new List<Roll> {
                     new Roll
                     {
-                        Dices = new List<Dice> { new Dice { Valid = true, Result = 4, Faces = 6 } },
-                        Result = 4,
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
+                        Result = 5,
                     }
                 }
             ),
@@ -112,11 +112,11 @@ namespace DiceSharp.Test.TestData
                     {
                         Dices = new List<Dice>
                         {
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
                             new Dice { Valid = false, Result = 5, Faces = 6 },
-                            new Dice { Valid = true, Result = 4, Faces = 6 },
+                            new Dice { Valid = false, Result = 5, Faces = 6 },
+                            new Dice { Valid = false, Result = 5, Faces = 6 },
                         },
-                        Result = 2,
+                        Result = 0,
                     }
                 }
             ),
@@ -135,10 +135,30 @@ namespace DiceSharp.Test.TestData
                         Dices = new List<Dice>
                         {
                             new Dice { Valid = true, Result = 5, Faces = 6 },
-                            new Dice { Valid = false, Result = 4, Faces = 6 },
-                            new Dice { Valid = false, Result = 4, Faces = 6 },
+                            new Dice { Valid = false, Result = 5, Faces = 6 },
+                            new Dice { Valid = false, Result = 5, Faces = 6 },
                         },
                         Result = 5,
+                    }
+                }
+            ),
+            (
+                "2D2(exp)",
+                Helpers.ToAst(new RichDiceExpression
+                {
+                    Dices = new DiceDeclaration { Faces = 2, Number = 2 },
+                    Aggregation = AggregationType.Sum,
+                    Exploding = true
+                }),
+                new List<Roll> {
+                    new Roll
+                    {
+                        Dices = new List<Dice>
+                        {
+                            new Dice { Valid = true, Result = 9, Faces = 2 },
+                            new Dice { Valid = true, Result = 5, Faces = 2 },
+                        },
+                        Result = 14,
                     }
                 }
             ),

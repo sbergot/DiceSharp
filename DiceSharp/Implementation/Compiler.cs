@@ -40,7 +40,7 @@ namespace DiceSharp.Implementation
         private static Roll RollRichDices(RichDiceExpression expr, RunContext ctx)
         {
             var dices = Enumerable.Range(0, expr.Dices.Number)
-                .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces))
+                .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces, expr.Exploding))
                 .ToList();
 
             var filteredDices = FilterDices(
