@@ -1,6 +1,6 @@
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class ScalarExpression : Expression
+    internal class ConstantScalar : Scalar
     {
         public int Value { get; set; }
     }

@@ -10,21 +10,43 @@ namespace DiceSharp.Implementation
     {
         internal Func<DiceRoller, IList<Roll>> Compile(Ast tree)
         {
+            var variables = new Dictionary<string, int>();
             return (diceRoller) =>
             {
-                var statements = tree.Statements.OfType<ExpressionStatement>();
-                var expr = statements.Select(s => s.Expression).OfType<RichDiceExpression>();
-                return expr.Select(e => RollRichDices(e, diceRoller)).ToList();
+                var ctx = new RunContext { Variables = variables, DiceRoller = diceRoller };
+                return tree.Statements.Select(s => RunStatement(s, ctx)).ToList();
             };
         }
 
-        private Roll RollRichDices(RichDiceExpression expr, DiceRoller diceRoller)
+        private static Roll RunStatement(Statement statement, RunContext ctx)
+        {
+            _ = statement ?? throw new ArgumentNullException(nameof(statement));
+
+            if (statement is ExpressionStatement exprStmt)
+            {
+                return RollRichDices(exprStmt.Expression as RichDiceExpression, ctx);
+            }
+
+            if (statement is AssignementStatement assignStmt)
+            {
+                var roll = RollRichDices(assignStmt.Expression as RichDiceExpression, ctx);
+                ctx.Variables[assignStmt.VariableName] = roll.Result;
+                return roll;
+            }
+
+            throw new InvalidOperationException($"Uknown statement type: {statement.GetType()}");
+        }
+
+        private static Roll RollRichDices(RichDiceExpression expr, RunContext ctx)
         {
             var dices = Enumerable.Range(0, expr.Dices.Number)
-                .Select(i => diceRoller.Roll(expr.Dices.Faces))
+                .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces))
                 .ToList();
 
-            var filteredDices = FilterDices(dices, expr.Filter ?? new FilterExpression { Type = FilterType.None });
+            var filteredDices = FilterDices(
+                dices,
+                expr.Filter ?? new FilterOption { Type = FilterType.None },
+                ctx.Variables);
             var aggrType = expr.Aggregation;
             var bonus = expr.SumBonus?.Value ?? 0;
             return new Roll
@@ -34,8 +56,26 @@ namespace DiceSharp.Implementation
             };
         }
 
-        private List<Dice> FilterDices(List<Dice> dices, FilterExpression filter)
+        private static int GetScalarValue(Dictionary<string, int> variables, Scalar scalar)
         {
+            _ = scalar ?? throw new ArgumentNullException(nameof(scalar));
+
+            if (scalar is ConstantScalar constant)
+            {
+                return constant.Value;
+            }
+
+            if (scalar is VariableScalar variable)
+            {
+                return variables[variable.VariableName];
+            }
+
+            throw new InvalidOperationException($"Unknown scalar type: {scalar.GetType()}");
+        }
+
+        private static List<Dice> FilterDices(List<Dice> dices, FilterOption filter, Dictionary<string, int> variables)
+        {
+            var scalarValue = filter.Type != FilterType.None ? GetScalarValue(variables, filter.Scalar) : 0;
             return filter.Type switch
             {
                 FilterType.None => dices,
@@ -44,21 +84,21 @@ namespace DiceSharp.Implementation
                     {
                         Result = d.Result,
                         Faces = d.Faces,
-                        Valid = d.Result > filter.Scalar
+                        Valid = d.Result > scalarValue
                     }).ToList(),
                 FilterType.Smaller => dices
                     .Select(d => new Dice
                     {
                         Result = d.Result,
                         Faces = d.Faces,
-                        Valid = d.Result < filter.Scalar
+                        Valid = d.Result < scalarValue
                     }).ToList(),
                 FilterType.Equal => dices
                     .Select(d => new Dice
                     {
                         Result = d.Result,
                         Faces = d.Faces,
-                        Valid = d.Result == filter.Scalar
+                        Valid = d.Result == scalarValue
                     }).ToList(),
                 FilterType.Top => dices
                     .OrderByDescending(d => d.Result)
@@ -66,7 +106,7 @@ namespace DiceSharp.Implementation
                     {
                         Result = d.Result,
                         Faces = d.Faces,
-                        Valid = i < filter.Scalar
+                        Valid = i < scalarValue
                     }).ToList(),
                 FilterType.Bottom => dices
                     .OrderBy(d => d.Result)
@@ -74,13 +114,13 @@ namespace DiceSharp.Implementation
                     {
                         Result = d.Result,
                         Faces = d.Faces,
-                        Valid = i < filter.Scalar
+                        Valid = i < scalarValue
                     }).ToList(),
                 _ => throw new InvalidOperationException(),
             };
         }
 
-        private int ComputeResult(List<Dice> dices, AggregationType aggregationType)
+        private static int ComputeResult(List<Dice> dices, AggregationType aggregationType)
         {
             var init = aggregationType switch
             {

@@ -9,30 +9,30 @@ using DiceSharp.Implementation.SyntaxTree;
 
 namespace DiceSharp.Implementation.Parsing
 {
-    internal class OptionParser
+    internal static class OptionParser
     {
-        public static Parser<char, OptionGroupExpression> OptionGroup
+        public static Parser<char, OptionGroup> OptionGroup
         {
             get
             {
                 return Option
                     .Separated(Char(',').Then(SkipWhitespaces))
-                    .Select(opts => new OptionGroupExpression { Options = opts.ToList() })
+                    .Select(opts => new OptionGroup { Options = opts.ToList() })
                     .Between(Char('('), Char(')'));
             }
         }
 
-        private static Parser<char, OptionExpression> Option
+        private static Parser<char, Option> Option
         {
             get
             {
                 return OneOf(
-                    Try(Filter).Cast<OptionExpression>(),
-                    Try(Aggregate).Cast<OptionExpression>());
+                    Try(Filter).Cast<Option>(),
+                    Try(Aggregate).Cast<Option>());
             }
         }
 
-        private static Parser<char, FilterExpression> Filter
+        private static Parser<char, FilterOption> Filter
         {
             get
             {
@@ -46,13 +46,13 @@ namespace DiceSharp.Implementation.Parsing
                 };
                 var type = OneOf(filterTypes.Keys.Select(String)).Select(s => filterTypes[s]);
                 return Map(
-                    (t, n) => new FilterExpression { Type = t, Scalar = n },
+                    (t, n) => new FilterOption { Type = t, Scalar = n },
                     type,
-                    BaseParser.Number);
+                    BaseParser.Scalar);
             }
         }
 
-        private static Parser<char, AggregateExpression> Aggregate
+        private static Parser<char, AggregateOption> Aggregate
         {
             get
             {
@@ -64,7 +64,7 @@ namespace DiceSharp.Implementation.Parsing
                     { "min", AggregationType.Min },
                 };
                 var type = OneOf(aggreationTypes.Keys.Select(s => Try(String(s)))).Select(s => aggreationTypes[s]);
-                return type.Select(t => new AggregateExpression { Type = t });
+                return type.Select(t => new AggregateOption { Type = t });
             }
         }
     }

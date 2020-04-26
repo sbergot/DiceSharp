@@ -6,16 +6,16 @@ using DiceSharp.Implementation.SyntaxTree;
 
 namespace DiceSharp.Implementation.Parsing
 {
-    internal class DiceParser
+    internal static class DiceParser
     {
-        public static Parser<char, DiceExpression> Dice
+        public static Parser<char, DiceDeclaration> Dice
         {
             get
             {
                 var singleDice = Char('D')
                     .Then(Number)
-                    .Select(n => new DiceExpression { Number = 1, Faces = n });
-                var multipleDice = Map((n, dice) => new DiceExpression { Number = n, Faces = dice.Faces }, Number, singleDice);
+                    .Select(n => new DiceDeclaration { Number = 1, Faces = n });
+                var multipleDice = Map((n, dice) => new DiceDeclaration { Number = n, Faces = dice.Faces }, Number, singleDice);
                 return multipleDice.Or(singleDice);
             }
         }

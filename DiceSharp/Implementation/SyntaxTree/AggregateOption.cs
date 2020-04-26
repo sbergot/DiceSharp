@@ -1,6 +1,6 @@
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class AggregateExpression : OptionExpression
+    internal class AggregateOption : Option
     {
         public AggregationType Type { get; set; }
     }

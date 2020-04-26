@@ -1,6 +1,6 @@
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class OptionExpression
+    internal class Option
     {
     }
 }

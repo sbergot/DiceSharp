@@ -1,8 +1,8 @@
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class FilterExpression : OptionExpression
+    internal class FilterOption : Option
     {
         public FilterType Type { get; set; }
-        public int Scalar { get; set; }
+        public Scalar Scalar { get; set; }
     }
 }
