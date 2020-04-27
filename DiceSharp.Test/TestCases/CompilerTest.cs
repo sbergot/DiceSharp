@@ -29,6 +29,13 @@ namespace DiceSharp.Test.TestCases
             CompileSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(RangeMappingTestData))]
+        internal void RangeMapCompileCase(TestVector test)
+        {
+            CompileSuccess(test);
+        }
+
         internal void CompileSuccess(TestVector test)
         {
             var compiler = new Compiler();

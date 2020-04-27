@@ -11,12 +11,12 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<RollResult>)>
+            return new List<(string, Ast, List<Result>)>
             {
             (
                 "var $a<-D6",
                 Helpers.AssignStmt("a", new DiceDeclaration { Faces = 6, Number = 1 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -27,7 +27,7 @@ namespace DiceSharp.Test.TestData
             (
                 "var $my_name_42 <-  D6",
                 Helpers.AssignStmt("my_name_42", new DiceDeclaration { Faces = 6, Number = 1 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -64,7 +64,7 @@ namespace DiceSharp.Test.TestData
                         }
                     }
                 },
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -107,7 +107,7 @@ namespace DiceSharp.Test.TestData
                         }
                     }
                 },
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -149,7 +149,7 @@ namespace DiceSharp.Test.TestData
                         }
                     }
                 },
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },

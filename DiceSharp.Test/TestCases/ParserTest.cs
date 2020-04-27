@@ -28,6 +28,13 @@ namespace DiceSharp.Test.TestCases
             ParsingSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(RangeMappingTestData))]
+        internal void RangeMapParseCase(TestVector test)
+        {
+            ParsingSuccess(test);
+        }
+
         private static void ParsingSuccess(TestVector test)
         {
             var parser = new Parser();

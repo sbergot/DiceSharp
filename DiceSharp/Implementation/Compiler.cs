@@ -48,7 +48,7 @@ namespace DiceSharp.Implementation
             var scalarValue = GetScalarValue(ctx.Variables, rangeStmt.Scalar);
             foreach (var range in rangeStmt.Ranges)
             {
-                var filterScalarValue = GetScalarValue(ctx.Variables, range.Filter.Scalar);
+                var filterScalarValue = GetScalarValue(ctx.Variables, range.Filter.Scalar ?? new ConstantScalar { Value = 0 });
                 var match = range.Filter.Type switch
                 {
                     FilterType.Larger => scalarValue > filterScalarValue,

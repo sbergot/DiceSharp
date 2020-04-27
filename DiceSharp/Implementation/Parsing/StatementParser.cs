@@ -76,8 +76,7 @@ namespace DiceSharp.Implementation.Parsing
                 return Map(
                     (s, f) => new RangeDeclaration { Filter = f, Value = s },
                     BaseParser.QuotedString,
-                    rangeFilter).Between(Char('('), Char(')'));
-
+                    separator.Then(rangeFilter)).Between(Char('('), Char(')'));
             }
         }
     }

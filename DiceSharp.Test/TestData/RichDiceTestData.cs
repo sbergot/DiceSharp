@@ -11,7 +11,7 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<RollResult>)>
+            return new List<(string, Ast, List<Result>)>
             {
             (
                 "D6(=7)",
@@ -22,7 +22,7 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = false, Result = 5, Faces = 6 } },
@@ -39,7 +39,7 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Top, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -56,7 +56,7 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -73,7 +73,7 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -90,7 +90,7 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -107,7 +107,7 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 4 } },
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>
@@ -129,7 +129,7 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Top, Scalar = new ConstantScalar { Value = 1 } },
                     SumBonus = null
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>
@@ -150,7 +150,7 @@ namespace DiceSharp.Test.TestData
                     Aggregation = AggregationType.Sum,
                     Exploding = true
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>
@@ -170,7 +170,7 @@ namespace DiceSharp.Test.TestData
                     Aggregation = AggregationType.Sum,
                     Name = "my name!"
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>

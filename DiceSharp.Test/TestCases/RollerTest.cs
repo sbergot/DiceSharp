@@ -29,6 +29,13 @@ namespace DiceSharp.Test.TestCases
             RunSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(RangeMappingTestData))]
+        internal void RangeMapRollCase(TestVector test)
+        {
+            RunSuccess(test);
+        }
+
         private static void RunSuccess(TestVector test)
         {
             var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });

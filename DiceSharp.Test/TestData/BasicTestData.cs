@@ -11,12 +11,12 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<RollResult>)>
+            return new List<(string, Ast, List<Result>)>
             {
             (
                 "D6",
                 Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 1 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
@@ -27,7 +27,7 @@ namespace DiceSharp.Test.TestData
             (
                 "3D6",
                 Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 3 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>
@@ -62,7 +62,7 @@ namespace DiceSharp.Test.TestData
                         }
                     }
                 },
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 6, Faces = 8 } },
@@ -90,7 +90,7 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Plus }
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>
@@ -112,7 +112,7 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Minus }
                 }),
-                new List<RollResult> {
+                new List<Result> {
                     new RollResult
                     {
                         Dices = new List<Dice>
