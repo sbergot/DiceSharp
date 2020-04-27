@@ -11,7 +11,7 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<Roll>)>
+            return new List<(string, Ast, List<RollResult>)>
             {
             (
                 "D6(=7)",
@@ -22,8 +22,8 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = false, Result = 5, Faces = 6 } },
                         Result = 0,
@@ -39,8 +39,8 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Top, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
@@ -56,8 +56,8 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
@@ -73,8 +73,8 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 1,
@@ -90,8 +90,8 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
@@ -107,8 +107,8 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 4 } },
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {
@@ -129,8 +129,8 @@ namespace DiceSharp.Test.TestData
                     Filter = new FilterOption { Type = FilterType.Top, Scalar = new ConstantScalar { Value = 1 } },
                     SumBonus = null
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {
@@ -150,8 +150,8 @@ namespace DiceSharp.Test.TestData
                     Aggregation = AggregationType.Sum,
                     Exploding = true
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {
@@ -159,6 +159,27 @@ namespace DiceSharp.Test.TestData
                             new Dice { Valid = true, Result = 5, Faces = 2 },
                         },
                         Result = 14,
+                    }
+                }
+            ),
+            (
+                "2D2(\"my name!\")",
+                Helpers.ToAst(new RichDiceExpression
+                {
+                    Dices = new DiceDeclaration { Faces = 2, Number = 2 },
+                    Aggregation = AggregationType.Sum,
+                    Name = "my name!"
+                }),
+                new List<RollResult> {
+                    new RollResult
+                    {
+                        Dices = new List<Dice>
+                        {
+                            new Dice { Valid = true, Result = 2, Faces = 2 },
+                            new Dice { Valid = true, Result = 2, Faces = 2 },
+                        },
+                        Result = 4,
+                        Name = "my name!"
                     }
                 }
             ),

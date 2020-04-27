@@ -6,32 +6,32 @@ using DiceSharp.Test.TestData;
 
 namespace DiceSharp.Test.TestCases
 {
-    public class RollerTest
+    public class RunnerTest
     {
         [Theory]
         [ClassData(typeof(BasicTestData))]
         internal void BasicRollCase(TestVector test)
         {
-            RollSuccess(test);
+            RunSuccess(test);
         }
 
         [Theory]
         [ClassData(typeof(AssignTestData))]
         internal void AssignRollCase(TestVector test)
         {
-            RollSuccess(test);
+            RunSuccess(test);
         }
 
         [Theory]
         [ClassData(typeof(RichDiceTestData))]
         internal void RichDiceRollCase(TestVector test)
         {
-            RollSuccess(test);
+            RunSuccess(test);
         }
 
-        private static void RollSuccess(TestVector test)
+        private static void RunSuccess(TestVector test)
         {
-            var roller = new Roller(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             roller.Random = new Random(0);
             var result = roller.Roll(test.Program);
             Helpers.CompareObjects(test.Results, result);

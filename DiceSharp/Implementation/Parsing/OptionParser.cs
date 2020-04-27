@@ -26,9 +26,7 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
-                var nameoption = AnyCharExcept('"')
-                    .ManyString()
-                    .Between(Char('"'))
+                var nameoption = BaseParser.QuotedString
                     .Select(s => new NameOption { Name = s } as Option);
                 var explodingOption = String("exp").ThenReturn(new ExplodingOption() as Option);
                 return OneOf(
@@ -39,7 +37,7 @@ namespace DiceSharp.Implementation.Parsing
             }
         }
 
-        private static Parser<char, FilterOption> Filter
+        public static Parser<char, FilterOption> Filter
         {
             get
             {

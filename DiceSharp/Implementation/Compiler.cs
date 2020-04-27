@@ -8,7 +8,7 @@ namespace DiceSharp.Implementation
 {
     internal class Compiler
     {
-        internal Func<DiceRoller, IList<Roll>> Compile(Ast tree)
+        internal Func<DiceRoller, IList<Result>> Compile(Ast tree)
         {
             var variables = new Dictionary<string, int>();
             return (diceRoller) =>
@@ -18,7 +18,7 @@ namespace DiceSharp.Implementation
             };
         }
 
-        private static Roll RunStatement(Statement statement, RunContext ctx)
+        private static Result RunStatement(Statement statement, RunContext ctx)
         {
             _ = statement ?? throw new ArgumentNullException(nameof(statement));
 
@@ -34,10 +34,38 @@ namespace DiceSharp.Implementation
                 return roll;
             }
 
+            if (statement is RangeMappingStatement rangeStmt)
+            {
+                var result = RunRangeMapping(ctx, rangeStmt);
+                return new PrintResult { Value = result };
+            }
+
             throw new InvalidOperationException($"Uknown statement type: {statement.GetType()}");
         }
 
-        private static Roll RollRichDices(RichDiceExpression expr, RunContext ctx)
+        private static string RunRangeMapping(RunContext ctx, RangeMappingStatement rangeStmt)
+        {
+            var scalarValue = GetScalarValue(ctx.Variables, rangeStmt.Scalar);
+            foreach (var range in rangeStmt.Ranges)
+            {
+                var filterScalarValue = GetScalarValue(ctx.Variables, range.Filter.Scalar);
+                var match = range.Filter.Type switch
+                {
+                    FilterType.Larger => scalarValue > filterScalarValue,
+                    FilterType.Smaller => scalarValue < filterScalarValue,
+                    FilterType.Equal => scalarValue < filterScalarValue,
+                    FilterType.None => true,
+                    _ => throw new InvalidOperationException()
+                };
+                if (match)
+                {
+                    return range.Value;
+                }
+            }
+            return null;
+        }
+
+        private static RollResult RollRichDices(RichDiceExpression expr, RunContext ctx)
         {
             var dices = Enumerable.Range(0, expr.Dices.Number)
                 .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces, expr.Exploding))
@@ -51,10 +79,11 @@ namespace DiceSharp.Implementation
             var bonus = expr.SumBonus != null
                 ? GetScalarValue(ctx.Variables, expr.SumBonus.Scalar) * GetSignFactor(expr.SumBonus.Sign)
                 : 0;
-            return new Roll
+            return new RollResult
             {
                 Dices = filteredDices,
-                Result = ComputeResult(filteredDices, aggrType) + bonus
+                Result = ComputeResult(filteredDices, aggrType) + bonus,
+                Name = expr.Name
             };
         }
 

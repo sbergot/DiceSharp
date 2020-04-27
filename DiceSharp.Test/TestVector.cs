@@ -8,6 +8,6 @@ namespace DiceSharp.Test
     {
         public string Program { get; set; }
         public Ast Ast { get; set; }
-        public List<Roll> Results { get; set; }
+        public List<RollResult> Results { get; set; }
     }
 }

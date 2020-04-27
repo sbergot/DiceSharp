@@ -27,5 +27,15 @@ namespace DiceSharp.Implementation.Parsing
                 );
             }
         }
+
+        public static Parser<char, string> QuotedString
+        {
+            get
+            {
+                return AnyCharExcept('"')
+                    .ManyString()
+                    .Between(Char('"'));
+            }
+        }
     }
 }

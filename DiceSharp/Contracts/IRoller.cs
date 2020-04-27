@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace DiceSharp.Contracts
 {
-    public interface IRoller
+    public interface IRunner
     {
-        IList<Roll> Roll(string rollquery);
+        IList<Result> Roll(string rollquery);
     }
 }

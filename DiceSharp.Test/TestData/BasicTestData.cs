@@ -11,13 +11,13 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<Roll>)>
+            return new List<(string, Ast, List<RollResult>)>
             {
             (
                 "D6",
                 Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 1 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
@@ -27,8 +27,8 @@ namespace DiceSharp.Test.TestData
             (
                 "3D6",
                 Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 3 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {
@@ -62,13 +62,13 @@ namespace DiceSharp.Test.TestData
                         }
                     }
                 },
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 6, Faces = 8 } },
                         Result = 6,
                     },
-                    new Roll
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {
@@ -90,8 +90,8 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Plus }
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {
@@ -112,8 +112,8 @@ namespace DiceSharp.Test.TestData
                     Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Minus }
                 }),
-                new List<Roll> {
-                    new Roll
+                new List<RollResult> {
+                    new RollResult
                     {
                         Dices = new List<Dice>
                         {

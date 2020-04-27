@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
+using DiceSharp.Contracts;
 using DiceSharp.Implementation.SyntaxTree;
 using Xunit;
 
@@ -38,6 +39,7 @@ namespace DiceSharp.Test
             options.Converters.Add(new ConcreteTypeConverter<Statement>());
             options.Converters.Add(new ConcreteTypeConverter<Expression>());
             options.Converters.Add(new ConcreteTypeConverter<Option>());
+            options.Converters.Add(new ConcreteTypeConverter<Result>());
             options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
             var sa = JsonSerializer.Serialize(a, options);
             var sb = JsonSerializer.Serialize(b, options);

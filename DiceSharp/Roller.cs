@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DiceSharp.Contracts;
 using DiceSharp.Implementation;
 using DiceSharp.Implementation.Parsing;
 
 namespace DiceSharp
 {
-    public class Roller : IRoller
+    public class Runner : IRunner
     {
         public Random Random { get; set; } = new Random();
         public Limitations Limitations { get; }
 
-        public Roller(Limitations limitations)
+        public Runner(Limitations limitations)
         {
             Limitations = limitations;
         }
 
-        public IList<Roll> Roll(string rollquery)
+        public IList<Result> Roll(string rollquery)
         {
             if (rollquery.Length > Limitations.MaxProgramSize)
             {
