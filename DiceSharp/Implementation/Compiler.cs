@@ -53,7 +53,7 @@ namespace DiceSharp.Implementation
                 {
                     FilterType.Larger => scalarValue > filterScalarValue,
                     FilterType.Smaller => scalarValue < filterScalarValue,
-                    FilterType.Equal => scalarValue < filterScalarValue,
+                    FilterType.Equal => scalarValue == filterScalarValue,
                     FilterType.None => true,
                     _ => throw new InvalidOperationException()
                 };

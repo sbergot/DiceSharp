@@ -32,6 +32,57 @@ namespace DiceSharp.Test.TestData
                     }
                 }
             ),
+            (
+                "var $a <- D6\nrange $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
+                new Ast
+                {
+                    Statements = new List<Statement>
+                    {
+                        new AssignementStatement
+                        {
+                            VariableName = "a",
+                            Expression = new RichDiceExpression
+                            {
+                                Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                                Aggregation = AggregationType.Sum
+                            }
+                        },
+                        new RangeMappingStatement
+                        {
+                            Scalar = new VariableScalar { VariableName = "a" },
+                            Ranges = new List<RangeDeclaration>
+                            {
+                                new RangeDeclaration
+                                {
+                                    Value = "wont pass",
+                                    Filter = new FilterOption { Type = FilterType.Smaller, Scalar = new ConstantScalar { Value = 4 } }
+                                },
+                                new RangeDeclaration
+                                {
+                                    Value = "will pass",
+                                    Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 5 } }
+                                },
+                                new RangeDeclaration
+                                {
+                                    Value = "hello rangemap",
+                                    Filter = new FilterOption { Type = FilterType.None }
+                                }
+                            }
+                        }
+                    }
+                },
+                new List<Result> {
+                    new RollResult
+                    {
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
+                        Result = 5,
+                    },
+                    new PrintResult
+                    {
+                        Value = "will pass",
+                    }
+                }
+            ),
             }
             .Select(t => new TestVector { Program = t.Item1, Ast = t.Item2, Results = t.Item3 })
             .ToList();
