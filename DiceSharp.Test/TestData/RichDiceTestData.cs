@@ -11,11 +11,11 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<Result>)>
+            return new List<(string, Script, List<Result>)>
             {
             (
                 "D6(=7)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                     Aggregation = AggregationType.Sum,
@@ -32,7 +32,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "D6 (top7)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                     Aggregation = AggregationType.Sum,
@@ -49,7 +49,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "D6 (sum)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                     Aggregation = AggregationType.Sum,
@@ -66,7 +66,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "D6 (count)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                     Aggregation = AggregationType.Count,
@@ -83,7 +83,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "D6 (min)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                     Aggregation = AggregationType.Min,
@@ -100,7 +100,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "3D6(=4, count)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Count,
@@ -122,7 +122,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "3D6(top1)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Sum,
@@ -144,7 +144,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "2D2(exp)",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 2, Number = 2 },
                     Aggregation = AggregationType.Sum,
@@ -164,7 +164,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "2D2(\"my name!\")",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 2, Number = 2 },
                     Aggregation = AggregationType.Sum,
@@ -184,7 +184,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             }
-            .Select(t => new TestVector { Program = t.Item1, Ast = t.Item2, Results = t.Item3 })
+            .Select(t => new TestVector { Program = t.Item1, Script = t.Item2, Results = t.Item3 })
             .ToList();
         }
 

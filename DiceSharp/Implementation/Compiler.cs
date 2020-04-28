@@ -8,7 +8,7 @@ namespace DiceSharp.Implementation
 {
     internal class Compiler
     {
-        internal Func<DiceRoller, IList<Result>> Compile(Ast tree)
+        internal Func<DiceRoller, IList<Result>> Compile(Script tree)
         {
             var variables = new Dictionary<string, int>();
             return (diceRoller) =>
@@ -24,12 +24,12 @@ namespace DiceSharp.Implementation
 
             if (statement is ExpressionStatement exprStmt)
             {
-                return RollRichDices(exprStmt.Expression as RichDiceExpression, ctx);
+                return RollRichDices(exprStmt.Expression as DiceExpression, ctx);
             }
 
             if (statement is AssignementStatement assignStmt)
             {
-                var roll = RollRichDices(assignStmt.Expression as RichDiceExpression, ctx);
+                var roll = RollRichDices(assignStmt.Expression as DiceExpression, ctx);
                 ctx.Variables[assignStmt.VariableName] = roll.Result;
                 return roll;
             }
@@ -65,7 +65,7 @@ namespace DiceSharp.Implementation
             return null;
         }
 
-        private static RollResult RollRichDices(RichDiceExpression expr, RunContext ctx)
+        private static RollResult RollRichDices(DiceExpression expr, RunContext ctx)
         {
             var dices = Enumerable.Range(0, expr.Dices.Number)
                 .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces, expr.Exploding))

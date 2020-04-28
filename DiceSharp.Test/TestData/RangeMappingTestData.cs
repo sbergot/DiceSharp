@@ -11,7 +11,7 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<Result>)>
+            return new List<(string, Script, List<Result>)>
             {
             (
                 "range 4 ((\"hello rangemap\";default))",
@@ -33,15 +33,15 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a <- D6\nrange $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
-                new Ast
+                "var $a <- D6;range $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
+                new Script
                 {
                     Statements = new List<Statement>
                     {
                         new AssignementStatement
                         {
                             VariableName = "a",
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                                 Aggregation = AggregationType.Sum
@@ -84,7 +84,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             }
-            .Select(t => new TestVector { Program = t.Item1, Ast = t.Item2, Results = t.Item3 })
+            .Select(t => new TestVector { Program = t.Item1, Script = t.Item2, Results = t.Item3 })
             .ToList();
         }
 

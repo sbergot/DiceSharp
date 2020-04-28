@@ -8,23 +8,23 @@ namespace DiceSharp.Test
 {
     internal static class Helpers
     {
-        public static Ast AssignStmt(string varName, DiceDeclaration exp)
+        public static Script AssignStmt(string varName, DiceDeclaration exp)
         {
-            return new Ast
+            return new Script
             {
                 Statements = new List<Statement>
                 {
                     new AssignementStatement {
                         VariableName = varName,
-                        Expression = new RichDiceExpression { Dices = exp }
+                        Expression = new DiceExpression { Dices = exp }
                     }
                 }
             };
         }
 
-        public static Ast RangeMapStmt(Scalar scalar, List<RangeDeclaration> ranges)
+        public static Script RangeMapStmt(Scalar scalar, List<RangeDeclaration> ranges)
         {
-            return new Ast
+            return new Script
             {
                 Statements = new List<Statement>
                 {
@@ -36,15 +36,15 @@ namespace DiceSharp.Test
             };
         }
 
-        public static Ast ToAst(DiceDeclaration exp)
+        public static Script ToAst(DiceDeclaration exp)
         {
-            return ToAst(new RichDiceExpression { Dices = exp });
+            return ToAst(new DiceExpression { Dices = exp });
         }
 
-        public static Ast ToAst(Expression exp)
+        public static Script ToAst(Expression exp)
         {
             var statement = new ExpressionStatement { Expression = exp };
-            return new Ast { Statements = new List<Statement> { statement } };
+            return new Script { Statements = new List<Statement> { statement } };
         }
 
         public static void CompareObjects(object a, object b)

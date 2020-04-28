@@ -11,7 +11,7 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<Result>)>
+            return new List<(string, Script, List<Result>)>
             {
             (
                 "var $a<-D6",
@@ -36,22 +36,22 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a<-D6\n2D6(>$a,count)",
-                new Ast
+                "var $a<-D6;2D6(>$a,count)",
+                new Script
                 {
                     Statements = new List<Statement>
                     {
                         new AssignementStatement
                         {
                             VariableName = "a",
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 1 }
                             }
                         },
                         new ExpressionStatement
                         {
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 2 },
                                 Filter = new FilterOption
@@ -81,22 +81,22 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a<-D6\nD6+$a",
-                new Ast
+                "var $a<-D6;D6+$a",
+                new Script
                 {
                     Statements = new List<Statement>
                     {
                         new AssignementStatement
                         {
                             VariableName = "a",
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 1 }
                             }
                         },
                         new ExpressionStatement
                         {
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                                 SumBonus = new SumBonusDeclaration {
@@ -123,22 +123,22 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a<-D6\nD6-$a",
-                new Ast
+                "var $a<-D6;D6-$a",
+                new Script
                 {
                     Statements = new List<Statement>
                     {
                         new AssignementStatement
                         {
                             VariableName = "a",
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 1 }
                             }
                         },
                         new ExpressionStatement
                         {
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                                 SumBonus = new SumBonusDeclaration {
@@ -165,7 +165,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             }
-            .Select(t => new TestVector { Program = t.Item1, Ast = t.Item2, Results = t.Item3 })
+            .Select(t => new TestVector { Program = t.Item1, Script = t.Item2, Results = t.Item3 })
             .ToList();
         }
 

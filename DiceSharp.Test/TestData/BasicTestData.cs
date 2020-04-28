@@ -11,7 +11,7 @@ namespace DiceSharp.Test.TestData
     {
         public static List<TestVector> GetTestData()
         {
-            return new List<(string, Ast, List<Result>)>
+            return new List<(string, Script, List<Result>)>
             {
             (
                 "D6",
@@ -41,21 +41,21 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "D8\n4D3",
-                new Ast
+                "D8;4D3",
+                new Script
                 {
                     Statements = new List<Statement>
                     {
                         new ExpressionStatement
                         {
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 8, Number = 1 }
                             }
                         },
                         new ExpressionStatement
                         {
-                            Expression = new RichDiceExpression
+                            Expression = new DiceExpression
                             {
                                 Dices = new DiceDeclaration { Faces = 3, Number = 4 }
                             }
@@ -83,7 +83,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "3D6+2",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Sum,
@@ -105,7 +105,7 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "3D6-2",
-                Helpers.ToAst(new RichDiceExpression
+                Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Sum,
@@ -126,7 +126,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             }
-            .Select(t => new TestVector { Program = t.Item1, Ast = t.Item2, Results = t.Item3 })
+            .Select(t => new TestVector { Program = t.Item1, Script = t.Item2, Results = t.Item3 })
             .ToList();
         }
 

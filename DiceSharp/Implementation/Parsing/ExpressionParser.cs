@@ -10,7 +10,7 @@ namespace DiceSharp.Implementation.Parsing
 
         public static Parser<char, Expression> AnyExpression => OneOf(Try(ComplexDice.Cast<Expression>()));
 
-        private static Parser<char, RichDiceExpression> ComplexDice
+        public static Parser<char, DiceExpression> ComplexDice
         {
             get
             {
@@ -23,12 +23,12 @@ namespace DiceSharp.Implementation.Parsing
             }
         }
 
-        private static RichDiceExpression ComputeDiceExpression(
+        private static DiceExpression ComputeDiceExpression(
             DiceDeclaration diceExpr,
             Maybe<SumBonusDeclaration> sumBonus,
             Maybe<OptionGroup> optionGroupExpr)
         {
-            var result = new RichDiceExpression
+            var result = new DiceExpression
             {
                 Dices = diceExpr,
                 Aggregation = AggregationType.Sum,

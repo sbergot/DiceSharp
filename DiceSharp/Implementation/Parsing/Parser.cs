@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 
 using Pidgin;
@@ -10,13 +9,22 @@ namespace DiceSharp.Implementation.Parsing
 {
     internal class Parser
     {
-        internal Ast Parse(string program)
+        internal Script Parse(string program)
         {
-            var lines = program.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            return new Ast
+            return ScriptParser.ParseOrThrow(program);
+        }
+
+        private static Parser<char, Script> ScriptParser
+        {
+            get
             {
-                Statements = lines.Select(l => StatementParser.AnyStatement.ParseOrThrow(l)).ToList()
-            };
+                return StatementParser.AnyStatement
+                    .Separated(Char(';'))
+                    .Select(s => new Script
+                    {
+                        Statements = s.ToList()
+                    });
+            }
         }
     }
 }

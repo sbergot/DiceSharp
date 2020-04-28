@@ -1,6 +1,6 @@
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class RichDiceExpression : Expression
+    internal class DiceExpression : Expression
     {
         public DiceDeclaration Dices { get; set; }
         public FilterOption Filter { get; set; }

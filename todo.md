@@ -1,4 +1,4 @@
-- [ ] range mapping print statement
+- [x] range mapping print statement
 - [ ] only one parseorthrow call
 - [ ] encapsulate variable management
 - [ ] InvalidScriptException when variable does not exists or is overwritten

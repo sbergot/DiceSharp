@@ -39,7 +39,7 @@ namespace DiceSharp.Test.TestCases
         {
             var parser = new Parser();
             var ast = parser.Parse(test.Program);
-            Helpers.CompareObjects(test.Ast, ast);
+            Helpers.CompareObjects(test.Script, ast);
         }
     }
 }
