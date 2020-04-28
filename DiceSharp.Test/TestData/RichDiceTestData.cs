@@ -36,7 +36,7 @@ namespace DiceSharp.Test.TestData
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
                     Aggregation = AggregationType.Sum,
-                    Filter = new FilterOption { Type = FilterType.Top, Scalar = new ConstantScalar { Value = 7 } },
+                    Ranking = new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
                 }),
                 new List<Result> {
@@ -126,7 +126,7 @@ namespace DiceSharp.Test.TestData
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
                     Aggregation = AggregationType.Sum,
-                    Filter = new FilterOption { Type = FilterType.Top, Scalar = new ConstantScalar { Value = 1 } },
+                    Ranking = new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 1 } },
                     SumBonus = null
                 }),
                 new List<Result> {

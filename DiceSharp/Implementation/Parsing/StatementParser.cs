@@ -66,12 +66,7 @@ namespace DiceSharp.Implementation.Parsing
             {
                 var defaultFilter = String("default")
                     .ThenReturn(new FilterOption { Type = FilterType.None });
-                var filterSubSet = OptionParser.Filter
-                    .Assert(f =>
-                    {
-                        return f.Type != FilterType.Bottom && f.Type != FilterType.Top;
-                    });
-                var rangeFilter = Try(defaultFilter).Or(filterSubSet);
+                var rangeFilter = Try(defaultFilter).Or(OptionParser.Filter);
                 var separator = Char(';').Between(SkipWhitespaces);
                 return Map(
                     (s, f) => new RangeDeclaration { Filter = f, Value = s },

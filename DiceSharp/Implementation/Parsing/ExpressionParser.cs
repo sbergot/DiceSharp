@@ -32,7 +32,6 @@ namespace DiceSharp.Implementation.Parsing
             {
                 Dices = diceExpr,
                 Aggregation = AggregationType.Sum,
-                Filter = null
             };
 
             if (sumBonus.HasValue)
@@ -47,6 +46,11 @@ namespace DiceSharp.Implementation.Parsing
                     if (option is FilterOption filter)
                     {
                         result.Filter = filter;
+                    }
+
+                    if (option is RankingOption ranking)
+                    {
+                        result.Ranking = ranking;
                     }
 
                     if (option is AggregateOption aggregate)

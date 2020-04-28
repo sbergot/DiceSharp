@@ -31,6 +31,7 @@ namespace DiceSharp.Implementation.Parsing
                 var explodingOption = String("exp").ThenReturn(new ExplodingOption() as Option);
                 return OneOf(
                     Try(Filter).Cast<Option>(),
+                    Try(Ranking).Cast<Option>(),
                     Try(nameoption),
                     Try(explodingOption),
                     Try(Aggregate).Cast<Option>());
@@ -43,15 +44,30 @@ namespace DiceSharp.Implementation.Parsing
             {
                 var filterTypes = new Dictionary<string, FilterType>
                 {
-                    { "bot", FilterType.Bottom },
                     { "=", FilterType.Equal },
                     { ">", FilterType.Larger },
                     { "<", FilterType.Smaller },
-                    { "top", FilterType.Top },
                 };
                 var type = OneOf(filterTypes.Keys.Select(String)).Select(s => filterTypes[s]);
                 return Map(
                     (t, n) => new FilterOption { Type = t, Scalar = n },
+                    type,
+                    BaseParser.Scalar);
+            }
+        }
+
+        public static Parser<char, RankingOption> Ranking
+        {
+            get
+            {
+                var filterTypes = new Dictionary<string, RankingType>
+                {
+                    { "bot", RankingType.Bottom },
+                    { "top", RankingType.Top },
+                };
+                var type = OneOf(filterTypes.Keys.Select(String)).Select(s => filterTypes[s]);
+                return Map(
+                    (t, n) => new RankingOption { Type = t, Scalar = n },
                     type,
                     BaseParser.Scalar);
             }

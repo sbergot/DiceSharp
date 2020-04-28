@@ -4,6 +4,7 @@ namespace DiceSharp.Implementation.SyntaxTree
     {
         public DiceDeclaration Dices { get; set; }
         public FilterOption Filter { get; set; }
+        public RankingOption Ranking { get; set; }
         public AggregationType Aggregation { get; set; }
         public SumBonusDeclaration SumBonus { get; set; }
         public bool Exploding { get; set; }

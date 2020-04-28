@@ -6,7 +6,5 @@ namespace DiceSharp.Implementation
         Equal,
         Larger,
         Smaller,
-        Top,
-        Bottom,
     }
 }

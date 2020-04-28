@@ -10,10 +10,9 @@ namespace DiceSharp.Implementation
     {
         internal Func<DiceRoller, IList<Result>> Compile(Script tree)
         {
-            var variables = new Dictionary<string, int>();
             return (diceRoller) =>
             {
-                var ctx = new RunContext { Variables = variables, DiceRoller = diceRoller };
+                var ctx = new RunContext { Variables = new VariableContainer(), DiceRoller = diceRoller };
                 return tree.Statements.Select(s => RunStatement(s, ctx)).ToList();
             };
         }
@@ -24,13 +23,13 @@ namespace DiceSharp.Implementation
 
             if (statement is ExpressionStatement exprStmt)
             {
-                return RollRichDices(exprStmt.Expression as DiceExpression, ctx);
+                return RunDiceExpression(exprStmt.Expression as DiceExpression, ctx);
             }
 
             if (statement is AssignementStatement assignStmt)
             {
-                var roll = RollRichDices(assignStmt.Expression as DiceExpression, ctx);
-                ctx.Variables[assignStmt.VariableName] = roll.Result;
+                var roll = RunDiceExpression(assignStmt.Expression as DiceExpression, ctx);
+                ctx.Variables.SetVariable(assignStmt.VariableName, roll.Result);
                 return roll;
             }
 
@@ -45,27 +44,18 @@ namespace DiceSharp.Implementation
 
         private static string RunRangeMapping(RunContext ctx, RangeMappingStatement rangeStmt)
         {
-            var scalarValue = GetScalarValue(ctx.Variables, rangeStmt.Scalar);
+            var scalarValue = ctx.Variables.GetScalarValue(rangeStmt.Scalar);
             foreach (var range in rangeStmt.Ranges)
             {
-                var filterScalarValue = GetScalarValue(ctx.Variables, range.Filter.Scalar ?? new ConstantScalar { Value = 0 });
-                var match = range.Filter.Type switch
-                {
-                    FilterType.Larger => scalarValue > filterScalarValue,
-                    FilterType.Smaller => scalarValue < filterScalarValue,
-                    FilterType.Equal => scalarValue == filterScalarValue,
-                    FilterType.None => true,
-                    _ => throw new InvalidOperationException()
-                };
-                if (match)
-                {
-                    return range.Value;
-                }
+                var filter = range.Filter;
+                var filterScalarValue = ctx.Variables.GetScalarValue(filter.Scalar ?? new ConstantScalar { Value = 0 });
+                var match = Compare(filter.Type, filterScalarValue, scalarValue);
+                if (match) { return range.Value; }
             }
             return null;
         }
 
-        private static RollResult RollRichDices(DiceExpression expr, RunContext ctx)
+        private static RollResult RunDiceExpression(DiceExpression expr, RunContext ctx)
         {
             var dices = Enumerable.Range(0, expr.Dices.Number)
                 .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces, expr.Exploding))
@@ -74,10 +64,11 @@ namespace DiceSharp.Implementation
             var filteredDices = FilterDices(
                 dices,
                 expr.Filter ?? new FilterOption { Type = FilterType.None },
+                expr.Ranking ?? new RankingOption { Type = RankingType.None },
                 ctx.Variables);
             var aggrType = expr.Aggregation;
             var bonus = expr.SumBonus != null
-                ? GetScalarValue(ctx.Variables, expr.SumBonus.Scalar) * GetSignFactor(expr.SumBonus.Sign)
+                ? ctx.Variables.GetScalarValue(expr.SumBonus.Scalar) * GetSignFactor(expr.SumBonus.Sign)
                 : 0;
             return new RollResult
             {
@@ -97,51 +88,20 @@ namespace DiceSharp.Implementation
             };
         }
 
-        private static int GetScalarValue(Dictionary<string, int> variables, Scalar scalar)
+        private static List<Dice> FilterDices(List<Dice> dices, FilterOption filter, RankingOption ranking, VariableContainer variables)
         {
-            _ = scalar ?? throw new ArgumentNullException(nameof(scalar));
+            List<Dice> filteredDices = ApplyFilter(dices, filter, variables);
 
-            if (scalar is ConstantScalar constant)
-            {
-                return constant.Value;
-            }
-
-            if (scalar is VariableScalar variable)
-            {
-                return variables[variable.VariableName];
-            }
-
-            throw new InvalidOperationException($"Unknown scalar type: {scalar.GetType()}");
+            return ApplyRanking(ranking, variables, filteredDices);
         }
 
-        private static List<Dice> FilterDices(List<Dice> dices, FilterOption filter, Dictionary<string, int> variables)
+        private static List<Dice> ApplyRanking(RankingOption ranking, VariableContainer variables, List<Dice> filteredDices)
         {
-            var scalarValue = filter.Type != FilterType.None ? GetScalarValue(variables, filter.Scalar) : 0;
-            return filter.Type switch
+            var scalarValue = ranking.Type != RankingType.None ? variables.GetScalarValue(ranking.Scalar) : 0;
+            return ranking.Type switch
             {
-                FilterType.None => dices,
-                FilterType.Larger => dices
-                    .Select(d => new Dice
-                    {
-                        Result = d.Result,
-                        Faces = d.Faces,
-                        Valid = d.Result > scalarValue
-                    }).ToList(),
-                FilterType.Smaller => dices
-                    .Select(d => new Dice
-                    {
-                        Result = d.Result,
-                        Faces = d.Faces,
-                        Valid = d.Result < scalarValue
-                    }).ToList(),
-                FilterType.Equal => dices
-                    .Select(d => new Dice
-                    {
-                        Result = d.Result,
-                        Faces = d.Faces,
-                        Valid = d.Result == scalarValue
-                    }).ToList(),
-                FilterType.Top => dices
+                RankingType.None => filteredDices,
+                RankingType.Top => filteredDices
                     .OrderByDescending(d => d.Result)
                     .Select((d, i) => new Dice
                     {
@@ -149,7 +109,7 @@ namespace DiceSharp.Implementation
                         Faces = d.Faces,
                         Valid = i < scalarValue
                     }).ToList(),
-                FilterType.Bottom => dices
+                RankingType.Bottom => filteredDices
                     .OrderBy(d => d.Result)
                     .Select((d, i) => new Dice
                     {
@@ -157,6 +117,30 @@ namespace DiceSharp.Implementation
                         Faces = d.Faces,
                         Valid = i < scalarValue
                     }).ToList(),
+                _ => throw new InvalidOperationException(),
+            };
+        }
+
+        private static List<Dice> ApplyFilter(List<Dice> dices, FilterOption filter, VariableContainer variables)
+        {
+            var scalarValue = filter.Type != FilterType.None ? variables.GetScalarValue(filter.Scalar) : 0;
+            return dices
+                .Select(d => new Dice
+                {
+                    Result = d.Result,
+                    Faces = d.Faces,
+                    Valid = Compare(filter.Type, scalarValue, d.Result)
+                }).ToList();
+        }
+
+        private static bool Compare(FilterType filterType, int filterValue, int valueToCompare)
+        {
+            return filterType switch
+            {
+                FilterType.None => true,
+                FilterType.Larger => valueToCompare > filterValue,
+                FilterType.Smaller => valueToCompare < filterValue,
+                FilterType.Equal => valueToCompare == filterValue,
                 _ => throw new InvalidOperationException(),
             };
         }
