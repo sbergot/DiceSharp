@@ -14,8 +14,12 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
+                var rollCommand = BaseParser.QuotedString
+                    .Optional()
+                    .Between(String("roll ").Then(SkipWhitespaces), SkipWhitespaces);
                 return Map(
                     ComputeDiceExpression,
+                    rollCommand,
                     DiceParser.Dice,
                     DiceParser.SumBonus.Optional(),
                     SkipWhitespaces.Then(OptionParser.OptionGroup).Optional()
@@ -24,6 +28,7 @@ namespace DiceSharp.Implementation.Parsing
         }
 
         private static DiceExpression ComputeDiceExpression(
+            Maybe<string> name,
             DiceDeclaration diceExpr,
             Maybe<SumBonusDeclaration> sumBonus,
             Maybe<OptionGroup> optionGroupExpr)
@@ -32,6 +37,7 @@ namespace DiceSharp.Implementation.Parsing
             {
                 Dices = diceExpr,
                 Aggregation = AggregationType.Sum,
+                Name = name.GetValueOrDefault()
             };
 
             if (sumBonus.HasValue)
@@ -56,11 +62,6 @@ namespace DiceSharp.Implementation.Parsing
                     if (option is AggregateOption aggregate)
                     {
                         result.Aggregation = aggregate.Type;
-                    }
-
-                    if (option is NameOption name)
-                    {
-                        result.Name = name.Name;
                     }
 
                     if (option is ExplodingOption)

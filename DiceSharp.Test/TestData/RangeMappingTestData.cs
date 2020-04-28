@@ -33,7 +33,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a <- D6;range $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
+                "var $a <- roll D6;range $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
                 new Script
                 {
                     Statements = new List<Statement>

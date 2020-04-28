@@ -14,7 +14,7 @@ namespace DiceSharp.Test.TestData
             return new List<(string, Script, List<Result>)>
             {
             (
-                "D6(=7)",
+                "roll D6(=7)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
@@ -31,7 +31,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "D6 (top7)",
+                "roll D6 (top7)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
@@ -48,7 +48,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "D6 (sum)",
+                "roll D6 (sum)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
@@ -65,7 +65,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "D6 (count)",
+                "roll D6 (count)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
@@ -82,7 +82,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "D6 (min)",
+                "roll D6 (min)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 1 },
@@ -99,7 +99,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "3D6(=4, count)",
+                "roll 3D6(=4, count)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
@@ -121,7 +121,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "3D6(top1)",
+                "roll 3D6(top1)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
@@ -143,7 +143,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "2D2(exp)",
+                "roll 2D2(exp)",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 2, Number = 2 },
@@ -163,7 +163,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "2D2(\"my name!\")",
+                "roll \"my name!\" 2D2",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 2, Number = 2 },

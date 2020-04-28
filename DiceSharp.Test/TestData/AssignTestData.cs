@@ -14,7 +14,7 @@ namespace DiceSharp.Test.TestData
             return new List<(string, Script, List<Result>)>
             {
             (
-                "var $a<-D6",
+                "var $a<-roll D6",
                 Helpers.AssignStmt("a", new DiceDeclaration { Faces = 6, Number = 1 }),
                 new List<Result> {
                     new RollResult
@@ -25,7 +25,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $my_name_42 <-  D6",
+                "var $my_name_42 <-  roll D6",
                 Helpers.AssignStmt("my_name_42", new DiceDeclaration { Faces = 6, Number = 1 }),
                 new List<Result> {
                     new RollResult
@@ -36,7 +36,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a<-D6;2D6(>$a,count)",
+                "var $a<-roll D6;roll 2D6(>$a,count)",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -81,7 +81,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a<-D6;D6+$a",
+                "var $a<-roll D6;roll D6+$a",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -123,7 +123,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a<-D6;D6-$a",
+                "var $a<-roll D6;roll D6-$a",
                 new Script
                 {
                     Statements = new List<Statement>

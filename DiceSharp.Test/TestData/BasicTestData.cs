@@ -14,7 +14,7 @@ namespace DiceSharp.Test.TestData
             return new List<(string, Script, List<Result>)>
             {
             (
-                "D6",
+                "roll D6",
                 Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 1 }),
                 new List<Result> {
                     new RollResult
@@ -25,7 +25,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "3D6",
+                "roll 3D6",
                 Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 3 }),
                 new List<Result> {
                     new RollResult
@@ -41,7 +41,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "D8;4D3",
+                "roll D8;roll 4D3",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -82,7 +82,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "3D6+2",
+                "roll 3D6+2",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
@@ -104,7 +104,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "3D6-2",
+                "roll 3D6-2",
                 Helpers.ToAst(new DiceExpression
                 {
                     Dices = new DiceDeclaration { Faces = 6, Number = 3 },
