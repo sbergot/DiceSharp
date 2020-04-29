@@ -8,12 +8,31 @@ namespace DiceSharp.Implementation
 {
     internal class Compiler
     {
-        internal Func<DiceRoller, IList<Result>> Compile(Script tree)
+        internal List<Function> CompileLib(LibraryTree lib)
+        {
+            var result = new List<Function>();
+            foreach (var func in lib.Functions)
+            {
+                result.Add(new Function
+                {
+                    Spec = new FunctionSpec { Name = func.Name, Arguments = func.Variables },
+                    Run = (dr, args) =>
+                    {
+                        var vc = new VariableContainer(args);
+                        var ctx = new RunContext { Variables = vc, DiceRoller = dr };
+                        return func.Script.Statements.Select(script => RunStatement(script, ctx)).ToList();
+                    }
+                });
+            }
+            return result;
+        }
+
+        internal Func<DiceRoller, IList<Result>> CompileScript(Script tree)
         {
             return (diceRoller) =>
             {
                 var ctx = new RunContext { Variables = new VariableContainer(), DiceRoller = diceRoller };
-                return tree.Statements.Select(s => RunStatement(s, ctx)).ToList();
+                return tree.Statements.Select(script => RunStatement(script, ctx)).ToList();
             };
         }
 

@@ -11,7 +11,7 @@ namespace DiceSharp.Implementation.Parsing
             return StatementsParser.ScriptParser.ParseOrThrow(program);
         }
 
-        internal Library ParseLibrary(string program)
+        internal LibraryTree ParseLibrary(string program)
         {
             return LibraryParser.LibraryBlock.ParseOrThrow(program);
         }

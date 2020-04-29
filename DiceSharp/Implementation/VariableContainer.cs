@@ -9,6 +9,15 @@ namespace DiceSharp.Implementation
     {
         private Dictionary<string, int> Variables { get; set; } = new Dictionary<string, int>();
 
+        public VariableContainer()
+        {
+        }
+
+        public VariableContainer(Dictionary<string, int> init)
+        {
+            Variables = init;
+        }
+
         public int GetScalarValue(Scalar scalar)
         {
             _ = scalar ?? throw new ArgumentNullException(nameof(scalar));

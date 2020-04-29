@@ -9,13 +9,13 @@ namespace DiceSharp.Implementation.Parsing
 {
     internal static class LibraryParser
     {
-        public static Parser<char, Library> LibraryBlock
+        public static Parser<char, LibraryTree> LibraryBlock
         {
             get
             {
                 return FunctionParser
                     .Separated(Whitespace.Then(SkipWhitespaces))
-                    .Select(f => new Library { Functions = f.ToList() });
+                    .Select(f => new LibraryTree { Functions = f.ToList() });
             }
         }
 

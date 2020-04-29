@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class Library
+    internal class LibraryTree
     {
         public List<FunctionDeclaration> Functions { get; set; }
     }

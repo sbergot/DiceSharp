@@ -32,7 +32,7 @@ namespace DiceSharp.Test.TestCases
                     }
                 }
             };
-            var expectedLibAst = new Library
+            var expectedLibAst = new LibraryTree
             {
                 Functions = new List<FunctionDeclaration>
                 {
@@ -72,7 +72,7 @@ namespace DiceSharp.Test.TestCases
                     }
                 }
             };
-            var expectedLibAst = new Library
+            var expectedLibAst = new LibraryTree
             {
                 Functions = new List<FunctionDeclaration>
                 {
@@ -129,7 +129,7 @@ namespace DiceSharp.Test.TestCases
                     }
                 }
             };
-            var expectedLibAst = new Library
+            var expectedLibAst = new LibraryTree
             {
                 Functions = new List<FunctionDeclaration>
                 {

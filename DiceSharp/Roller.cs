@@ -25,8 +25,25 @@ namespace DiceSharp
             }
             var parser = new Parser();
             var compiler = new Compiler();
-            var program = compiler.Compile(parser.ParseScript(rollquery));
+            var program = compiler.CompileScript(parser.ParseScript(rollquery));
             return program(new DiceRoller(Limitations.MaxRollNbr, Random));
+        }
+
+        public ILibrary BuildLib(string libstr)
+        {
+            if (libstr.Length > Limitations.MaxProgramSize)
+            {
+                throw new LimitException($"program of size {libstr.Length} above limit {Limitations.MaxProgramSize}");
+            }
+            var lib = new Library(Limitations.MaxRollNbr);
+            var parser = new Parser();
+            var compiler = new Compiler();
+            var funcs = compiler.CompileLib(parser.ParseLibrary(libstr));
+            foreach (var function in funcs)
+            {
+                lib.Functions[function.Spec.Name] = function;
+            }
+            return lib;
         }
     }
 }

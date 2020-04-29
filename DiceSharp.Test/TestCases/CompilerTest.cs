@@ -39,7 +39,7 @@ namespace DiceSharp.Test.TestCases
         internal void CompileSuccess(TestVector test)
         {
             var compiler = new Compiler();
-            var program = compiler.Compile(test.Script);
+            var program = compiler.CompileScript(test.Script);
             var diceRoller = new DiceRoller(1000, new Random(0));
             var result = program(diceRoller);
             Helpers.CompareObjects(test.Results, result);
