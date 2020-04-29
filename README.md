@@ -20,7 +20,7 @@ A roll can be named using a quoted string:
 roll "my roll" 2D10
 ```
 
-## Filtering and aggregating
+## Filtering, ranking and aggregating
 
 Roll 3 D6 and keep the ones above 4: `roll 3D6(>4)`  
 Roll 3 D6 and count the ones above 4: `roll 3D6(>4,count)`
@@ -28,6 +28,8 @@ Roll 3 D6 and count the ones above 4: `roll 3D6(>4,count)`
 `>{number}` is a filter. Other filters are `<` and `=`.
 
 `count` is an aggregation. The other aggregations are `sum`, `max` and `min`. The default aggregation is `sum`.
+
+Roll 4 D6 and keep the highest one: `roll 4D6(top1)`. Use `bot` to keep the lowest dices.
 
 ## Variables
 
@@ -38,13 +40,13 @@ var $x <- roll D8;
 roll 2D6+$x;
 ```
 
-All variables must start with `$`. The rest of the name is composed of letters, numbers and underscore `_`.
+All variables must start with `$`. The rest of the name is composed of letters, numbers and underscore `_`. Statements must be separated by a `;`.
 
 They can be used to determine the number of faces of a dice roll: `roll 3D$x`
 
 Or they can be used to specify the number of dices to roll. In this case a `$` must be used to separate the variable from the rest of the dice declaration: `roll $x$D6`.
 
-Statements must be separated by a `;`.
+Variables can also be used in options such as filters and rankings: `roll 5D6(>$x)`.
 
 ## Functions
 
@@ -56,6 +58,7 @@ function my_roll($x) {
 }
 ```
 
+A function name follows the same rules as the variables (letters, digits, underscores).
 A function can also be defined by invoquing another one using a specific syntax:
 
 ```
