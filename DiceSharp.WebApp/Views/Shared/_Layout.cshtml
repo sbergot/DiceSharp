@@ -1,0 +1,44 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cubirds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.2.0/tailwind.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="container m-auto">
+    <header class="mb-8">
+        <div>
+            <a href="/" class="text-4xl" >Cubirds</a>
+            <span class="capicon text-3xl mr-8" >&#xe65d;</span>
+            @await Component.InvokeAsync("Profile")
+        </div>
+        <div>
+            <p>un jeu de Stefan Alexander - illustrations: Kristiaan der Nederlanden</p>
+            <a
+            class="underline text-blue-400 visited:text-blue-800"
+            target="_blank"
+            href="http://www.catchupgames.com/cubirds/">
+                http://www.catchupgames.com/cubirds/
+            </a>
+            <span class="mx-2">-</span> 
+            <a
+            class="underline text-blue-400 visited:text-blue-800"
+            target="_blank"
+            href="http://catchupgames.com/media/cubirds/regles_cubirds.pdf">
+                règles
+            </a>
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <script src="~/vendor/react.production.min.js"></script>
+    <script src="~/vendor/react-dom.production.min.js"></script>
+    <script src="~/vendor/signalr.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
