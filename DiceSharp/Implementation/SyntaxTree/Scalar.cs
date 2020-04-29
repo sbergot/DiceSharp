@@ -2,7 +2,7 @@ using System;
 
 namespace DiceSharp.Implementation.SyntaxTree
 {
-    internal class Scalar
+    internal abstract class Scalar
     {
     }
 }

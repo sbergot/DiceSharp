@@ -7,7 +7,7 @@ using DiceSharp.Implementation.Parsing;
 
 namespace DiceSharp
 {
-    public class Runner : IRunner
+    public class Runner
     {
         public Random Random { get; set; } = new Random();
         public Limitations Limitations { get; }

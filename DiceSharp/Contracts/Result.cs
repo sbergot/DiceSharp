@@ -1,6 +1,6 @@
 namespace DiceSharp.Contracts
 {
-    public class Result
+    abstract public class Result
     {
     }
 }

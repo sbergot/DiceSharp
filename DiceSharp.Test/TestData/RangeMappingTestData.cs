@@ -14,7 +14,7 @@ namespace DiceSharp.Test.TestData
             return new List<(string, Script, List<Result>)>
             {
             (
-                "range 4 ((\"hello rangemap\";default))",
+                "match 4 ((\"hello rangemap\";default))",
                 Helpers.RangeMapStmt(
                     new ConstantScalar { Value = 4 },
                     new List<RangeDeclaration>
@@ -33,7 +33,7 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
-                "var $a <- roll D6;range $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
+                "var $a <- roll D6;match $a ((\"wont pass\"; <4), (\"will pass\"; =5), (\"hello rangemap\";default))",
                 new Script
                 {
                     Statements = new List<Statement>

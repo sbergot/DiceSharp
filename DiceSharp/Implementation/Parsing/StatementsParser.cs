@@ -16,7 +16,7 @@ namespace DiceSharp.Implementation.Parsing
             get
             {
                 return Parsing.StatementsParser.AnyStatement
-                    .Separated(Char(';').Then(SkipWhitespaces))
+                    .SeparatedAndOptionallyTerminated(Char(';').Then(SkipWhitespaces))
                     .Select(s => new Script
                     {
                         Statements = s.ToList()
@@ -64,7 +64,7 @@ namespace DiceSharp.Implementation.Parsing
                 var ranges = Range
                     .Separated(Char(',').Between(SkipWhitespaces))
                     .Between(Char('('), Char(')'));
-                return Try(String("range "))
+                return Try(String("match "))
                     .Then(SkipWhitespaces)
                     .Then(Map(
                         (s, r) => new RangeMappingStatement { Ranges = r.ToList(), Scalar = s },

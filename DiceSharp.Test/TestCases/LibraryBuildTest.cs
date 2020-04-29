@@ -13,15 +13,33 @@ namespace DiceSharp.Test
         {
             var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             roller.Random = new Random(0);
-            var lib = roller.BuildLib("function singledice($faces) { var $res <- roll D6+$faces; range $res ((\"head\"; <4), (\"tails\"; default))}");
+            var lib = roller.BuildLib(@"
+            function singledice($bonus) {
+                var $res <- roll D6+$bonus;
+                match $res ((""head""; <4), (""tails""; default))
+            }
+            ");
             var funcs = lib.GetFunctionList();
-            Assert.Equal(1, funcs.Count);
-            var function = funcs.Single();
-            Assert.Equal("singledice", function.Name);
-            Assert.Equal(1, function.Arguments.Count);
-            Assert.Equal("faces", function.Arguments.Single());
+            var expectedFuncs = new List<FunctionSpec>
+            {
+                new FunctionSpec { Name = "singledice", Arguments = new List<string> { "bonus" } }
+            };
+            Helpers.CompareObjects(expectedFuncs, funcs);
             lib.SetSeed(0);
-            var results = lib.Call("singledice", new Dictionary<string, int> { { "faces", 3 } });
+            var results = lib.Call("singledice", new Dictionary<string, int> { { "bonus", 3 } });
+            var expectedResults = new List<Result>
+            {
+                new RollResult
+                {
+                    Dices = new List<Dice>
+                    {
+                        new Dice { Faces = 6, Result = 5, Valid = true }
+                    },
+                    Result = 8
+                },
+                new PrintResult { Value = "tails" }
+            };
+            Helpers.CompareObjects(expectedResults, results);
         }
     }
 }

@@ -14,7 +14,8 @@ namespace DiceSharp.Implementation.Parsing
             get
             {
                 return FunctionParser
-                    .Separated(Whitespace.Then(SkipWhitespaces))
+                    .SeparatedAndOptionallyTerminated(SkipWhitespaces)
+                    .Between(SkipWhitespaces)
                     .Select(f => new LibraryTree { Functions = f.ToList() });
             }
         }
