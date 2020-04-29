@@ -24,10 +24,52 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
+                return OneOf(
+                    Try(FunctionImplementationParser).Cast<FunctionDeclaration>(),
+                    Try(PartialApplicationParser).Cast<FunctionDeclaration>());
+            }
+        }
+
+        private static Parser<char, PartialApplicationDeclaration> PartialApplicationParser
+        {
+            get
+            {
                 return String("function ")
                     .Then(SkipWhitespaces)
                     .Then(Map(
-                        (name, args, script) => new FunctionDeclaration
+                        (name, args, appliedName, scalars) => new PartialApplicationDeclaration
+                        {
+                            Name = name,
+                            Arguments = args,
+                            AppliedFunction = appliedName,
+                            ProvidedValues = scalars
+                        },
+                        BaseParser.Name,
+                        Arguments,
+                        String("<- apply ").Between(SkipWhitespaces).Then(BaseParser.Name),
+                        ScalarList));
+            }
+        }
+
+        private static Parser<char, List<Scalar>> ScalarList
+        {
+            get
+            {
+                return BaseParser.Scalar
+                    .Separated(Char(',').Between(SkipWhitespaces))
+                    .Between(Char('('), Char(')'))
+                    .Select(s => s.ToList());
+            }
+        }
+
+        private static Parser<char, FunctionImplementation> FunctionImplementationParser
+        {
+            get
+            {
+                return String("function ")
+                    .Then(SkipWhitespaces)
+                    .Then(Map(
+                        (name, args, script) => new FunctionImplementation
                         {
                             Name = name,
                             Arguments = args,

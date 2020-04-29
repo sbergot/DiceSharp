@@ -20,6 +20,10 @@ namespace DiceSharp.Implementation
 
         public IList<Result> Call(string name, Dictionary<string, int> arguments)
         {
+            if (!Functions.ContainsKey(name))
+            {
+                throw new InvalidOperationException($"unknown function: {name}");
+            }
             var func = Functions[name];
             foreach (var arg in func.Spec.Arguments)
             {

@@ -13,16 +13,45 @@ namespace DiceSharp.Implementation
             var result = new List<Function>();
             foreach (var func in lib.Functions)
             {
-                result.Add(new Function
+                if (func is FunctionImplementation impl)
                 {
-                    Spec = new FunctionSpec { Name = func.Name, Arguments = func.Arguments },
-                    Run = (diceroller, args) =>
+                    result.Add(new Function
                     {
-                        var variables = new VariableContainer(args);
-                        var ctx = new RunContext { Variables = variables, DiceRoller = diceroller };
-                        return func.Script.Statements.Select(script => RunStatement(script, ctx)).ToList();
+                        Spec = new FunctionSpec { Name = impl.Name, Arguments = impl.Arguments },
+                        Run = (diceroller, args) =>
+                        {
+                            var variables = new VariableContainer(args);
+                            var ctx = new RunContext { Variables = variables, DiceRoller = diceroller };
+                            return impl.Script.Statements.Select(script => RunStatement(script, ctx)).ToList();
+                        }
+                    });
+                }
+
+                if (func is PartialApplicationDeclaration partial)
+                {
+                    var appliedFunc = result.Single(f => f.Spec.Name == partial.AppliedFunction);
+                    if (partial.ProvidedValues.Count != appliedFunc.Spec.Arguments.Count)
+                    {
+                        throw new InvalidScriptException(
+                            "mismatch between applied func args number and provided scalars:"
+                            + $"{partial.ProvidedValues.Count} and {appliedFunc.Spec.Arguments.Count}");
                     }
-                });
+                    result.Add(new Function
+                    {
+                        Spec = new FunctionSpec { Name = partial.Name, Arguments = partial.Arguments },
+                        Run = (diceroller, args) =>
+                        {
+                            var outvariables = new VariableContainer(args);
+                            var innerArgs = new Dictionary<string, int>();
+                            for (var idx = 0; idx < appliedFunc.Spec.Arguments.Count; idx++)
+                            {
+                                var value = outvariables.GetScalarValue(partial.ProvidedValues[idx]);
+                                innerArgs[appliedFunc.Spec.Arguments[idx]] = value;
+                            }
+                            return appliedFunc.Run(diceroller, innerArgs);
+                        }
+                    });
+                }
             }
             return result;
         }

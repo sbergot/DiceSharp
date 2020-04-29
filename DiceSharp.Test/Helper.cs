@@ -55,6 +55,7 @@ namespace DiceSharp.Test
             options.Converters.Add(new ConcreteTypeConverter<Option>());
             options.Converters.Add(new ConcreteTypeConverter<Result>());
             options.Converters.Add(new ConcreteTypeConverter<Scalar>());
+            options.Converters.Add(new ConcreteTypeConverter<FunctionDeclaration>());
             options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
             var sa = JsonSerializer.Serialize(a, options);
             var sb = JsonSerializer.Serialize(b, options);

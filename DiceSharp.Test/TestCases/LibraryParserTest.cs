@@ -39,7 +39,7 @@ namespace DiceSharp.Test.TestCases
             {
                 Functions = new List<FunctionDeclaration>
                 {
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "signledice",
                         Arguments = new List<string> { "faces" },
@@ -77,7 +77,7 @@ namespace DiceSharp.Test.TestCases
             {
                 Functions = new List<FunctionDeclaration>
                 {
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "signledice",
                         Arguments = new List<string>(),
@@ -116,7 +116,7 @@ namespace DiceSharp.Test.TestCases
             {
                 Functions = new List<FunctionDeclaration>
                 {
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "signledice",
                         Arguments = new List<string> { "arg1", "arg2" },
@@ -160,7 +160,7 @@ namespace DiceSharp.Test.TestCases
             {
                 Functions = new List<FunctionDeclaration>
                 {
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "signledice",
                         Arguments = new List<string> { "faces" },
@@ -226,7 +226,7 @@ namespace DiceSharp.Test.TestCases
             {
                 Functions = new List<FunctionDeclaration>
                 {
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "signledice",
                         Arguments = new List<string> { "faces" },
@@ -319,19 +319,79 @@ namespace DiceSharp.Test.TestCases
             {
                 Functions = new List<FunctionDeclaration>
                 {
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "signledice",
                         Arguments = new List<string> { "faces" },
                         Script = expectedScript1,
                     },
-                    new FunctionDeclaration
+                    new FunctionImplementation
                     {
                         Name = "multipledice",
                         Arguments = new List<string> { "bonus" },
                         Script = expectedScript2,
                     }
 
+                }
+            };
+            Helpers.CompareObjects(expectedLibAst, libast);
+        }
+
+        [Fact]
+        public void TestPartialApplicationParsing()
+        {
+            var parser = new Parser();
+            var libast = parser.ParseLibrary(@"
+            function multipledice($faces, $bonus) {
+                roll 2D$faces+$bonus;
+            }
+
+            function specialized($bonus) <- apply multipledice(4, $bonus)
+            ");
+            var expectedScript1 = new Script
+            {
+                Statements = new List<Statement>
+                {
+                    new ExpressionStatement
+                    {
+                        Expression = new DiceExpression
+                        {
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new VariableScalar { VariableName = "faces" },
+                                Number = new ConstantScalar { Value = 2 }
+                            },
+                            Aggregation = AggregationType.Sum,
+                            SumBonus = new SumBonusDeclaration
+                            {
+                                Scalar = new VariableScalar { VariableName = "bonus" },
+                                Sign = SignType.Plus
+                            }
+                        }
+                    },
+                }
+            };
+            var expectedLibAst = new LibraryTree
+            {
+                Functions = new List<FunctionDeclaration>
+                {
+                    new FunctionImplementation
+                    {
+                        Name = "multipledice",
+                        Arguments = new List<string> { "faces", "bonus" },
+                        Script = expectedScript1,
+                    },
+                    new PartialApplicationDeclaration
+                    {
+                        Name = "specialized",
+                        Arguments = new List<string> { "bonus" },
+                        AppliedFunction = "multipledice",
+                        ProvidedValues = new List<Scalar>
+                        {
+                            new ConstantScalar { Value = 4 },
+                            new VariableScalar { VariableName = "bonus" }
+                        }
+                    }
                 }
             };
             Helpers.CompareObjects(expectedLibAst, libast);

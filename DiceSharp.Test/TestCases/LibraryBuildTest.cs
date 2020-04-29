@@ -56,7 +56,6 @@ namespace DiceSharp.Test
             Assert.Throws<ArgumentException>(() => lib.Call("singledice", new Dictionary<string, int> { { "badarg", 3 } }));
         }
 
-
         [Fact]
         public void TestCustomDice()
         {
@@ -101,6 +100,62 @@ namespace DiceSharp.Test
                         new Dice { Faces = 8, Result = 7, Valid = true }
                     },
                     Result = 16
+                },
+            };
+            Helpers.CompareObjects(expectedResults, results);
+        }
+
+        [Fact]
+        public void TestPartialApplication()
+        {
+            var Builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            Builder.Random = new Random(0);
+            var lib = Builder.BuildLib(@"
+            function multipledice($faces, $bonus) {
+                roll 2D$faces+$bonus;
+            }
+
+            function specialized($bonus) <- apply multipledice(4, $bonus)
+            ");
+            var funcs = lib.GetFunctionList();
+            var expectedFuncs = new List<FunctionSpec>
+            {
+                new FunctionSpec
+                {
+                    Name = "multipledice",
+                    Arguments = new List<string>
+                    {
+                        "faces",
+                        "bonus",
+                    }
+                },
+                new FunctionSpec
+                {
+                    Name = "specialized",
+                    Arguments = new List<string>
+                    {
+                        "bonus",
+                    }
+                },
+            };
+            Helpers.CompareObjects(expectedFuncs, funcs);
+            lib.SetSeed(0);
+            var results = lib.Call(
+                "specialized",
+                new Dictionary<string, int>
+                {
+                    { "bonus", 3 }
+                });
+            var expectedResults = new List<Result>
+            {
+                new RollResult
+                {
+                    Dices = new List<Dice>
+                    {
+                        new Dice { Faces = 4, Result = 3, Valid = true },
+                        new Dice { Faces = 4, Result = 4, Valid = true }
+                    },
+                    Result = 10
                 },
             };
             Helpers.CompareObjects(expectedResults, results);
