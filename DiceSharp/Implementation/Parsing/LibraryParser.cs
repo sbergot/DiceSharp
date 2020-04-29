@@ -30,7 +30,7 @@ namespace DiceSharp.Implementation.Parsing
                         (name, args, script) => new FunctionDeclaration
                         {
                             Name = name,
-                            Variables = args,
+                            Arguments = args,
                             Script = script
                         },
                         BaseParser.Name,

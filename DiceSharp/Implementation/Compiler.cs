@@ -15,7 +15,7 @@ namespace DiceSharp.Implementation
             {
                 result.Add(new Function
                 {
-                    Spec = new FunctionSpec { Name = func.Name, Arguments = func.Variables },
+                    Spec = new FunctionSpec { Name = func.Name, Arguments = func.Arguments },
                     Run = (dr, args) =>
                     {
                         var vc = new VariableContainer(args);

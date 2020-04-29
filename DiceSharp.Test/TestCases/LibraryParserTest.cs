@@ -39,7 +39,7 @@ namespace DiceSharp.Test.TestCases
                     new FunctionDeclaration
                     {
                         Name = "signledice",
-                        Variables = new List<string> { "faces" },
+                        Arguments = new List<string> { "faces" },
                         Script = expectedScript,
                     }
                 }
@@ -73,7 +73,7 @@ namespace DiceSharp.Test.TestCases
                     new FunctionDeclaration
                     {
                         Name = "signledice",
-                        Variables = new List<string>(),
+                        Arguments = new List<string>(),
                         Script = expectedScript,
                     }
                 }
@@ -108,7 +108,7 @@ namespace DiceSharp.Test.TestCases
                     new FunctionDeclaration
                     {
                         Name = "signledice",
-                        Variables = new List<string> { "arg1", "arg2" },
+                        Arguments = new List<string> { "arg1", "arg2" },
                         Script = expectedScript,
                     }
                 }
@@ -148,7 +148,7 @@ namespace DiceSharp.Test.TestCases
                     new FunctionDeclaration
                     {
                         Name = "signledice",
-                        Variables = new List<string> { "faces" },
+                        Arguments = new List<string> { "faces" },
                         Script = expectedScript,
                     }
                 }
@@ -210,7 +210,7 @@ namespace DiceSharp.Test.TestCases
                     new FunctionDeclaration
                     {
                         Name = "signledice",
-                        Variables = new List<string> { "faces" },
+                        Arguments = new List<string> { "faces" },
                         Script = expectedScript,
                     }
                 }
@@ -295,13 +295,13 @@ namespace DiceSharp.Test.TestCases
                     new FunctionDeclaration
                     {
                         Name = "signledice",
-                        Variables = new List<string> { "faces" },
+                        Arguments = new List<string> { "faces" },
                         Script = expectedScript1,
                     },
                     new FunctionDeclaration
                     {
                         Name = "multipledice",
-                        Variables = new List<string> { "bonus" },
+                        Arguments = new List<string> { "bonus" },
                         Script = expectedScript2,
                     }
 
