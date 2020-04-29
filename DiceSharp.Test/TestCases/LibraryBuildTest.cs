@@ -55,5 +55,55 @@ namespace DiceSharp.Test
             ");
             Assert.Throws<ArgumentException>(() => lib.Call("singledice", new Dictionary<string, int> { { "badarg", 3 } }));
         }
+
+
+        [Fact]
+        public void TestCustomDice()
+        {
+            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            roller.Random = new Random(0);
+            var lib = roller.BuildLib(@"
+            function customDice($nbr, $faces, $bonus) {
+                roll $nbr$D$faces+$bonus;
+            }
+            ");
+            var funcs = lib.GetFunctionList();
+            var expectedFuncs = new List<FunctionSpec>
+            {
+                new FunctionSpec
+                {
+                    Name = "customDice",
+                    Arguments = new List<string>
+                    {
+                        "nbr",
+                        "faces",
+                        "bonus",
+                    }
+                }
+            };
+            Helpers.CompareObjects(expectedFuncs, funcs);
+            lib.SetSeed(0);
+            var results = lib.Call(
+                "customDice",
+                new Dictionary<string, int>
+                {
+                    { "nbr", 2 },
+                    { "faces", 8 },
+                    { "bonus", 3 }
+                });
+            var expectedResults = new List<Result>
+            {
+                new RollResult
+                {
+                    Dices = new List<Dice>
+                    {
+                        new Dice { Faces = 8, Result = 6, Valid = true },
+                        new Dice { Faces = 8, Result = 7, Valid = true }
+                    },
+                    Result = 16
+                },
+            };
+            Helpers.CompareObjects(expectedResults, results);
+        }
     }
 }

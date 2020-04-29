@@ -1,2 +1,2 @@
-- [x] add args verification
-- [ ] dice expression should use scalars to allow variables
+- [ ] create language documentation
+- [ ] start website
