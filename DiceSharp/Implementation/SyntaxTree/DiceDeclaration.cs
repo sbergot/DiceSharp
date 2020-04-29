@@ -2,7 +2,7 @@ namespace DiceSharp.Implementation.SyntaxTree
 {
     internal class DiceDeclaration
     {
-        public int Number { get; set; }
-        public int Faces { get; set; }
+        public Scalar Number { get; set; }
+        public Scalar Faces { get; set; }
     }
 }

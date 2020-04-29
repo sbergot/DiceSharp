@@ -41,5 +41,19 @@ namespace DiceSharp.Test
             };
             Helpers.CompareObjects(expectedResults, results);
         }
+
+        [Fact]
+        public void TestArgMissing()
+        {
+            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            roller.Random = new Random(0);
+            var lib = roller.BuildLib(@"
+            function singledice($bonus) {
+                var $res <- roll D6+$bonus;
+                match $res ((""head""; <4), (""tails""; default))
+            }
+            ");
+            Assert.Throws<ArgumentException>(() => lib.Call("singledice", new Dictionary<string, int> { { "badarg", 3 } }));
+        }
     }
 }

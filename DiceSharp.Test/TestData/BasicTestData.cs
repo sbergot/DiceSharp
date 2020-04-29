@@ -15,7 +15,11 @@ namespace DiceSharp.Test.TestData
             {
             (
                 "roll D6",
-                Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 1 }),
+                Helpers.ToAst(new DiceDeclaration
+                {
+                    Faces = new ConstantScalar { Value = 6 },
+                    Number = new ConstantScalar { Value = 1 }
+                }),
                 new List<Result> {
                     new RollResult
                     {
@@ -26,7 +30,11 @@ namespace DiceSharp.Test.TestData
             ),
             (
                 "roll 3D6",
-                Helpers.ToAst(new DiceDeclaration { Faces = 6, Number = 3 }),
+                Helpers.ToAst(new DiceDeclaration
+                {
+                    Faces = new ConstantScalar { Value = 6 },
+                    Number = new ConstantScalar { Value = 3 }
+                }),
                 new List<Result> {
                     new RollResult
                     {
@@ -50,14 +58,22 @@ namespace DiceSharp.Test.TestData
                         {
                             Expression = new DiceExpression
                             {
-                                Dices = new DiceDeclaration { Faces = 8, Number = 1 }
+                                Dices = new DiceDeclaration
+                                {
+                                    Faces = new ConstantScalar { Value = 8 },
+                                    Number = new ConstantScalar { Value = 1 }
+                                },
                             }
                         },
                         new ExpressionStatement
                         {
                             Expression = new DiceExpression
                             {
-                                Dices = new DiceDeclaration { Faces = 3, Number = 4 }
+                                Dices = new DiceDeclaration
+                                {
+                                    Faces = new ConstantScalar { Value = 3 },
+                                    Number = new ConstantScalar { Value = 4 }
+                                },
                             }
                         }
                     }
@@ -91,14 +107,22 @@ namespace DiceSharp.Test.TestData
                         {
                             Expression = new DiceExpression
                             {
-                                Dices = new DiceDeclaration { Faces = 8, Number = 1 }
+                                Dices = new DiceDeclaration
+                                {
+                                    Faces = new ConstantScalar { Value = 8 },
+                                    Number = new ConstantScalar { Value = 1 }
+                                },
                             }
                         },
                         new ExpressionStatement
                         {
                             Expression = new DiceExpression
                             {
-                                Dices = new DiceDeclaration { Faces = 3, Number = 4 }
+                                Dices = new DiceDeclaration
+                                {
+                                    Faces = new ConstantScalar { Value = 3 },
+                                    Number = new ConstantScalar { Value = 4 }
+                                },
                             }
                         }
                     }
@@ -126,7 +150,11 @@ namespace DiceSharp.Test.TestData
                 "roll 3D6+2",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 3 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 3 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Plus }
@@ -148,7 +176,11 @@ namespace DiceSharp.Test.TestData
                 "roll 3D6-2",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 3 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 3 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Minus }

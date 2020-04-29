@@ -12,11 +12,20 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
-                var singleDice = Char('D')
-                    .Then(Number)
-                    .Select(n => new DiceDeclaration { Number = 1, Faces = n });
-                var multipleDice = Map((n, dice) => new DiceDeclaration { Number = n, Faces = dice.Faces }, Number, singleDice);
-                return multipleDice.Or(singleDice);
+                var singleDice = CIChar('D')
+                    .Then(BaseParser.Scalar)
+                    .Select(n => new DiceDeclaration { Number = new ConstantScalar { Value = 1 }, Faces = n });
+                return Map(
+                    (n, dice) =>
+                    {
+                        if (n.HasValue)
+                        {
+                            dice.Number = n.Value;
+                        }
+                        return dice;
+                    },
+                    BaseParser.Scalar.Optional(),
+                    singleDice);
             }
         }
 

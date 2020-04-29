@@ -20,8 +20,16 @@ namespace DiceSharp.Implementation
 
         public IList<Result> Call(string name, Dictionary<string, int> arguments)
         {
+            var func = Functions[name];
+            foreach (var arg in func.Spec.Arguments)
+            {
+                if (!arguments.ContainsKey(arg))
+                {
+                    throw new ArgumentException($"Missing argument: {arg}");
+                }
+            }
             var diceRoller = new DiceRoller(MaxRollNumber, Random);
-            return Functions[name].Run(diceRoller, arguments);
+            return func.Run(diceRoller, arguments);
         }
 
         public IReadOnlyCollection<FunctionSpec> GetFunctionList()

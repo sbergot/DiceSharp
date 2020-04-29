@@ -43,7 +43,11 @@ namespace DiceSharp.Test.TestData
                             VariableName = "a",
                             Expression = new DiceExpression
                             {
-                                Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                                Dices = new DiceDeclaration
+                                {
+                                    Faces = new ConstantScalar { Value = 6 },
+                                    Number = new ConstantScalar { Value = 1 }
+                                },
                                 Aggregation = AggregationType.Sum
                             }
                         },

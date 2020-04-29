@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DiceSharp.Contracts;
 using DiceSharp.Implementation;
 using DiceSharp.Implementation.Parsing;

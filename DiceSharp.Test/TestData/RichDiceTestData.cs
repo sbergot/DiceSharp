@@ -17,7 +17,11 @@ namespace DiceSharp.Test.TestData
                 "roll D6(=7)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 1 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
@@ -34,7 +38,11 @@ namespace DiceSharp.Test.TestData
                 "roll D6 (top7)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 1 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Ranking = new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 7 } },
                     SumBonus = null
@@ -51,7 +59,11 @@ namespace DiceSharp.Test.TestData
                 "roll D6 (sum)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 1 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Filter = null,
                     SumBonus = null
@@ -68,7 +80,11 @@ namespace DiceSharp.Test.TestData
                 "roll D6 (count)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 1 }
+                    },
                     Aggregation = AggregationType.Count,
                     Filter = null,
                     SumBonus = null
@@ -85,7 +101,11 @@ namespace DiceSharp.Test.TestData
                 "roll D6 (min)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 1 }
+                    },
                     Aggregation = AggregationType.Min,
                     Filter = null,
                     SumBonus = null
@@ -102,7 +122,11 @@ namespace DiceSharp.Test.TestData
                 "roll 3D6(=4, count)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 3 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 3 }
+                    },
                     Aggregation = AggregationType.Count,
                     Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 4 } },
                     SumBonus = null
@@ -124,7 +148,11 @@ namespace DiceSharp.Test.TestData
                 "roll 3D6(top1)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 6, Number = 3 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 6 },
+                        Number = new ConstantScalar { Value = 3 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Ranking = new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 1 } },
                     SumBonus = null
@@ -146,7 +174,11 @@ namespace DiceSharp.Test.TestData
                 "roll 2D2(exp)",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 2, Number = 2 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 2 },
+                        Number = new ConstantScalar { Value = 2 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Exploding = true
                 }),
@@ -166,7 +198,11 @@ namespace DiceSharp.Test.TestData
                 "roll \"my name!\" 2D2",
                 Helpers.ToAst(new DiceExpression
                 {
-                    Dices = new DiceDeclaration { Faces = 2, Number = 2 },
+                    Dices = new DiceDeclaration
+                    {
+                        Faces = new ConstantScalar { Value = 2 },
+                        Number = new ConstantScalar { Value = 2 }
+                    },
                     Aggregation = AggregationType.Sum,
                     Name = "my name!"
                 }),

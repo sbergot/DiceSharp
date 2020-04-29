@@ -21,7 +21,10 @@ namespace DiceSharp.Test.TestCases
                     {
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                            Dices = new DiceDeclaration {
+                                Faces = new ConstantScalar { Value = 6 },
+                                Number = new ConstantScalar { Value = 1 }
+                            },
                             Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
@@ -60,7 +63,11 @@ namespace DiceSharp.Test.TestCases
                     {
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new ConstantScalar { Value = 6 },
+                                Number = new ConstantScalar { Value = 1 }
+                            },
                             Aggregation = AggregationType.Sum,
                         }
                     }
@@ -95,7 +102,11 @@ namespace DiceSharp.Test.TestCases
                     {
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new ConstantScalar { Value = 6 },
+                                Number = new ConstantScalar { Value = 1 }
+                            },
                             Aggregation = AggregationType.Sum,
                         }
                     }
@@ -130,7 +141,11 @@ namespace DiceSharp.Test.TestCases
                         VariableName = "test",
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new ConstantScalar { Value = 6 },
+                                Number = new ConstantScalar { Value = 1 }
+                            },
                             Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
@@ -175,7 +190,11 @@ namespace DiceSharp.Test.TestCases
                         VariableName = "res",
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new ConstantScalar { Value = 6 },
+                                Number = new ConstantScalar { Value = 1 }
+                            },
                             Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
@@ -241,7 +260,11 @@ namespace DiceSharp.Test.TestCases
                         VariableName = "res",
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 6, Number = 1 },
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new ConstantScalar { Value = 6 },
+                                Number = new ConstantScalar { Value = 1 }
+                            },
                             Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
@@ -277,7 +300,11 @@ namespace DiceSharp.Test.TestCases
                     {
                         Expression = new DiceExpression
                         {
-                            Dices = new DiceDeclaration { Faces = 8, Number = 2 },
+                            Dices = new DiceDeclaration
+                            {
+                                Faces = new ConstantScalar { Value = 8 },
+                                Number = new ConstantScalar { Value = 2 }
+                            },
                             Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {

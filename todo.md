@@ -1,2 +1,2 @@
-- [ ] add args verification
+- [x] add args verification
 - [ ] dice expression should use scalars to allow variables

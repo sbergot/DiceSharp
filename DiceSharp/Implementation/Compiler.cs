@@ -16,10 +16,10 @@ namespace DiceSharp.Implementation
                 result.Add(new Function
                 {
                     Spec = new FunctionSpec { Name = func.Name, Arguments = func.Arguments },
-                    Run = (dr, args) =>
+                    Run = (diceroller, args) =>
                     {
-                        var vc = new VariableContainer(args);
-                        var ctx = new RunContext { Variables = vc, DiceRoller = dr };
+                        var variables = new VariableContainer(args);
+                        var ctx = new RunContext { Variables = variables, DiceRoller = diceroller };
                         return func.Script.Statements.Select(script => RunStatement(script, ctx)).ToList();
                     }
                 });
@@ -76,8 +76,10 @@ namespace DiceSharp.Implementation
 
         private static RollResult RunDiceExpression(DiceExpression expr, RunContext ctx)
         {
-            var dices = Enumerable.Range(0, expr.Dices.Number)
-                .Select(i => ctx.DiceRoller.Roll(expr.Dices.Faces, expr.Exploding))
+            var diceNbr = ctx.Variables.GetScalarValue(expr.Dices.Number);
+            var faceNbr = ctx.Variables.GetScalarValue(expr.Dices.Faces);
+            var dices = Enumerable.Range(0, diceNbr)
+                .Select(i => ctx.DiceRoller.Roll(faceNbr, expr.Exploding))
                 .ToList();
 
             var filteredDices = FilterDices(
