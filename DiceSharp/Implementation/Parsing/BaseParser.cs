@@ -8,14 +8,9 @@ namespace DiceSharp.Implementation.Parsing
     {
         public static Parser<char, int> Number => Pidgin.Parser.AtLeastOnceString(Digit).Select(int.Parse);
 
-        public static Parser<char, string> Variable
-        {
-            get
-            {
-                return Char('$')
-                    .Then(LetterOrDigit.Or(Char('_')).ManyString());
-            }
-        }
+        public static Parser<char, string> Name => LetterOrDigit.Or(Char('_')).ManyString();
+
+        public static Parser<char, string> Variable => Char('$').Then(Name);
 
         public static Parser<char, Scalar> Scalar
         {

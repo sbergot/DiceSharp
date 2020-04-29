@@ -82,6 +82,47 @@ namespace DiceSharp.Test.TestData
                 }
             ),
             (
+                "roll D8 ; roll 4D3",
+                new Script
+                {
+                    Statements = new List<Statement>
+                    {
+                        new ExpressionStatement
+                        {
+                            Expression = new DiceExpression
+                            {
+                                Dices = new DiceDeclaration { Faces = 8, Number = 1 }
+                            }
+                        },
+                        new ExpressionStatement
+                        {
+                            Expression = new DiceExpression
+                            {
+                                Dices = new DiceDeclaration { Faces = 3, Number = 4 }
+                            }
+                        }
+                    }
+                },
+                new List<Result> {
+                    new RollResult
+                    {
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 6, Faces = 8 } },
+                        Result = 6,
+                    },
+                    new RollResult
+                    {
+                        Dices = new List<Dice>
+                        {
+                            new Dice { Valid = true, Result = 3, Faces = 3 },
+                            new Dice { Valid = true, Result = 3, Faces = 3 },
+                            new Dice { Valid = true, Result = 2, Faces = 3 },
+                            new Dice { Valid = true, Result = 1, Faces = 3 },
+                        },
+                        Result = 9,
+                    }
+                }
+            ),
+            (
                 "roll 3D6+2",
                 Helpers.ToAst(new DiceExpression
                 {

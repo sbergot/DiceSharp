@@ -9,16 +9,29 @@ using DiceSharp.Implementation.SyntaxTree;
 
 namespace DiceSharp.Implementation.Parsing
 {
-    internal static class StatementParser
+    internal static class StatementsParser
     {
-        public static Parser<char, Statement> AnyStatement
+        public static Parser<char, Script> ScriptParser
+        {
+            get
+            {
+                return Parsing.StatementsParser.AnyStatement
+                    .Separated(Char(';').Then(SkipWhitespaces))
+                    .Select(s => new Script
+                    {
+                        Statements = s.ToList()
+                    });
+            }
+        }
+
+        private static Parser<char, Statement> AnyStatement
         {
             get
             {
                 return OneOf(
-                    Try(AssignementStmt.Cast<Statement>()),
-                    Try(ExpressionStmt.Cast<Statement>()),
-                    Try(RangeMappingStmt.Cast<Statement>()));
+                    AssignementStmt.Cast<Statement>(),
+                    ExpressionStmt.Cast<Statement>(),
+                    RangeMappingStmt.Cast<Statement>());
             }
         }
 
@@ -26,7 +39,7 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
-                return String("var ")
+                return Try(String("var "))
                     .Then(SkipWhitespaces)
                     .Then(Map(
                     (name, _, expr) => new AssignementStatement { VariableName = name, Expression = expr },
@@ -51,7 +64,7 @@ namespace DiceSharp.Implementation.Parsing
                 var ranges = Range
                     .Separated(Char(',').Between(SkipWhitespaces))
                     .Between(Char('('), Char(')'));
-                return String("range ")
+                return Try(String("range "))
                     .Then(SkipWhitespaces)
                     .Then(Map(
                         (s, r) => new RangeMappingStatement { Ranges = r.ToList(), Scalar = s },

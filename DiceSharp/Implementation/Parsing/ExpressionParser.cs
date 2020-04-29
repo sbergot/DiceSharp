@@ -8,7 +8,7 @@ namespace DiceSharp.Implementation.Parsing
     internal static class ExpressionParser
     {
 
-        public static Parser<char, Expression> AnyExpression => OneOf(Try(ComplexDice.Cast<Expression>()));
+        public static Parser<char, Expression> AnyExpression => OneOf(ComplexDice.Cast<Expression>());
 
         public static Parser<char, DiceExpression> ComplexDice
         {
@@ -16,13 +16,13 @@ namespace DiceSharp.Implementation.Parsing
             {
                 var rollCommand = BaseParser.QuotedString
                     .Optional()
-                    .Between(String("roll ").Then(SkipWhitespaces), SkipWhitespaces);
+                    .Between(Try(String("roll ")).Then(SkipWhitespaces), SkipWhitespaces);
                 return Map(
                     ComputeDiceExpression,
                     rollCommand,
                     DiceParser.Dice,
                     DiceParser.SumBonus.Optional(),
-                    SkipWhitespaces.Then(OptionParser.OptionGroup).Optional()
+                    SkipWhitespaces.Then(OptionParser.OptionGroup.Optional())
                 );
             }
         }

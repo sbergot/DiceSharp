@@ -25,7 +25,7 @@ namespace DiceSharp
             }
             var parser = new Parser();
             var compiler = new Compiler();
-            var program = compiler.Compile(parser.Parse(rollquery));
+            var program = compiler.Compile(parser.ParseScript(rollquery));
             return program(new DiceRoller(Limitations.MaxRollNbr, Random));
         }
     }

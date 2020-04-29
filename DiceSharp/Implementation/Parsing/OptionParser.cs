@@ -57,12 +57,13 @@ namespace DiceSharp.Implementation.Parsing
         {
             get
             {
-                var filterTypes = new Dictionary<string, RankingType>
+                var rankingTypes = new Dictionary<string, RankingType>
                 {
                     { "bot", RankingType.Bottom },
                     { "top", RankingType.Top },
                 };
-                var type = OneOf(filterTypes.Keys.Select(String)).Select(s => filterTypes[s]);
+                var type = OneOf(rankingTypes.Keys.Select(s => Try(String(s))))
+                    .Select(s => rankingTypes[s]);
                 return Map(
                     (t, n) => new RankingOption { Type = t, Scalar = n },
                     type,
@@ -81,7 +82,8 @@ namespace DiceSharp.Implementation.Parsing
                     { "max", AggregationType.Max },
                     { "min", AggregationType.Min },
                 };
-                var type = OneOf(aggreationTypes.Keys.Select(s => Try(String(s)))).Select(s => aggreationTypes[s]);
+                var type = OneOf(aggreationTypes.Keys.Select(s => Try(String(s))))
+                    .Select(s => aggreationTypes[s]);
                 return type.Select(t => new AggregateOption { Type = t });
             }
         }

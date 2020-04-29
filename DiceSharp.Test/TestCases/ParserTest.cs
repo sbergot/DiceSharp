@@ -38,7 +38,7 @@ namespace DiceSharp.Test.TestCases
         private static void ParsingSuccess(TestVector test)
         {
             var parser = new Parser();
-            var ast = parser.Parse(test.Program);
+            var ast = parser.ParseScript(test.Program);
             Helpers.CompareObjects(test.Script, ast);
         }
     }
