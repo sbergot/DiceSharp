@@ -11,9 +11,9 @@ namespace DiceSharp.Test
         [Fact]
         public void TestLibBuild()
         {
-            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
-            roller.Random = new Random(0);
-            var lib = roller.BuildLib(@"
+            var builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            builder.Random = new Random(0);
+            var lib = builder.BuildLib(@"
             function singledice($bonus) {
                 var $res <- roll D6+$bonus;
                 match $res ((""head""; <4), (""tails""; default))
@@ -45,9 +45,9 @@ namespace DiceSharp.Test
         [Fact]
         public void TestArgMissing()
         {
-            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
-            roller.Random = new Random(0);
-            var lib = roller.BuildLib(@"
+            var builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            builder.Random = new Random(0);
+            var lib = builder.BuildLib(@"
             function singledice($bonus) {
                 var $res <- roll D6+$bonus;
                 match $res ((""head""; <4), (""tails""; default))
@@ -60,9 +60,9 @@ namespace DiceSharp.Test
         [Fact]
         public void TestCustomDice()
         {
-            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
-            roller.Random = new Random(0);
-            var lib = roller.BuildLib(@"
+            var Builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            Builder.Random = new Random(0);
+            var lib = Builder.BuildLib(@"
             function customDice($nbr, $faces, $bonus) {
                 roll $nbr$D$faces+$bonus;
             }

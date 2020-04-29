@@ -6,7 +6,7 @@ using DiceSharp.Test.TestData;
 
 namespace DiceSharp.Test.TestCases
 {
-    public class RunnerTest
+    public class BuilderTest
     {
         [Theory]
         [ClassData(typeof(BasicTestData))]
@@ -38,9 +38,9 @@ namespace DiceSharp.Test.TestCases
 
         private static void RunSuccess(TestVector test)
         {
-            var roller = new Runner(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
-            roller.Random = new Random(0);
-            var result = roller.Roll(test.Program);
+            var builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
+            builder.Random = new Random(0);
+            var result = builder.BuildScript(test.Program)();
             Helpers.CompareObjects(test.Results, result);
         }
     }

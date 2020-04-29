@@ -1,2 +1,3 @@
+- [ ] partial application declaration
 - [ ] create language documentation
 - [ ] start website

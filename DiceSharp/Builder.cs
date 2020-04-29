@@ -6,17 +6,17 @@ using DiceSharp.Implementation.Parsing;
 
 namespace DiceSharp
 {
-    public class Runner
+    public class Builder
     {
         public Random Random { get; set; } = new Random();
         public Limitations Limitations { get; }
 
-        public Runner(Limitations limitations)
+        public Builder(Limitations limitations)
         {
             Limitations = limitations;
         }
 
-        public IList<Result> Roll(string rollquery)
+        public Func<IList<Result>> BuildScript(string rollquery)
         {
             if (rollquery.Length > Limitations.MaxProgramSize)
             {
@@ -25,7 +25,8 @@ namespace DiceSharp
             var parser = new Parser();
             var compiler = new Compiler();
             var program = compiler.CompileScript(parser.ParseScript(rollquery));
-            return program(new DiceRoller(Limitations.MaxRollNbr, Random));
+            var diceRoller = new DiceRoller(Limitations.MaxRollNbr, Random);
+            return () => program(diceRoller);
         }
 
         public ILibrary BuildLib(string libstr)
