@@ -1,11 +1,11 @@
-export function post(url: string, data?: object) {
+export function post(url: string, data?: object | string) {
   const init: RequestInit = {
-    method: "POST"
+    method: "POST",
   };
   if (data) {
     init.headers = {
       Accept: "application/json",
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     };
     init.body = JSON.stringify(data);
   }

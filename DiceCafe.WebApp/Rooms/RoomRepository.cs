@@ -31,11 +31,13 @@ namespace DiceCafe.WebApp.Rooms
             {
                 throw new InvalidOperationException("too many active rooms");
             }
+
+            string id = NewRoomId();
             var room = new Room
             {
-                Id = NewRoomId(),
+                Id = id,
                 LastUpdate = DateTime.UtcNow,
-                State = new RoomState(),
+                State = new RoomState(id),
             };
             Rooms[room.Id] = room;
             return room;

@@ -20,8 +20,8 @@ interface LobbyProps {
 }
 
 export function Lobby({ room }: LobbyProps) {
-  const { joinUrl, quitUrl, setLibrary } = createUrls(room.id);
-  const { users } = room;
+  const { joinUrl, quitUrl, setLibrary, callFunction } = createUrls(room.id);
+  const { users, functions, results } = room;
   const [libraryScript, setLibrayScript] = React.useState("");
   return (
     <div>
@@ -50,10 +50,38 @@ export function Lobby({ room }: LobbyProps) {
           );
         })}
       </ul>
+      <p>functions</p>
+      <ul className="list-disc list-inside">
+        {Object.values(functions).map((f) => {
+          return (
+            <li className="mt-4">
+              <span className={`font-bold px-2 py-1 rounded-md`}>{f.name}</span>
+              <Button
+                label="Lancer"
+                onclick={() =>
+                  post(callFunction, { name: f.name, arguments: {} })
+                }
+              />
+            </li>
+          );
+        })}
+      </ul>
+      <ul className="list-disc list-inside">
+        {Object.values(results).map((f) => {
+          return (
+            <li className="mt-4">
+              <span className={`font-bold px-2 py-1 rounded-md`}>
+                {(f as RollResult).result}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
       <textarea
         value={libraryScript}
         onChange={(e) => setLibrayScript(e.target.value)}
       />
+      <Button label="Sauver" onclick={() => post(setLibrary, libraryScript)} />
     </div>
   );
 }

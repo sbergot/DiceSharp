@@ -11,6 +11,7 @@ using DiceCafe.WebApp.Rooms.Contracts;
 using DiceCafe.WebApp.Rooms;
 using DiceCafe.WebApp.Users.Contract;
 using System.Collections.Generic;
+using DiceCafe.WebApp.ViewModels;
 
 namespace DiceCafe.WebApp.Controllers
 {
@@ -37,7 +38,7 @@ namespace DiceCafe.WebApp.Controllers
 
         [HttpPost]
         [Route("api/room/{roomId}/[action]")]
-        async public Task<IActionResult> Library(string roomId, string library)
+        async public Task<IActionResult> Library(string roomId, [FromBody]string library)
         {
             var normalisedRoomId = roomId.ToUpperInvariant();
             if (!RoomRepository.Exists(normalisedRoomId))
@@ -59,8 +60,8 @@ namespace DiceCafe.WebApp.Controllers
         }
 
         [HttpPost]
-        [Route("api/room/{roomId}/[action]/{name}")]
-        async public Task<IActionResult> Run(string roomId, string name, Dictionary<string, int> args)
+        [Route("api/room/{roomId}/[action]")]
+        async public Task<IActionResult> Run(string roomId, FunctionCallViewModel fcall)
         {
             var normalisedRoomId = roomId.ToUpperInvariant();
             if (!RoomRepository.Exists(normalisedRoomId))
@@ -74,12 +75,12 @@ namespace DiceCafe.WebApp.Controllers
                 return BadRequest();
             }
 
-            if (!room.Library.GetFunctionList().Any(f => f.Name == name))
+            if (!room.Library.GetFunctionList().Any(f => f.Name == fcall.Name))
             {
                 return NotFound();
             }
 
-            var result = room.Library.Call(name, args);
+            var result = room.Library.Call(fcall.Name, fcall.Arguments);
             room.State.Results.AddRange(result);
             await RoomHub.Update(room);
 
