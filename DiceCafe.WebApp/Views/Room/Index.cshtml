@@ -1,0 +1,11 @@
+@model DiceCafe.WebApp.ViewModels.RoomViewModel;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div id="root"></div>
+
+@section Scripts {
+    <script>
+        window.preloadedData = @Html.Raw(Json.Serialize(@Model));
+    </script>
+    <script src="~/dist/main.js" asp-append-version="true"></script>
+}

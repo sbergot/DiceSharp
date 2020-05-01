@@ -1,0 +1,27 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dice café</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.2.0/tailwind.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="container m-auto">
+    <header class="mb-8">
+        <div>
+            <a href="/" class="text-4xl" >Dice Café</a>
+            @await Component.InvokeAsync("Profile")
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <script src="~/vendor/react.production.min.js"></script>
+    <script src="~/vendor/react-dom.production.min.js"></script>
+    <script src="~/vendor/signalr.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
