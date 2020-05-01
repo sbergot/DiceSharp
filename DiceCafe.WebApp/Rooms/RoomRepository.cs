@@ -2,8 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using DiceCafe.WebApp.Rooms;
-using DiceCafe.WebApp.Rooms.Contracts;
 using DiceCafe.WebApp.Rooms.Contracts;
 
 namespace DiceCafe.WebApp.Rooms

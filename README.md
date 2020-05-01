@@ -59,7 +59,7 @@ function my_roll($x) {
 ```
 
 A function name follows the same rules as the variables (letters, digits, underscores).
-A function can also be defined by invoquing another one using a specific syntax:
+A function can also be defined by invoking another one using a specific `apply` syntax:
 
 ```
 function multipledice($faces, $bonus) {
