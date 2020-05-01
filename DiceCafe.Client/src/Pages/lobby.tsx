@@ -3,7 +3,6 @@ import * as React from "react";
 import { Link } from "../Components/Link";
 import { Button } from "../Components/Button";
 import { post } from "../http";
-import { getColorBgClass } from "../helpers";
 
 function createUrls(roomId: string): RoomUrls {
   const prefix = `${window.location.origin}/room/${roomId}`;
@@ -11,8 +10,8 @@ function createUrls(roomId: string): RoomUrls {
   return {
     joinUrl: `${prefix}/join`,
     quitUrl: `${prefix}/quit `,
-    addComputerUrl: `${apiprefix}/addcomputer`,
-    startUrl: `${apiprefix}/start`,
+    setLibrary: `${apiprefix}/library`,
+    callFunction: `${apiprefix}/run`,
   };
 }
 
@@ -21,24 +20,12 @@ interface LobbyProps {
 }
 
 export function Lobby({ room }: LobbyProps) {
-  const { joinUrl, quitUrl, startUrl, addComputerUrl } = createUrls(room.id);
-  const players = room.users;
+  const { joinUrl, quitUrl, setLibrary } = createUrls(room.id);
+  const { users } = room;
+  const [libraryScript, setLibrayScript] = React.useState("");
   return (
     <div>
       <Link href={quitUrl} label="Quitter" className="mr-2" />
-      <Button
-        onclick={() => {
-          post(startUrl);
-        }}
-        label="Démarrer"
-        className="mr-2"
-      />
-      <Button
-        onclick={() => {
-          post(addComputerUrl);
-        }}
-        label="Ajouter ordinateur"
-      />
       <p>
         Les autres joueurs peuvent rejoindre cette salle en allant sur cette
         url:{" "}
@@ -55,7 +42,7 @@ export function Lobby({ room }: LobbyProps) {
       </p>
       <p>Joueurs présents dans cette salle:</p>
       <ul className="list-disc list-inside">
-        {Object.values(players).map((p) => {
+        {Object.values(users).map((p) => {
           return (
             <li className="mt-4">
               <span className={`font-bold px-2 py-1 rounded-md`}>{p.name}</span>
@@ -63,6 +50,10 @@ export function Lobby({ room }: LobbyProps) {
           );
         })}
       </ul>
+      <textarea
+        value={libraryScript}
+        onChange={(e) => setLibrayScript(e.target.value)}
+      />
     </div>
   );
 }

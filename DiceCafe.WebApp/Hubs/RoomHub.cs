@@ -14,11 +14,6 @@ namespace DiceCafe.WebApp.Hubs
             RoomRepository = roomRepository;
         }
 
-        async public Task Log(string roomId, string message)
-        {
-            await Clients.Group(roomId).SendAsync("Log", message);
-        }
-
         async public Task JoinRoom(string roomId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId);

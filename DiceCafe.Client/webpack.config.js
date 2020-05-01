@@ -4,7 +4,7 @@ module.exports = {
   entry: "./src/index.tsx",
 
   output: {
-    path: path.resolve(__dirname, "..", "WebApp", "wwwroot", "dist")
+    path: path.resolve(__dirname, "..", "DiceCafe.WebApp", "wwwroot", "dist"),
   },
 
   mode: "production",
@@ -12,7 +12,7 @@ module.exports = {
   devtool: "source-map",
 
   resolve: {
-    extensions: [".ts", ".tsx"]
+    extensions: [".ts", ".tsx"],
   },
 
   module: {
@@ -22,22 +22,22 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: "ts-loader"
-          }
-        ]
+            loader: "ts-loader",
+          },
+        ],
       },
       // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {
         enforce: "pre",
         test: /\.js$/,
-        loader: "source-map-loader"
-      }
-    ]
+        loader: "source-map-loader",
+      },
+    ],
   },
 
   externals: {
     react: "React",
     "react-dom": "ReactDOM",
-    "@microsoft/signalr": "signalR"
-  }
+    "@microsoft/signalr": "signalR",
+  },
 };

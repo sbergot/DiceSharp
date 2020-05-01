@@ -1,7 +1,7 @@
 import {
   HubConnectionBuilder,
   LogLevel,
-  HubConnection
+  HubConnection,
 } from "@microsoft/signalr";
 
 class Channel<T> {
@@ -12,16 +12,15 @@ class Channel<T> {
   }
 
   unsubscribe(cb: Updater<T>) {
-    this.listeners = this.listeners.filter(c => c != cb);
+    this.listeners = this.listeners.filter((c) => c != cb);
   }
 
   fire(value: T) {
-    this.listeners.forEach(cb => cb(value));
+    this.listeners.forEach((cb) => cb(value));
   }
 }
 
 export const roomUpdateChannel = new Channel<Room>();
-export const logChannel = new Channel<LogMessage>();
 
 let connection: HubConnection;
 
@@ -31,8 +30,7 @@ export async function startConnection(roomId: string) {
     .configureLogging(LogLevel.Information)
     .build();
 
-  startingCon.on("Update", room => roomUpdateChannel.fire(room));
-  startingCon.on("Log", message => logChannel.fire(message));
+  startingCon.on("Update", (room) => roomUpdateChannel.fire(room));
 
   await startingCon.start();
   connection = startingCon;

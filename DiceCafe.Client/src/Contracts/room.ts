@@ -2,29 +2,15 @@ type UserId = string;
 
 interface RoomViewModel {
   room: Room;
-  playerId: UserId;
+  userId: string;
 }
 
 interface Room {
   id: string;
-  users: Record<UserId, User>;
-  lastUpdate: string;
+  users: User[];
+  results: Result[];
+  functions: FunctionSpec[];
 }
-
-type RoomMode = "Starting" | "InProgress" | "Ended";
-
-type Color =
-  | "Red"
-  | "Orange"
-  | "Yellow"
-  | "Green"
-  | "Teal"
-  | "Blue"
-  | "Indigo"
-  | "Purple"
-  | "Pink";
-
-type PlayerType = "Human" | "Computer";
 
 interface User {
   id: UserId;
@@ -34,6 +20,6 @@ interface User {
 interface RoomUrls {
   joinUrl: string;
   quitUrl: string;
-  startUrl: string;
-  addComputerUrl: string;
+  setLibrary: string;
+  callFunction: string;
 }

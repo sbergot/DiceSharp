@@ -36,7 +36,7 @@ namespace DiceCafe.WebApp.Controllers
             var room = RoomRepository.Create();
             await RoomHelpers.WithRoomLock(room, () =>
             {
-                room.State.Players.Add(SessionManager.GetCurrentUser());
+                room.State.Users.Add(SessionManager.GetCurrentUser());
             });
             return RedirectToAction("Index", new { roomId = room.Id });
         }
@@ -52,8 +52,8 @@ namespace DiceCafe.WebApp.Controllers
             string scheme = Request.HttpContext.Request.Scheme;
             return View(new RoomViewModel
             {
-                Room = room,
-                PlayerId = SessionManager.GetCurrentUser().Id,
+                Room = room.State,
+                UserId = SessionManager.GetCurrentUser().Id,
             });
         }
 
@@ -69,11 +69,9 @@ namespace DiceCafe.WebApp.Controllers
 
             await RoomHelpers.WithRoomLock(room, async () =>
             {
-                User player = SessionManager.GetCurrentUser();
-                room.State.Players.Add(player);
+                User user = SessionManager.GetCurrentUser();
+                room.State.Users.Add(user);
                 await RoomHub.Update(room);
-                var message = $"{player.Name} a rejoint la salle";
-                await RoomHub.Log(normalisedRoomId, message);
             });
 
             return RedirectToAction("Index", new { roomId = room.Id });
@@ -90,11 +88,9 @@ namespace DiceCafe.WebApp.Controllers
 
             await RoomHelpers.WithRoomLock(room, async () =>
             {
-                User player = SessionManager.GetCurrentUser();
-                room.State.Players.Remove(player);
+                User user = SessionManager.GetCurrentUser();
+                room.State.Users.Remove(user);
                 await RoomHub.Update(room);
-                var message = $"{player.Name} a quitté la salle";
-                await RoomHub.Log(roomId, message);
             });
             return Redirect("/");
         }
