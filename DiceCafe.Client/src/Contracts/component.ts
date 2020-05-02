@@ -5,3 +5,7 @@ interface ChildrenProp {
 interface ClassProp {
   className?: string;
 }
+
+interface RoomProp {
+  room: Room;
+}

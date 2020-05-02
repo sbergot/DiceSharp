@@ -11,3 +11,14 @@ export function post(url: string, data?: object | string) {
   }
   fetch(url, init);
 }
+
+export function createUrls(roomId: string): RoomUrls {
+  const prefix = `${window.location.origin}/room/${roomId}`;
+  const apiprefix = `${window.location.origin}/api/room/${roomId}`;
+  return {
+    joinUrl: `${prefix}/join`,
+    quitUrl: `${prefix}/quit `,
+    setLibrary: `${apiprefix}/library`,
+    callFunction: `${apiprefix}/run`,
+  };
+}

@@ -1,20 +1,10 @@
 # dicesharp
 
 - [ ] check statistical distributions of the dices
+- [ ] add a type tag on results
 
-# backend
+# dicecafé
 
-- [x] log in & choose name
-- [x] create a room
-- [x] join a room
-- [x] set program
-- [x] run function
-
-# frontend
-
-- [x] log in & choose name
-- [x] create a room
-- [x] join a room
-- [ ] set program
-- [ ] run function
-- [ ] display results
+- [ ] global layout
+- [ ] result display
+- [ ] add username & date on the result
