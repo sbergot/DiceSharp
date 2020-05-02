@@ -53,6 +53,7 @@ namespace DiceCafe.WebApp.Controllers
             var builder = new DiceScript.Builder(limitations);
             room.Library = builder.BuildLib(library);
             room.State.Functions = room.Library.GetFunctionList();
+            room.State.LibraryScript = library;
             await RoomHub.Update(room);
 
             return Ok();

@@ -4,7 +4,6 @@ import { JoinArea } from "./dice-table/join-area";
 import { UserList } from "./dice-table/user-list";
 import { FunctionList } from "./dice-table/function-list";
 import { ResultList } from "./dice-table/result-list";
-import { LibraryEditor } from "./dice-table/library-editor";
 
 export function DiceTable({ room }: RoomProp) {
   return (

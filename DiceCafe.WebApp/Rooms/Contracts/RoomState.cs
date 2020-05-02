@@ -11,6 +11,7 @@ namespace DiceCafe.WebApp.Rooms.Contracts
             Id = id;
         }
         public string Id { get; }
+        public string LibraryScript { get; set; }
         public IList<User> Users { get; } = new List<User>();
         public List<ResultGroup> Results { get; set; } = new List<ResultGroup>();
         public IReadOnlyCollection<FunctionSpec> Functions { get; set; } = new List<FunctionSpec>();

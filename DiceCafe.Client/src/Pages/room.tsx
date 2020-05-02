@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 import { DiceTable } from "./dice-table";
 import { roomUpdateChannel } from "../connection";
@@ -21,16 +21,6 @@ export function Room({ roomVm }: RoomProps) {
 
   return (
     <Router>
-      <nav className="mb-4">
-        <ul className="flex">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li className="ml-4">
-            <Link to="/admin">Admin</Link>
-          </li>
-        </ul>
-      </nav>
       <Switch>
         <Route path="/admin">
           <Admin room={room} />

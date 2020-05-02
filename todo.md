@@ -5,8 +5,8 @@
 # dicecafé
 
 - [x] add a type tag on results
-- [ ] group results
-- [ ] global layout
-- [ ] result display
+- [x] group results
+- [x] global layout
+- [x] result display
 - [ ] add username & date on the result
-- [ ] nice library editor in modal
+- [ ] nice library editor with feedback
