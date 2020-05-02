@@ -1,4 +1,4 @@
-# DiceSharp
+# DiceScript
 
 a small dice runner library
 

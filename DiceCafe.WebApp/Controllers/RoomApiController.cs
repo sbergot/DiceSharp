@@ -46,12 +46,12 @@ namespace DiceCafe.WebApp.Controllers
                 return NotFound();
             }
             var room = RoomRepository.Get(normalisedRoomId);
-            var limitations = new DiceSharp.Contracts.Limitations
+            var limitations = new DiceScript.Contracts.Limitations
             {
                 MaxProgramSize = 500,
                 MaxRollNbr = 100
             };
-            var builder = new DiceSharp.Builder(limitations);
+            var builder = new DiceScript.Builder(limitations);
             room.Library = builder.BuildLib(library);
             room.State.Functions = room.Library.GetFunctionList();
             await RoomHub.Update(room);

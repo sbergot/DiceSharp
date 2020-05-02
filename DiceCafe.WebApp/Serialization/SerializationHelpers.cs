@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DiceSharp.Contracts;
+using DiceScript.Contracts;
 
 namespace DiceCafe.WebApp.Serialization
 {

@@ -7,7 +7,7 @@ namespace DiceCafe.WebApp.Rooms.Contracts
     {
         public string Id { get; set; }
         public RoomState State { get; set; }
-        public DiceSharp.Contracts.ILibrary Library { get; set; }
+        public DiceScript.Contracts.ILibrary Library { get; set; }
         public DateTime LastUpdate { get; set; }
         public SemaphoreSlim Lock { get; } = new SemaphoreSlim(1, 1);
     }

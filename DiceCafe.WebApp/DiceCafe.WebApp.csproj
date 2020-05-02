@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\DiceSharp\DiceSharp.csproj" />
+    <ProjectReference Include="..\DiceScript\DiceScript.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

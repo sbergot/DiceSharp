@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DiceSharp.Contracts;
+using DiceScript.Contracts;
 using DiceCafe.WebApp.Users.Contract;
 
 namespace DiceCafe.WebApp.Rooms.Contracts

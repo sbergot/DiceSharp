@@ -1,4 +1,4 @@
-using DiceSharp;
+using DiceScript;
 using DiceCafe.WebApp.Rooms.Contracts;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
