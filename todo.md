@@ -4,7 +4,8 @@
 
 # dicecafé
 
-- [ ] add a type tag on results
+- [x] add a type tag on results
+- [ ] group results
 - [ ] global layout
 - [ ] result display
 - [ ] add username & date on the result

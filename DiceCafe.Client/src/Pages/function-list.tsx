@@ -1,17 +1,24 @@
 import * as React from "react";
+import { Button } from "../Components/Button";
+import { createUrls, post } from "../http";
 
 export function FunctionList({ room }: RoomProp) {
-  const { results } = room;
+  const { functions } = room;
+  const { callFunction } = createUrls(room.id);
 
   return (
     <>
-      <ul className="list-disc list-inside">
-        {Object.values(results).map((f) => {
+      <p>functions</p>
+      <ul>
+        {Object.values(functions).map((f) => {
           return (
             <li className="mt-4">
-              <span className={`font-bold px-2 py-1 rounded-md`}>
-                {(f as RollResult).result}
-              </span>
+              <Button
+                label={f.name}
+                onclick={() =>
+                  post(callFunction, { name: f.name, arguments: {} })
+                }
+              />
             </li>
           );
         })}

@@ -1,12 +1,14 @@
 import * as React from "react";
 
 import { createUrls } from "../http";
+import { Link } from "../Components/Link";
 
 export function JoinArea({ room }: RoomProp) {
-  const { joinUrl } = createUrls(room.id);
+  const { joinUrl, quitUrl } = createUrls(room.id);
 
   return (
     <>
+      <Link href={quitUrl} label="Quitter" className="mr-2" />
       <p>
         Les autres joueurs peuvent rejoindre cette salle en allant sur cette
         url:{" "}
