@@ -8,7 +8,7 @@ interface RoomViewModel {
 interface Room {
   id: string;
   users: User[];
-  results: ResultModel[];
+  results: ResultGroup[];
   functions: FunctionSpec[];
 }
 

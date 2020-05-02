@@ -80,13 +80,17 @@ namespace DiceCafe.WebApp.Controllers
             }
 
             var results = room.Library.Call(fcall.Name, fcall.Arguments);
-            room.State.Results.AddRange(results.Select(r => new ResultModel
+            var taggedResults = results.Select(r => new TaggedResult
             {
                 Result = r,
                 ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
+            }).ToList();
+            room.State.Results.Add(new ResultGroup
+            {
+                Results = taggedResults,
                 Created = DateTime.UtcNow,
                 User = SessionManager.GetCurrentUser()
-            }));
+            });
             await RoomHub.Update(room);
 
             return Ok();

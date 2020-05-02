@@ -1,7 +1,9 @@
 import * as React from "react";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { Lobby } from "./lobby";
+import { DiceTable } from "./dice-table";
 import { roomUpdateChannel } from "../connection";
+import { Admin } from "./admin";
 
 interface RoomProps {
   roomVm: RoomViewModel;
@@ -17,5 +19,26 @@ export function Room({ roomVm }: RoomProps) {
     };
   }, []);
 
-  return <Lobby room={room} />;
+  return (
+    <Router>
+      <nav className="mb-4">
+        <ul className="flex">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li className="ml-4">
+            <Link to="/admin">Admin</Link>
+          </li>
+        </ul>
+      </nav>
+      <Switch>
+        <Route path="/admin">
+          <Admin room={room} />
+        </Route>
+        <Route>
+          <DiceTable room={room} />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }

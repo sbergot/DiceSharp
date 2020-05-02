@@ -9,9 +9,13 @@ export function ResultList({ room }: RoomProp) {
         {Object.values(results).map((f) => {
           return (
             <li className="mt-4">
-              <span className={`font-bold px-2 py-1 rounded-md`}>
-                <Result result={f} />
-              </span>
+              <div className={`font-bold px-2 py-1 rounded-md`}>
+                {f.results.map((r) => (
+                  <div>
+                    <Result result={r} />
+                  </div>
+                ))}
+              </div>
             </li>
           );
         })}
@@ -20,7 +24,7 @@ export function ResultList({ room }: RoomProp) {
   );
 }
 
-function Result({ result }: { result: ResultModel }) {
+function Result({ result }: { result: TaggedResult }) {
   return result.resultType == "Roll" ? (
     <RollResult result={result.result} />
   ) : (

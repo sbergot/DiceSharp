@@ -18,14 +18,18 @@ type Result = RollResult | PrintResult;
 
 type ResultType = "Roll" | "Print";
 
-interface ResultModelG<TRes extends Result, TResType extends ResultType> {
+interface ResultGroup {
   user: User;
   created: string;
+  results: TaggedResult[];
+}
+
+interface ResultModelG<TRes extends Result, TResType extends ResultType> {
   resultType: TResType;
   result: TRes;
 }
 
-type ResultModel =
+type TaggedResult =
   | ResultModelG<RollResult, "Roll">
   | ResultModelG<PrintResult, "Print">;
 

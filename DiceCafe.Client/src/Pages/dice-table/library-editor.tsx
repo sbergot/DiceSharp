@@ -1,6 +1,6 @@
 import * as React from "react";
-import { createUrls, post } from "../http";
-import { Button } from "../Components/Button";
+import { createUrls, post } from "../../http";
+import { Button } from "../../Components/Button";
 
 export function LibraryEditor({ room }: RoomProp) {
   const { setLibrary } = createUrls(room.id);

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Button } from "../Components/Button";
-import { createUrls, post } from "../http";
+import { Button } from "../../Components/Button";
+import { createUrls, post } from "../../http";
 
 export function FunctionList({ room }: RoomProp) {
   const { functions } = room;
@@ -8,7 +8,6 @@ export function FunctionList({ room }: RoomProp) {
 
   return (
     <>
-      <p>functions</p>
       <ul>
         {Object.values(functions).map((f) => {
           return (

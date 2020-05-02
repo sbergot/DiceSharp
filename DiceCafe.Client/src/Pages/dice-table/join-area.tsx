@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { createUrls } from "../http";
-import { Link } from "../Components/Link";
+import { createUrls } from "../../http";
+import { Link } from "../../Components/Link";
 
 export function JoinArea({ room }: RoomProp) {
   const { joinUrl, quitUrl } = createUrls(room.id);
