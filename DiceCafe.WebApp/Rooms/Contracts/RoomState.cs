@@ -12,7 +12,7 @@ namespace DiceCafe.WebApp.Rooms.Contracts
         }
         public string Id { get; }
         public IList<User> Users { get; } = new List<User>();
-        public List<Result> Results { get; set; } = new List<Result>();
+        public List<ResultModel> Results { get; set; } = new List<ResultModel>();
         public IReadOnlyCollection<FunctionSpec> Functions { get; set; } = new List<FunctionSpec>();
     }
 }

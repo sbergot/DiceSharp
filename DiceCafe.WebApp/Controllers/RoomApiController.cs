@@ -8,10 +8,9 @@ using Microsoft.AspNetCore.SignalR;
 
 using DiceCafe.WebApp.Hubs;
 using DiceCafe.WebApp.Rooms.Contracts;
-using DiceCafe.WebApp.Rooms;
 using DiceCafe.WebApp.Users.Contract;
-using System.Collections.Generic;
 using DiceCafe.WebApp.ViewModels;
+using DiceScript.Contracts;
 
 namespace DiceCafe.WebApp.Controllers
 {
@@ -80,8 +79,14 @@ namespace DiceCafe.WebApp.Controllers
                 return NotFound();
             }
 
-            var result = room.Library.Call(fcall.Name, fcall.Arguments);
-            room.State.Results.AddRange(result);
+            var results = room.Library.Call(fcall.Name, fcall.Arguments);
+            room.State.Results.AddRange(results.Select(r => new ResultModel
+            {
+                Result = r,
+                ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
+                Created = DateTime.UtcNow,
+                User = SessionManager.GetCurrentUser()
+            }));
             await RoomHub.Update(room);
 
             return Ok();
