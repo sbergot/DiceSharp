@@ -5,21 +5,23 @@ export function ResultList({ room }: RoomProp) {
 
   return (
     <>
-      <ul>
-        {Object.values(results).map((f) => {
-          return (
-            <li className="mt-4">
-              <div className={`font-bold px-2 py-1 rounded-md`}>
-                {f.results.map((r) => (
-                  <div>
-                    <Result result={r} />
-                  </div>
-                ))}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="absolute right-0 bottom-0 p-8 max-h-screen h-full">
+        <ul className="h-full w-56 flex flex-col justify-end overflow-hidden">
+          {Object.values(results).map((f) => {
+            return (
+              <li className="mt-4">
+                <div className={`font-bold px-2 py-1 rounded-md`}>
+                  {f.results.map((r) => (
+                    <div>
+                      <Result result={r} />
+                    </div>
+                  ))}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </>
   );
 }

@@ -5,8 +5,7 @@ export function UserList({ room }: RoomProp) {
 
   return (
     <>
-      <p>Joueurs présents dans cette salle:</p>
-      <ul className="list-disc list-inside">
+      <ul className="">
         {Object.values(users).map((p) => {
           return (
             <li className="mt-4">
