@@ -11,6 +11,9 @@ namespace DiceScript
         public Random Random { get; set; } = new Random();
         public Limitations Limitations { get; }
 
+        private static Parser Parser { get; } = new Parser();
+        private static Compiler Compiler { get; } = new Compiler();
+
         public Builder(Limitations limitations)
         {
             Limitations = limitations;
@@ -22,9 +25,7 @@ namespace DiceScript
             {
                 throw new LimitException($"program of size {rollquery.Length} above limit {Limitations.MaxProgramSize}");
             }
-            var parser = new Parser();
-            var compiler = new Compiler();
-            var program = compiler.CompileScript(parser.ParseScript(rollquery));
+            var program = Compiler.CompileScript(Parser.ParseScript(rollquery));
             var diceRoller = new DiceRoller(Limitations.MaxRollNbr, Random);
             return () => program(diceRoller);
         }
