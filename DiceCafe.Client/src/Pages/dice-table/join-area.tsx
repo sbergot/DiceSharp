@@ -6,7 +6,10 @@ import { Button } from "../../Components/Button";
 import { Modal } from "../../Components/Modal";
 import { HashLink } from "../../Components/HashLink";
 
-export function JoinArea({ room }: RoomProp) {
+export function JoinArea({
+  room,
+  isCreator,
+}: RoomProp & { isCreator: boolean }) {
   const { joinUrl, quitUrl } = createUrls(room.id);
   const [joinModalOpened, setJoinModalOpened] = React.useState(false);
 
@@ -17,7 +20,9 @@ export function JoinArea({ room }: RoomProp) {
         label="Invite"
         className="mr-2"
       />
-      <HashLink href="/admin" label="Admin" className="mr-2" />
+      {isCreator ? (
+        <HashLink href="/admin" label="Admin" className="mr-2" />
+      ) : null}
       <Link href={quitUrl} label="Quit" className="mr-2" />
 
       <Modal active={joinModalOpened}>

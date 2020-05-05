@@ -7,6 +7,7 @@ interface RoomViewModel {
 
 interface Room {
   id: string;
+  creator: User;
   users: User[];
   libraryScript: string;
   results: ResultGroup[];

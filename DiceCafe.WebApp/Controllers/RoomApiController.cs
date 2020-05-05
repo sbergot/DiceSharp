@@ -11,6 +11,7 @@ using DiceCafe.WebApp.Rooms.Contracts;
 using DiceCafe.WebApp.Users.Contract;
 using DiceCafe.WebApp.ViewModels;
 using DiceScript.Contracts;
+using DiceCafe.WebApp.Rooms;
 
 namespace DiceCafe.WebApp.Controllers
 {
@@ -45,16 +46,25 @@ namespace DiceCafe.WebApp.Controllers
                 return NotFound();
             }
             var room = RoomRepository.Get(normalisedRoomId);
-            var limitations = new DiceScript.Contracts.Limitations
+
+            if (room.State.Creator.Id != SessionManager.GetCurrentUser().Id)
             {
-                MaxProgramSize = 500,
-                MaxRollNbr = 100
-            };
-            var builder = new DiceScript.Builder(limitations);
-            room.Library = builder.BuildLib(library);
-            room.State.Functions = room.Library.GetFunctionList();
-            room.State.LibraryScript = library;
-            await RoomHub.Update(room);
+                return Unauthorized("Only the creator of the room can edit the library");
+            }
+
+            await RoomHelpers.WithRoomLock(room, async () =>
+            {
+                var limitations = new DiceScript.Contracts.Limitations
+                {
+                    MaxProgramSize = 500,
+                    MaxRollNbr = 100
+                };
+                var builder = new DiceScript.Builder(limitations);
+                room.Library = builder.BuildLib(library);
+                room.State.Functions = room.Library.GetFunctionList();
+                room.State.LibraryScript = library;
+                await RoomHub.Update(room);
+            });
 
             return Ok();
         }
@@ -66,35 +76,38 @@ namespace DiceCafe.WebApp.Controllers
             var normalisedRoomId = roomId.ToUpperInvariant();
             if (!RoomRepository.Exists(normalisedRoomId))
             {
-                return NotFound();
+                return NotFound("Room not found");
             }
 
             var room = RoomRepository.Get(normalisedRoomId);
-            if (room.Library == null)
-            {
-                return BadRequest();
-            }
 
-            if (!room.Library.GetFunctionList().Any(f => f.Name == fcall.Name))
+            return await RoomHelpers.WithRoomLock<IActionResult>(room, async () =>
             {
-                return NotFound();
-            }
+                if (room.Library == null)
+                {
+                    return BadRequest();
+                }
 
-            var results = room.Library.Call(fcall.Name, fcall.Arguments);
-            var taggedResults = results.Select(r => new TaggedResult
-            {
-                Result = r,
-                ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
-            }).ToList();
-            room.State.Results.Add(new ResultGroup
-            {
-                Results = taggedResults,
-                Created = DateTime.UtcNow,
-                User = SessionManager.GetCurrentUser()
+                if (!room.Library.GetFunctionList().Any(f => f.Name == fcall.Name))
+                {
+                    return NotFound("Function not found");
+                }
+
+                var results = room.Library.Call(fcall.Name, fcall.Arguments);
+                var taggedResults = results.Select(r => new TaggedResult
+                {
+                    Result = r,
+                    ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
+                }).ToList();
+                room.State.Results.Add(new ResultGroup
+                {
+                    Results = taggedResults,
+                    Created = DateTime.UtcNow,
+                    User = SessionManager.GetCurrentUser()
+                });
+                await RoomHub.Update(room);
+                return Ok();
             });
-            await RoomHub.Update(room);
-
-            return Ok();
         }
     }
 }

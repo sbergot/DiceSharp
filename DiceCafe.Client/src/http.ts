@@ -1,4 +1,4 @@
-export function post(url: string, data?: object | string) {
+export async function post(url: string, data?: object | string) {
   const init: RequestInit = {
     method: "POST",
   };
@@ -9,7 +9,7 @@ export function post(url: string, data?: object | string) {
     };
     init.body = JSON.stringify(data);
   }
-  fetch(url, init);
+  return await fetch(url, init);
 }
 
 export function createUrls(roomId: string): RoomUrls {

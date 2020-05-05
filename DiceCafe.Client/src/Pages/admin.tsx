@@ -4,14 +4,20 @@ import { HashLink } from "../Components/HashLink";
 import { createUrls, post } from "../http";
 import { Button } from "../Components/Button";
 import { toast } from "react-toastify";
+import { useRoomContext } from "../room-context";
 
-export function Admin({ room }: RoomProp) {
+export function Admin() {
+  const { room } = useRoomContext();
   const { setLibrary } = createUrls(room.id);
   const [libraryScript, setLibrayScript] = React.useState(room.libraryScript);
 
   async function saveLibrary() {
-    await post(setLibrary, libraryScript);
-    toast("Script saved successfully", { type: toast.TYPE.SUCCESS });
+    const response = await post(setLibrary, libraryScript);
+    if (response.status == 200) {
+      toast("Script saved successfully", { type: toast.TYPE.SUCCESS });
+    } else {
+      toast("An error has occured", { type: toast.TYPE.ERROR });
+    }
   }
 
   return (

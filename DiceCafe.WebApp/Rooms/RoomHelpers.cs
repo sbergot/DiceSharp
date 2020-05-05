@@ -31,5 +31,35 @@ namespace DiceCafe.WebApp.Rooms
                 room.Lock.Release();
             }
         }
+
+        async public static Task<TRes> WithRoomLock<TRes>(Room room, Func<Task<TRes>> action)
+        {
+            await room.Lock.WaitAsync();
+            TRes res;
+            try
+            {
+                res = await action();
+            }
+            finally
+            {
+                room.Lock.Release();
+            }
+            return res;
+        }
+
+        async public static Task<TRes> WithRoomLock<TRes>(Room room, Func<TRes> action)
+        {
+            await room.Lock.WaitAsync();
+            TRes res;
+            try
+            {
+                res = action();
+            }
+            finally
+            {
+                room.Lock.Release();
+            }
+            return res;
+        }
     }
 }

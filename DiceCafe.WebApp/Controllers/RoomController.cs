@@ -36,7 +36,9 @@ namespace DiceCafe.WebApp.Controllers
             var room = RoomRepository.Create();
             await RoomHelpers.WithRoomLock(room, () =>
             {
-                room.State.Users.Add(SessionManager.GetCurrentUser());
+                User user = SessionManager.GetCurrentUser();
+                room.State.Users.Add(user);
+                room.State.Creator = user;
             });
             return RedirectToAction("Index", new { roomId = room.Id });
         }
