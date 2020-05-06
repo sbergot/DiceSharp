@@ -6,6 +6,4 @@ interface ClassProp {
   className?: string;
 }
 
-interface RoomProp {
-  room: Room;
-}
+type UIType = "main" | "secondary" | "danger";

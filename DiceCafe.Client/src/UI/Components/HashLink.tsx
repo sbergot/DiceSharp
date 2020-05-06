@@ -1,14 +1,17 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { bgColor, bgHoverColor, getButtonLikeColors } from "../colors";
 
 interface LinkProps extends ClassProp {
   href: string;
   label: string;
+  type?: UIType;
 }
 
-export function HashLink({ href, label, className }: LinkProps) {
+export function HashLink({ href, label, className, type }: LinkProps) {
   const classes = [
-    "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+    "inline-block font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+    getButtonLikeColors(type),
     className || "",
   ].join(" ");
   return (

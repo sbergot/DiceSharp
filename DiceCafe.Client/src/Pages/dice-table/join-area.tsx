@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { Link } from "../../Components/Link";
-import { Button } from "../../Components/Button";
-import { Modal } from "../../Components/Modal";
-import { HashLink } from "../../Components/HashLink";
+import { Link } from "../../UI/Components/Link";
+import { Button } from "../../UI/Components/Button";
+import { Modal } from "../../UI/Components/Modal";
+import { HashLink } from "../../UI/Components/HashLink";
 import { useRoomContext } from "../../room-context";
 
 export function JoinArea() {
@@ -21,7 +21,7 @@ export function JoinArea() {
       {isCreator ? (
         <HashLink href="/admin" label="Admin" className="mr-2" />
       ) : null}
-      <Link href={quitUrl} label="Quit" className="mr-2" />
+      <Link href={quitUrl} label="Quit" className="mr-2" type="danger" />
 
       <Modal active={joinModalOpened}>
         <p>
@@ -41,6 +41,7 @@ export function JoinArea() {
           className="mt-4"
           onclick={() => setJoinModalOpened(false)}
           label="Close"
+          type="secondary"
         />
       </Modal>
     </>

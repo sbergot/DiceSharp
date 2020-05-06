@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { HashLink } from "../Components/HashLink";
+import { HashLink } from "../UI/Components/HashLink";
 import { post } from "../http";
-import { Button } from "../Components/Button";
+import { Button } from "../UI/Components/Button";
 import { toast } from "react-toastify";
 import { useRoomContext } from "../room-context";
 
@@ -23,8 +23,8 @@ export function Admin() {
   return (
     <div>
       <div className="flex">
-        <HashLink href="/" label="Back" className="mr-2" />
-        <Button label="Save" onclick={saveLibrary} />
+        <HashLink href="/" label="Back" className="mr-2" type="secondary" />
+        <Button label="Save" onclick={saveLibrary} type="main" />
       </div>
       <textarea
         className="mt-4 p-2 border-solid border-4 border-gray-600"

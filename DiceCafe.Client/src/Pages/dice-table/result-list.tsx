@@ -43,7 +43,7 @@ function RollResult({ result }: { result: RollResult }) {
     return <span className={classes}>{d.result}</span>;
   });
   return (
-    <>
+    <div>
       {nameDisplay}
       {result.dices.length > 1 ? (
         <>
@@ -53,6 +53,6 @@ function RollResult({ result }: { result: RollResult }) {
       ) : null}
 
       {result.result}
-    </>
+    </div>
   );
 }

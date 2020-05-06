@@ -5,7 +5,7 @@
 
 # dicecafé
 
-- [ ] add inputs for function parameters
+- [x] add inputs for function parameters
 - [ ] transition pour faire apparaître les résultats
 
 - [ ] post formatted results to discord using webhook
