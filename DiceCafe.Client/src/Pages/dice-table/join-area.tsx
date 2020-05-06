@@ -1,16 +1,14 @@
 import * as React from "react";
 
-import { createUrls } from "../../http";
 import { Link } from "../../Components/Link";
 import { Button } from "../../Components/Button";
 import { Modal } from "../../Components/Modal";
 import { HashLink } from "../../Components/HashLink";
+import { useRoomContext } from "../../room-context";
 
-export function JoinArea({
-  room,
-  isCreator,
-}: RoomProp & { isCreator: boolean }) {
-  const { joinUrl, quitUrl } = createUrls(room.id);
+export function JoinArea() {
+  const { room, isCreator, urls } = useRoomContext();
+  const { joinUrl, quitUrl } = urls;
   const [joinModalOpened, setJoinModalOpened] = React.useState(false);
 
   return (

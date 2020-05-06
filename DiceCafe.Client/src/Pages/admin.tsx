@@ -1,14 +1,14 @@
 import * as React from "react";
 
 import { HashLink } from "../Components/HashLink";
-import { createUrls, post } from "../http";
+import { post } from "../http";
 import { Button } from "../Components/Button";
 import { toast } from "react-toastify";
 import { useRoomContext } from "../room-context";
 
 export function Admin() {
-  const { room } = useRoomContext();
-  const { setLibrary } = createUrls(room.id);
+  const { room, urls } = useRoomContext();
+  const { setLibrary } = urls;
   const [libraryScript, setLibrayScript] = React.useState(room.libraryScript);
 
   async function saveLibrary() {
