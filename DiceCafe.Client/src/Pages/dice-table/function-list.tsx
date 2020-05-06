@@ -45,7 +45,7 @@ export function FunctionCall({
   }
 
   return (
-    <div className="w-56 mt-8">
+    <div className="w-56 mt-2">
       <Button label={spec.name} onclick={call} type="main" className="w-full" />
       {spec.arguments.map((arg) => (
         <div className="mt-2 flex justify-between">
@@ -59,8 +59,10 @@ export function FunctionCall({
         </div>
       ))}
       {warnDisplayed ? (
-        <div className="text-red-400">Please fill all parameters</div>
-      ) : null}
+        <div className="h-4 text-red-400">Please fill all parameters</div>
+      ) : (
+        <div className="h-4"></div>
+      )}
     </div>
   );
 }

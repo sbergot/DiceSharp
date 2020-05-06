@@ -13,7 +13,7 @@ export function DiceTable() {
         <UserList />
         <FunctionList />
       </div>
-      <div className="ml-4">
+      <div>
         <ResultList />
       </div>
     </div>

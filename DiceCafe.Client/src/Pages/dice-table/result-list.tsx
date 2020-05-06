@@ -7,7 +7,7 @@ export function ResultList() {
 
   return (
     <>
-      <div className="absolute right-0 bottom-0 p-8 max-h-screen h-full">
+      <div className="absolute right-0 bottom-0 p-8 pr-20 max-h-screen h-full">
         <ul className="h-full w-56 flex flex-col justify-end overflow-hidden">
           {Object.values(results).map((f) => {
             return (
