@@ -106,6 +106,10 @@ namespace DiceScript.Implementation
         private static RollResult RunDiceExpression(DiceExpression expr, RunContext ctx)
         {
             var diceNbr = ctx.Variables.GetScalarValue(expr.Dices.Number);
+            if (diceNbr < 1)
+            {
+                throw new InvalidScriptException("Dice number must be positive");
+            }
             var faceNbr = ctx.Variables.GetScalarValue(expr.Dices.Faces);
             var dices = Enumerable.Range(0, diceNbr)
                 .Select(i => ctx.DiceRoller.Roll(faceNbr, expr.Exploding))

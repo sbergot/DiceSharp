@@ -21,6 +21,10 @@ namespace DiceScript.Implementation
 
         public Dice Roll(int faces, bool exploding)
         {
+            if (faces < 2)
+            {
+                throw new InvalidScriptException("Faces number must be 2 or above");
+            }
             var roll = RollOnce(faces);
             if (exploding)
             {

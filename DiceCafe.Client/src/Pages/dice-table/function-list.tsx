@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button } from "../../UI/Components/Button";
 import { post } from "../../http";
 import { useRoomContext } from "../../room-context";
+import { toast } from "react-toastify";
 
 export function FunctionList() {
   const { room, urls } = useRoomContext();
@@ -29,19 +30,23 @@ export function FunctionCall({
   callFunction: string;
 }) {
   const [params, setParams] = React.useState<Record<string, number>>({});
-  const [warnDisplayed, setWarnDisplayed] = React.useState(false);
   function setParam(name: string, value: string) {
     setParams((p) => ({ ...p, [name]: parseInt(value) }));
   }
-  function call() {
+  async function call() {
     for (const arg of spec.arguments) {
       if (!params[arg]) {
-        setWarnDisplayed(true);
+        toast("Please fill all parameters", { type: toast.TYPE.ERROR });
         return;
       }
     }
-    setWarnDisplayed(false);
-    post(callFunction, { name: spec.name, arguments: params });
+    const response = await post(callFunction, {
+      name: spec.name,
+      arguments: params,
+    });
+    if (response.status != 200) {
+      toast("An error has occured", { type: toast.TYPE.ERROR });
+    }
   }
 
   return (
@@ -58,11 +63,6 @@ export function FunctionCall({
           />
         </div>
       ))}
-      {warnDisplayed ? (
-        <div className="h-4 text-red-400">Please fill all parameters</div>
-      ) : (
-        <div className="h-4"></div>
-      )}
     </div>
   );
 }
