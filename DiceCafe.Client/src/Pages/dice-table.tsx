@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { JoinArea } from "./dice-table/join-area";
+import { Menu } from "./dice-table/menu";
 import { UserList } from "./dice-table/user-list";
 import { FunctionList } from "./dice-table/function-list";
 import { ResultList } from "./dice-table/result-list";
@@ -8,7 +8,7 @@ import { ResultList } from "./dice-table/result-list";
 export function DiceTable() {
   return (
     <>
-      <JoinArea />
+      <Menu />
       <div className="flex mt-4">
         <div className="w-full max-w-xs">
           <UserList />

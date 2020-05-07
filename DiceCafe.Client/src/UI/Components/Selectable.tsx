@@ -13,7 +13,7 @@ export function Selectable({
   selected,
 }: SelectableProps) {
   const classes = [
-    "font-bold py-2 px-4 rounded cursor-pointer border-solid border hover:shadow-md",
+    "font-bold py-2 px-4 rounded cursor-pointer border-solid border hover:shadow-md focus:outline-none",
     selected ? "border-gray-600 shadow-md" : "",
     className || "",
   ].join(" ");

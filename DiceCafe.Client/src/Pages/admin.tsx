@@ -23,11 +23,11 @@ export function Admin() {
   return (
     <div>
       <div className="flex">
-        <HashLink href="/" label="Back" className="mr-2" type="secondary" />
+        <HashLink href="/" label="Back" className="mr-2" type="link" />
         <Button label="Set Room Script" onclick={saveLibrary} type="primary" />
       </div>
       <textarea
-        className="mt-4 p-2 border-solid border-4 border-gray-600"
+        className="mt-4 p-2 shadow-md border"
         cols={80}
         rows={20}
         value={libraryScript}

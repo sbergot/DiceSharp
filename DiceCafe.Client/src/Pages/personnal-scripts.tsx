@@ -10,10 +10,11 @@ import { useLocalStorage } from "../localstorage";
 import { post } from "../http";
 
 export function PersonnalScript() {
-  const { room, urls } = useRoomContext();
+  const { room, urls, isCreator } = useRoomContext();
   const { setLibrary } = urls;
   const { libraryScript } = room;
   const [saveNewOpened, setSaveNewOpened] = React.useState(false);
+  const [deleteConfirmOpened, setDeleteConfirmOpened] = React.useState(false);
   const [newName, setNewName] = React.useState("");
   const [selectedKey, setSelectedKey] = React.useState<string | null>(null);
   const [localScripts, setLocalScripts] = useLocalStorage<
@@ -30,10 +31,14 @@ export function PersonnalScript() {
     save(newScripts);
   }
 
-  function remove(key: string) {
+  function remove(key: string | null) {
+    if (key == null) {
+      throw new Error("key is null");
+    }
     const newScript = { ...localScripts };
     delete newScript[key];
     save(newScript);
+    setDeleteConfirmOpened(false);
   }
 
   function saveNew() {
@@ -59,7 +64,8 @@ export function PersonnalScript() {
         <input
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
-          className="p-2 border-solid border-4 border-gray-600 mr-2"
+          className="p-2 shadow-md border mr-2"
+          placeholder="entry name"
         />
         <Button
           onclick={() => setSaveNewOpened(false)}
@@ -68,7 +74,20 @@ export function PersonnalScript() {
         />
         <Button onclick={saveNew} label="Save" type="primary" />
       </Modal>
-      <HashLink href="/" label="Back" className="mr-2" />
+      <Modal active={deleteConfirmOpened}>
+        <p>Are you sure that you want to delete "{selectedKey}"?</p>
+        <Button
+          onclick={() => setDeleteConfirmOpened(false)}
+          label="Cancel"
+          className="mr-2"
+        />
+        <Button
+          onclick={() => remove(selectedKey)}
+          label="Confirm"
+          type="danger"
+        />
+      </Modal>
+      <HashLink href="/" label="Back" className="mr-2" type="link" />
       <Button
         onclick={() => setSaveNewOpened(true)}
         label="Save room script to new"
@@ -77,12 +96,14 @@ export function PersonnalScript() {
       />
       {selectedKey != null ? (
         <>
-          <Button
-            label="Set as room script"
-            onclick={saveLibrary}
-            className="mr-2"
-            type="primary"
-          />
+          {isCreator ? (
+            <Button
+              label="Set as room script"
+              onclick={saveLibrary}
+              className="mr-2"
+              type="primary"
+            />
+          ) : null}
           <Button
             label="Overwrite with room script"
             onclick={() => saveTo(selectedKey)}
@@ -91,7 +112,7 @@ export function PersonnalScript() {
           />
           <Button
             label="Delete"
-            onclick={() => remove(selectedKey)}
+            onclick={() => setDeleteConfirmOpened(true)}
             type="danger"
           />
         </>

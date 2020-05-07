@@ -5,16 +5,7 @@
 
 # dicecafé
 
-- [x] when showing the results, show the dices and bonus:
-      tata: 2D6+3 -> 4 5 = 12
-
-- [ ] add personnal library stored locally
-
-  - [ ] save in personnal library
-  - [ ] load from personnal library
-
-- [ ] add simple dice expression prompt
-
+- [ ] setup real tailwind css and extract some components
 - [ ] add language doc page
 
 - [ ] post formatted results to discord using webhook

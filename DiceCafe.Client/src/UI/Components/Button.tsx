@@ -1,5 +1,5 @@
 import * as React from "react";
-import { bgColor, bgHoverColor, getButtonLikeColors } from "../colors";
+import { getButtonLikeColors } from "../colors";
 
 interface ButtonProps extends ClassProp {
   onclick(): void;
@@ -16,7 +16,7 @@ export function Button({
   type,
 }: ButtonProps) {
   const classes = [
-    "inline-block font-bold py-2 px-4 rounded",
+    "inline-block font-bold py-2 px-4 rounded focus:outline-none",
     disabled
       ? "bg-gray-500 text-white cursor-not-allowed"
       : getButtonLikeColors(type),

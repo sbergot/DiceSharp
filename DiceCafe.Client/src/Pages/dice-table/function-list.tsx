@@ -61,7 +61,7 @@ export function FunctionCall({
         <div className="mt-2 flex justify-between">
           <span>{arg}</span>
           <input
-            className="w-20 p-1 border-solid border-4 border-gray-600"
+            className="w-20 p-1 shadow-md border"
             type="number"
             value={params[arg]}
             onChange={(e) => setParam(arg, e.target.value)}

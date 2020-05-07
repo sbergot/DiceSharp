@@ -6,27 +6,33 @@ import { Modal } from "../../UI/Components/Modal";
 import { HashLink } from "../../UI/Components/HashLink";
 import { useRoomContext } from "../../room-context";
 
-export function JoinArea() {
+export function Menu() {
   const { room, isCreator, urls } = useRoomContext();
   const { joinUrl, quitUrl } = urls;
   const [joinModalOpened, setJoinModalOpened] = React.useState(false);
 
   return (
     <>
+      <Link href={quitUrl} label="Quit" className="mr-2" type="danger" />
       <Button
         onclick={() => setJoinModalOpened(true)}
         label="Invite"
         className="mr-2"
       />
       {isCreator ? (
-        <HashLink href="/admin" label="Admin" className="mr-2" />
+        <HashLink
+          href="/admin"
+          label="Room admin"
+          className="mr-2"
+          type="link"
+        />
       ) : null}
       <HashLink
         href="/personnal-scripts"
         label="Personnal scripts"
         className="mr-2"
+        type="link"
       />
-      <Link href={quitUrl} label="Quit" className="mr-2" type="danger" />
 
       <Modal active={joinModalOpened}>
         <p>
