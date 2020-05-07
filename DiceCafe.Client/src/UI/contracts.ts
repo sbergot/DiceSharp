@@ -6,4 +6,4 @@ interface ClassProp {
   className?: string;
 }
 
-type UIType = "main" | "secondary" | "danger";
+type UIType = "primary" | "secondary" | "danger";

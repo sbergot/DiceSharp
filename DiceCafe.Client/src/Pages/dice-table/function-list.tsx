@@ -51,7 +51,12 @@ export function FunctionCall({
 
   return (
     <div className="w-56 mt-2">
-      <Button label={spec.name} onclick={call} type="main" className="w-full" />
+      <Button
+        label={spec.name}
+        onclick={call}
+        type="primary"
+        className="w-full"
+      />
       {spec.arguments.map((arg) => (
         <div className="mt-2 flex justify-between">
           <span>{arg}</span>

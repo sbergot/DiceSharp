@@ -14,7 +14,7 @@ export function Admin() {
   async function saveLibrary() {
     const response = await post(setLibrary, libraryScript);
     if (response.status == 200) {
-      toast("Script saved successfully", { type: toast.TYPE.SUCCESS });
+      toast("Room updated successfully", { type: toast.TYPE.SUCCESS });
     } else {
       toast("An error has occured", { type: toast.TYPE.ERROR });
     }
@@ -24,7 +24,7 @@ export function Admin() {
     <div>
       <div className="flex">
         <HashLink href="/" label="Back" className="mr-2" type="secondary" />
-        <Button label="Save" onclick={saveLibrary} type="main" />
+        <Button label="Set Room Script" onclick={saveLibrary} type="primary" />
       </div>
       <textarea
         className="mt-4 p-2 border-solid border-4 border-gray-600"

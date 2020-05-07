@@ -16,7 +16,7 @@ export function Button({
   type,
 }: ButtonProps) {
   const classes = [
-    "inline-block font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+    "inline-block font-bold py-2 px-4 rounded",
     disabled
       ? "bg-gray-500 text-white cursor-not-allowed"
       : getButtonLikeColors(type),

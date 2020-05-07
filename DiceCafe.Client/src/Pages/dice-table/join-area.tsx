@@ -21,6 +21,11 @@ export function JoinArea() {
       {isCreator ? (
         <HashLink href="/admin" label="Admin" className="mr-2" />
       ) : null}
+      <HashLink
+        href="/personnal-scripts"
+        label="Personnal scripts"
+        className="mr-2"
+      />
       <Link href={quitUrl} label="Quit" className="mr-2" type="danger" />
 
       <Modal active={joinModalOpened}>

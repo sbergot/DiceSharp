@@ -4,6 +4,8 @@ import {
   HubConnection,
 } from "@microsoft/signalr";
 
+type Updater<T> = (value: T) => void;
+
 class Channel<T> {
   listeners: Updater<T>[] = [];
 
