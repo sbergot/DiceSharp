@@ -126,6 +126,13 @@ namespace DiceScript.Implementation
                 : 0;
             return new RollResult
             {
+                Description = new RollDescription
+                {
+                    Faces = faceNbr,
+                    Number = diceNbr,
+                    Bonus = bonus,
+                    Exploding = expr.Exploding,
+                },
                 Dices = filteredDices,
                 Result = ComputeResult(filteredDices, aggrType) + bonus,
                 Name = expr.Name

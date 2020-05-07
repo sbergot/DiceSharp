@@ -4,7 +4,15 @@ interface Dice {
   valid: boolean;
 }
 
+interface RollDescription {
+  faces: number;
+  number: number;
+  bonus: number;
+  exploding: boolean;
+}
+
 interface RollResult {
+  description: RollDescription;
   dices: Dice[];
   result: number;
   name: string;

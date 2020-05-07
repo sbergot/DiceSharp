@@ -7,8 +7,8 @@ export function ResultList() {
 
   return (
     <>
-      <div className="absolute right-0 bottom-0 p-8 pr-20 max-h-screen h-full">
-        <ul className="h-full w-56 flex flex-col justify-end overflow-hidden">
+      <div className="absolute right-0 bottom-0 p-8 pr-20 max-h-screen h-full max-w-md w-full">
+        <ul className="h-full w-full flex flex-col justify-end overflow-hidden">
           {Object.values(results).map((f) => {
             return (
               <li className="mt-4 px-2 py-1 rounded-md bg-gray-200">
@@ -37,22 +37,35 @@ function PrintResult({ result }: { result: PrintResult }) {
 }
 
 function RollResult({ result }: { result: RollResult }) {
-  var nameDisplay = result.name ? result.name + ": " : "";
-  var diceDisplay = result.dices.map((d) => {
-    var classes = ["mr-2", d.valid ? "" : "line-through"].join(" ");
+  const nameDisplay = result.name ? result.name + ": " : "";
+  const diceDisplay = result.dices.map((d) => {
+    const classes = ["mr-2", d.valid ? "" : "line-through"].join(" ");
     return <span className={classes}>{d.result}</span>;
   });
+  const rollDescription = formatDescription(result.description);
   return (
     <div>
       {nameDisplay}
+      {rollDescription} -->{" "}
       {result.dices.length > 1 ? (
         <>
           {diceDisplay}
           <span className="mr-2">=</span>
         </>
       ) : null}
-
       {result.result}
     </div>
   );
+}
+
+function formatDescription(description: RollDescription) {
+  const number = description.number > 1 ? description.number.toString() : "";
+  let bonus = "";
+  if (description.bonus > 0) {
+    bonus = `+${description.bonus}`;
+  }
+  if (description.bonus < 0) {
+    bonus = description.bonus.toString();
+  }
+  return `${number}D${description.faces}${bonus}`;
 }
