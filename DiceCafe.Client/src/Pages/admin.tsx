@@ -27,7 +27,7 @@ export function Admin() {
         <Button label="Set Room Script" onclick={saveLibrary} type="primary" />
       </div>
       <textarea
-        className="mt-4 p-2 shadow-md border"
+        className="mt-4 input-box"
         cols={80}
         rows={20}
         value={libraryScript}

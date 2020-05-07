@@ -8,10 +8,10 @@ export function ResultList() {
   return (
     <>
       <div className="absolute right-0 bottom-0 p-8 pr-20 max-h-screen h-full max-w-md w-full">
-        <ul className="h-full w-full flex flex-col justify-end overflow-hidden">
+        <ul className="h-full w-full flex flex-col justify-end overflow-hidden p-4">
           {Object.values(results).map((f) => {
             return (
-              <li className="mt-4 px-2 py-1 rounded-md bg-gray-200">
+              <li className="mt-4 px-2 py-1 rounded-md bg-gray-200 shadow-md">
                 {f.results.map((r) => (
                   <Result result={r} />
                 ))}
@@ -46,7 +46,7 @@ function RollResult({ result }: { result: RollResult }) {
   return (
     <div>
       {nameDisplay}
-      {rollDescription} -->{" "}
+      {rollDescription} &#8594;{" "}
       {result.dices.length > 1 ? (
         <>
           {diceDisplay}

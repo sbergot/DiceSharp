@@ -34,24 +34,7 @@ export function Modal({ active, children }: ModalProps) {
     <div className={modalClasses}>
       <div className={overlayClasses}></div>
       <div className={containerClasses}>
-        {reduced ? (
-          <div
-            className="capicon p-2 w-12 h-12 text-2xl text-center"
-            onClick={() => setReduced(!reduced)}
-          >
-            &#xe6f8;
-          </div>
-        ) : (
-          <div
-            className="capicon m-auto w-8 text-2xl absolute top-0 right-0 pt-2 pr-2"
-            onClick={() => setReduced(!reduced)}
-          >
-            &#xe6f9;
-          </div>
-        )}
-        {reduced ? null : (
-          <div className="py-4 text-left pl-6 pr-12">{children}</div>
-        )}
+        <div className="py-4 text-left pl-6 pr-12">{children}</div>
       </div>
     </div>
   );

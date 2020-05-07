@@ -7,15 +7,11 @@ export function UserList() {
 
   return (
     <>
-      <ul className="">
-        {Object.values(users).map((p) => {
-          return (
-            <li className="mt-4">
-              <span className={`font-bold px-2 py-1 rounded-md`}>{p.name}</span>
-            </li>
-          );
-        })}
-      </ul>
+      {Object.values(users).map((p) => {
+        return (
+          <span className={`font-bold px-2 py-1 rounded-md`}>{p.name}</span>
+        );
+      })}
     </>
   );
 }

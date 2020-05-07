@@ -64,7 +64,7 @@ export function PersonnalScript() {
         <input
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
-          className="p-2 shadow-md border mr-2"
+          className="input-box mr-2"
           placeholder="entry name"
         />
         <Button
