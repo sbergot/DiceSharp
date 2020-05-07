@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>documentation</title>
+
+    <link rel="stylesheet" href="css/doc.css" />
+  </head>
+
+  <body>
+    <h1 id="dicescript">DiceScript</h1>
+<p>a small dice runner library</p>
+<h2 id="basicdicecommands">Basic dice commands</h2>
+<p>Roll 1 D6: <code>roll D6</code> or <code>roll 1D6</code><br />
+Roll 2 D10: <code>roll 2D10</code><br />
+Roll 2 D6 and add 3: <code>roll 2D6+3</code><br />
+Roll 2 D6 and substract 2: <code>roll 2D6-2</code><br />
+Roll 3 explosives D8: <code>roll 3D8(exp)</code></p>
+<p>An exploding dices is rerolled when it lands one its maximum value.</p>
+<h2 id="namingrolls">Naming rolls</h2>
+<p>A roll can be named using a quoted string:</p>
+<pre><code>roll "my roll" 2D10
+</code></pre>
+<h2 id="filteringrankingandaggregating">Filtering, ranking and aggregating</h2>
+<p>Roll 3 D6 and keep the ones above 4: <code>roll 3D6(&gt;4)</code><br />
+Roll 3 D6 and count the ones above 4: <code>roll 3D6(&gt;4,count)</code></p>
+<p><code>&gt;{number}</code> is a filter. Other filters are <code>&lt;</code> and <code>=</code>.</p>
+<p><code>count</code> is an aggregation. The other aggregations are <code>sum</code>, <code>max</code> and <code>min</code>. The default aggregation is <code>sum</code>.</p>
+<p>Roll 4 D6 and keep the highest one: <code>roll 4D6(top1)</code>. Use <code>bot</code> to keep the lowest dices.</p>
+<h2 id="variables">Variables</h2>
+<p>Roll 1 D8 and 2 D6 and add them together:</p>
+<pre><code>var $x &lt;- roll D8;
+roll 2D6+$x;
+</code></pre>
+<p>All variables must start with <code>$</code>. The rest of the name is composed of letters, numbers and underscore <code>_</code>. Statements must be separated by a <code>;</code>.</p>
+<p>They can be used to determine the number of faces of a dice roll: <code>roll 3D$x</code></p>
+<p>Or they can be used to specify the number of dices to roll. In this case a <code>$</code> must be used to separate the variable from the rest of the dice declaration: <code>roll $x$D6</code>.</p>
+<p>Variables can also be used in options such as filters and rankings: <code>roll 5D6(&gt;$x)</code>.</p>
+<h2 id="functions">Functions</h2>
+<p>It is possible to define function with the following syntax:</p>
+<pre><code>function my_roll($x) {
+    roll 2D6+$x;
+}
+</code></pre>
+<p>A function name follows the same rules as the variables (letters, digits, underscores).
+A function can also be defined by invoking another one using a specific <code>apply</code> syntax:</p>
+<pre><code>function multipledice($faces, $bonus) {
+    roll 2D$faces+$bonus;
+}
+
+function specialized($bonus) &lt;- apply multipledice(4, $bonus)
+</code></pre>
+  </body>
+</html>
