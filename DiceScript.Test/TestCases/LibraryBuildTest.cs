@@ -16,7 +16,7 @@ namespace DiceScript.Test
             var lib = builder.BuildLib(@"
             function singledice($bonus) {
                 var $res <- roll D6+$bonus;
-                match $res ((""head""; <4), (""tails""; default))
+                match $res ((<4; ""head""), (default; ""tails""))
             }
             ");
             var funcs = lib.GetFunctionList();
@@ -31,6 +31,7 @@ namespace DiceScript.Test
             {
                 new RollResult
                 {
+                    Description = new RollDescription { Faces = 6, Number = 1, Bonus = 3, Exploding = false },
                     Dices = new List<Dice>
                     {
                         new Dice { Faces = 6, Result = 5, Valid = true }
@@ -50,7 +51,7 @@ namespace DiceScript.Test
             var lib = builder.BuildLib(@"
             function singledice($bonus) {
                 var $res <- roll D6+$bonus;
-                match $res ((""head""; <4), (""tails""; default))
+                match $res ((<4; ""head""), (default; ""tails""))
             }
             ");
             Assert.Throws<ArgumentException>(() => lib.Call("singledice", new Dictionary<string, int> { { "badarg", 3 } }));
@@ -94,6 +95,7 @@ namespace DiceScript.Test
             {
                 new RollResult
                 {
+                    Description = new RollDescription { Faces = 8, Number = 2, Bonus = 3, Exploding = false },
                     Dices = new List<Dice>
                     {
                         new Dice { Faces = 8, Result = 6, Valid = true },
@@ -150,6 +152,7 @@ namespace DiceScript.Test
             {
                 new RollResult
                 {
+                    Description = new RollDescription { Faces = 4, Number = 2, Bonus = 3, Exploding = false },
                     Dices = new List<Dice>
                     {
                         new Dice { Faces = 4, Result = 3, Valid = true },

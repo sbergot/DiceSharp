@@ -25,6 +25,7 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     }
@@ -42,6 +43,7 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     }
@@ -87,11 +89,13 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     },
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 2, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> {
                             new Dice { Valid = false, Result = 5, Faces = 6 },
                             new Dice { Valid = false, Result = 5, Faces = 6 },
@@ -138,11 +142,13 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     },
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 5, Exploding = false },
                         Dices = new List<Dice> {
                             new Dice { Valid = true, Result = 5, Faces = 6 },
                         },
@@ -188,11 +194,13 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     },
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = -5, Exploding = false },
                         Dices = new List<Dice> {
                             new Dice { Valid = true, Result = 5, Faces = 6 },
                         },
@@ -238,11 +246,13 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     },
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 5, Number = 1, Bonus = 5, Exploding = false },
                         Dices = new List<Dice> {
                             new Dice { Valid = true, Result = 5, Faces = 5 },
                         },
@@ -288,11 +298,13 @@ namespace DiceScript.Test.TestData
                 new List<Result> {
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
                         Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
                         Result = 5,
                     },
                     new RollResult
                     {
+                        Description = new RollDescription { Faces = 5, Number = 5, Bonus = 5, Exploding = false },
                         Dices = new List<Dice> {
                             new Dice { Valid = true, Result = 5, Faces = 5 },
                             new Dice { Valid = true, Result = 4, Faces = 5 },

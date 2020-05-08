@@ -178,7 +178,7 @@ namespace DiceScript.Test.TestCases
             var libast = parser.ParseLibrary(@"
             function signledice($faces) {
                 var $res <- roll D6+$faces;
-                match $res ((""head""; <4), (""tails""; default))
+                match $res ((<4; ""head""), (default; ""tails""))
             }
             ");
             var expectedScript = new Script
@@ -244,7 +244,7 @@ namespace DiceScript.Test.TestCases
             var libast = parser.ParseLibrary(@"
             function signledice($faces) {
                 var $res <- roll D6+$faces;
-                match $res ((""head""; <4), (""tails""; default))
+                match $res ((<4; ""head""), (default; ""tails""))
             }
 
             function multipledice($bonus) {

@@ -82,9 +82,10 @@ namespace DiceScript.Implementation.Parsing
                 var rangeFilter = Try(defaultFilter).Or(OptionParser.Filter);
                 var separator = Char(';').Between(SkipWhitespaces);
                 return Map(
-                    (s, f) => new RangeDeclaration { Filter = f, Value = s },
-                    BaseParser.QuotedString,
-                    separator.Then(rangeFilter)).Between(Char('('), Char(')'));
+                    (f, s) => new RangeDeclaration { Filter = f, Value = s },
+                    rangeFilter,
+                    separator.Then(BaseParser.QuotedString))
+                    .Between(Char('('), Char(')'));
             }
         }
     }

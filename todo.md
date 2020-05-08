@@ -5,9 +5,7 @@
 
 # dicecafé
 
-- [ ] add language doc page
-
-- [ ] post formatted results to discord using webhook
 - [ ] add username & date on the result
-
-- [ ] transition pour faire apparaître les résultats
+- [ ] post formatted results to discord using webhook
+- [ ] result ease in animation
+- [ ] study name and design identity
