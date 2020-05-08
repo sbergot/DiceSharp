@@ -39,7 +39,7 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return Try(String("var "))
+                return Try(String("int "))
                     .Then(SkipWhitespaces)
                     .Then(Map(
                     (name, _, expr) => new AssignementStatement { VariableName = name, Expression = expr },

@@ -14,7 +14,7 @@ namespace DiceScript.Test.TestData
             return new List<(string, Script, List<Result>)>
             {
             (
-                "var $a<-roll D6",
+                "int $a<-roll D6",
                 Helpers.AssignStmt(
                     "a",
                     new DiceDeclaration
@@ -32,7 +32,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $my_name_42 <-  roll D6",
+                "int $my_name_42 <-  roll D6",
                 Helpers.AssignStmt(
                     "my_name_42",
                     new DiceDeclaration
@@ -50,7 +50,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $a<-roll D6;roll 2D6(>$a,count)",
+                "int $a<-roll D6;roll 2D6(>$a,count)",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -105,7 +105,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $a<-roll D6;roll D6+$a",
+                "int $a<-roll D6;roll D6+$a",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -157,7 +157,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $a<-roll D6;roll D6-$a",
+                "int $a<-roll D6;roll D6-$a",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -209,7 +209,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $a<-roll D6;roll 1D$a+$a",
+                "int $a<-roll D6;roll 1D$a+$a",
                 new Script
                 {
                     Statements = new List<Statement>
@@ -261,7 +261,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $a<-roll D6;roll $a$D$a+$a",
+                "int $a<-roll D6;roll $a$D$a+$a",
                 new Script
                 {
                     Statements = new List<Statement>

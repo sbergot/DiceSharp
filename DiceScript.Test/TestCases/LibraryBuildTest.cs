@@ -15,7 +15,7 @@ namespace DiceScript.Test
             builder.Random = new Random(0);
             var lib = builder.BuildLib(@"
             macro singledice($bonus) {
-                var $res <- roll D6+$bonus;
+                int $res <- roll D6+$bonus;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
             ");
@@ -50,7 +50,7 @@ namespace DiceScript.Test
             builder.Random = new Random(0);
             var lib = builder.BuildLib(@"
             macro singledice($bonus) {
-                var $res <- roll D6+$bonus;
+                int $res <- roll D6+$bonus;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
             ");

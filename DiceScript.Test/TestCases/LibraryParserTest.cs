@@ -131,7 +131,7 @@ namespace DiceScript.Test.TestCases
         public void TestSingleFunctionAssignParsing()
         {
             var parser = new Parser();
-            var libast = parser.ParseLibrary("macro signledice($faces) { var $test<-roll D6+$faces }");
+            var libast = parser.ParseLibrary("macro signledice($faces) { int $test<-roll D6+$faces }");
             var expectedScript = new Script
             {
                 Statements = new List<Statement>
@@ -177,7 +177,7 @@ namespace DiceScript.Test.TestCases
             var parser = new Parser();
             var libast = parser.ParseLibrary(@"
             macro signledice($faces) {
-                var $res <- roll D6+$faces;
+                int $res <- roll D6+$faces;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
             ");
@@ -243,7 +243,7 @@ namespace DiceScript.Test.TestCases
             var parser = new Parser();
             var libast = parser.ParseLibrary(@"
             macro signledice($faces) {
-                var $res <- roll D6+$faces;
+                int $res <- roll D6+$faces;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
 

@@ -59,7 +59,7 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
-                "var $a <- calc 2 * 3; calc $a + $a",
+                "int $a <- calc 2 * 3; calc $a + $a",
                 new Script
                 {
                     Statements = new List<Statement>
