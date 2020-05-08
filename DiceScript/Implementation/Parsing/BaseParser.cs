@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using DiceScript.Implementation.SyntaxTree;
 using Pidgin;
 using static Pidgin.Parser;
@@ -31,6 +33,14 @@ namespace DiceScript.Implementation.Parsing
                     .ManyString()
                     .Between(Char('"'));
             }
+        }
+
+        public static Parser<char, List<T>> List<T>(Parser<char, T> itemParser)
+        {
+            return itemParser
+                .Separated(Char(',').Between(SkipWhitespaces))
+                .Between(Char('('), Char(')'))
+                .Select(s => s.ToList());
         }
     }
 }

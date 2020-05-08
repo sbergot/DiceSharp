@@ -61,9 +61,7 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                var ranges = Range
-                    .Separated(Char(',').Between(SkipWhitespaces))
-                    .Between(Char('('), Char(')'));
+                var ranges = BaseParser.List(Range);
                 return Try(String("match "))
                     .Then(SkipWhitespaces)
                     .Then(Map(
@@ -80,7 +78,7 @@ namespace DiceScript.Implementation.Parsing
                 var defaultFilter = String("default")
                     .ThenReturn(new FilterOption { Type = FilterType.None });
                 var rangeFilter = Try(defaultFilter).Or(OptionParser.Filter);
-                var separator = Char(';').Between(SkipWhitespaces);
+                var separator = Char(',').Between(SkipWhitespaces);
                 return Map(
                     (f, s) => new RangeDeclaration { Filter = f, Value = s },
                     rangeFilter,

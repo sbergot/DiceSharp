@@ -55,10 +55,7 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return BaseParser.Scalar
-                    .Separated(Char(',').Between(SkipWhitespaces))
-                    .Between(Char('('), Char(')'))
-                    .Select(s => s.ToList());
+                return BaseParser.List(BaseParser.Scalar);
             }
         }
 
@@ -85,10 +82,7 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return BaseParser.Variable
-                    .Separated(Char(',').Between(SkipWhitespaces))
-                    .Between(Char('('), Char(')'))
-                    .Select(s => s.ToList());
+                return BaseParser.List(BaseParser.Variable);
             }
         }
 

@@ -16,7 +16,7 @@ namespace DiceScript.Test
             var lib = builder.BuildLib(@"
             function singledice($bonus) {
                 var $res <- roll D6+$bonus;
-                match $res ((<4; ""head""), (default; ""tails""))
+                match $res ((<4, ""head""), (default, ""tails""))
             }
             ");
             var funcs = lib.GetFunctionList();
@@ -51,7 +51,7 @@ namespace DiceScript.Test
             var lib = builder.BuildLib(@"
             function singledice($bonus) {
                 var $res <- roll D6+$bonus;
-                match $res ((<4; ""head""), (default; ""tails""))
+                match $res ((<4, ""head""), (default, ""tails""))
             }
             ");
             Assert.Throws<ArgumentException>(() => lib.Call("singledice", new Dictionary<string, int> { { "badarg", 3 } }));

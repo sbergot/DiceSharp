@@ -15,10 +15,8 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return Option
-                    .Separated(Char(',').Then(SkipWhitespaces))
-                    .Select(opts => new OptionGroup { Options = opts.ToList() })
-                    .Between(Char('('), Char(')'));
+                return BaseParser.List(Option)
+                    .Select(opts => new OptionGroup { Options = opts });
             }
         }
 

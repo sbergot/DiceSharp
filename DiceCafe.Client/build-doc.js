@@ -3,7 +3,7 @@ const fs = require("fs").promises;
 const converter = new showdown.Converter();
 
 async function main() {
-  const content = await fs.readFile("../README.md");
+  const content = await fs.readFile("../dicescript_reference.md");
   const template = await fs.readFile("./template.html");
   const md = converter.makeHtml(content.toString());
   const fulldoc = template
