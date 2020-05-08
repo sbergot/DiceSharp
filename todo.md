@@ -1,13 +1,9 @@
 # DiceScript
 
-- [x] unify list parsing: (1, 2, 3)
-- [ ] rename function -> macro
-- [ ] simple integer arithmetics expressions (+, -, \*)
-      calc 1 + 2
 - [ ] distinguish int variables & dice variables
       int stores a single result value
       dice stores a set of results
-      dice can be converted to int with a aggregate expression
+- [ ] dice can be converted to int with a aggregate expression
 - [ ] check statistical distributions of the dices
 
 # dicecafé

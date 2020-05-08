@@ -1,6 +1,5 @@
 using Pidgin;
 using static Pidgin.Parser;
-using static DiceScript.Implementation.Parsing.BaseParser;
 
 using DiceScript.Implementation.SyntaxTree;
 

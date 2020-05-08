@@ -14,7 +14,7 @@ namespace DiceScript.Test
             var builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             builder.Random = new Random(0);
             var lib = builder.BuildLib(@"
-            function singledice($bonus) {
+            macro singledice($bonus) {
                 var $res <- roll D6+$bonus;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
@@ -49,7 +49,7 @@ namespace DiceScript.Test
             var builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             builder.Random = new Random(0);
             var lib = builder.BuildLib(@"
-            function singledice($bonus) {
+            macro singledice($bonus) {
                 var $res <- roll D6+$bonus;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
@@ -63,7 +63,7 @@ namespace DiceScript.Test
             var Builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             Builder.Random = new Random(0);
             var lib = Builder.BuildLib(@"
-            function customDice($nbr, $faces, $bonus) {
+            macro customDice($nbr, $faces, $bonus) {
                 roll $nbr$D$faces+$bonus;
             }
             ");
@@ -113,11 +113,11 @@ namespace DiceScript.Test
             var Builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });
             Builder.Random = new Random(0);
             var lib = Builder.BuildLib(@"
-            function multipledice($faces, $bonus) {
+            macro multipledice($faces, $bonus) {
                 roll 2D$faces+$bonus;
             }
 
-            function specialized($bonus) <- apply multipledice(4, $bonus)
+            macro specialized($bonus) <- apply multipledice(4, $bonus)
             ");
             var funcs = lib.GetFunctionList();
             var expectedFuncs = new List<FunctionSpec>

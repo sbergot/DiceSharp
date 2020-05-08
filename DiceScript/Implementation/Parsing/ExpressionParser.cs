@@ -8,7 +8,9 @@ namespace DiceScript.Implementation.Parsing
     internal static class ExpressionParser
     {
 
-        public static Parser<char, Expression> AnyExpression => OneOf(ComplexDice.Cast<Expression>());
+        public static Parser<char, Expression> AnyExpression => OneOf(
+            ArithmeticParser.ArithmeticExpression.Cast<Expression>(),
+            ComplexDice.Cast<Expression>());
 
         public static Parser<char, DiceExpression> ComplexDice
         {

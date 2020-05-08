@@ -71,12 +71,12 @@ namespace DiceScript.Implementation
 
             if (statement is ExpressionStatement exprStmt)
             {
-                return RunDiceExpression(exprStmt.Expression as DiceExpression, ctx);
+                return RunExpression(exprStmt.Expression, ctx);
             }
 
             if (statement is AssignementStatement assignStmt)
             {
-                var roll = RunDiceExpression(assignStmt.Expression as DiceExpression, ctx);
+                var roll = RunExpression(assignStmt.Expression, ctx);
                 ctx.Variables.SetVariable(assignStmt.VariableName, roll.Result);
                 return roll;
             }
@@ -101,6 +101,38 @@ namespace DiceScript.Implementation
                 if (match) { return range.Value; }
             }
             return null;
+        }
+
+        private static ValueResult RunExpression(Expression expr, RunContext ctx)
+        {
+            if (expr is DiceExpression diceexpr)
+            {
+                return RunDiceExpression(diceexpr, ctx);
+            }
+
+            if (expr is CalcExpression calcexpr)
+            {
+                return RunCalcExpression(calcexpr, ctx);
+            }
+
+            throw new InvalidOperationException($"Uknown expression type: {expr.GetType()}");
+        }
+
+        private static ValueResult RunCalcExpression(CalcExpression expr, RunContext ctx)
+        {
+            var leftVal = ctx.Variables.GetScalarValue(expr.LeftValue);
+            var rightVal = ctx.Variables.GetScalarValue(expr.RightValue);
+            var result = expr.Operator switch
+            {
+                SignType.Plus => leftVal + rightVal,
+                SignType.Minus => leftVal - rightVal,
+                SignType.Multiply => leftVal * rightVal,
+                _ => throw new InvalidOperationException()
+            };
+            return new ValueResult
+            {
+                Result = result
+            };
         }
 
         private static RollResult RunDiceExpression(DiceExpression expr, RunContext ctx)

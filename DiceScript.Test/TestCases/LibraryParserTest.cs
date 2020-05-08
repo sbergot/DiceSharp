@@ -12,7 +12,7 @@ namespace DiceScript.Test.TestCases
         public void TestSingleFunctionParsing()
         {
             var parser = new Parser();
-            var libast = parser.ParseLibrary("function signledice($faces) { roll D6+$faces }");
+            var libast = parser.ParseLibrary("macro signledice($faces) { roll D6+$faces }");
             var expectedScript = new Script
             {
                 Statements = new List<Statement>
@@ -54,7 +54,7 @@ namespace DiceScript.Test.TestCases
         public void TestSingleFunctionNoArgsParsing()
         {
             var parser = new Parser();
-            var libast = parser.ParseLibrary("function signledice() { roll D6 }");
+            var libast = parser.ParseLibrary("macro signledice() { roll D6 }");
             var expectedScript = new Script
             {
                 Statements = new List<Statement>
@@ -93,7 +93,7 @@ namespace DiceScript.Test.TestCases
         public void TestSingleFunctionMultipleArgsParsing()
         {
             var parser = new Parser();
-            var libast = parser.ParseLibrary("function signledice($arg1, $arg2) { roll D6 }");
+            var libast = parser.ParseLibrary("macro signledice($arg1, $arg2) { roll D6 }");
             var expectedScript = new Script
             {
                 Statements = new List<Statement>
@@ -131,7 +131,7 @@ namespace DiceScript.Test.TestCases
         public void TestSingleFunctionAssignParsing()
         {
             var parser = new Parser();
-            var libast = parser.ParseLibrary("function signledice($faces) { var $test<-roll D6+$faces }");
+            var libast = parser.ParseLibrary("macro signledice($faces) { var $test<-roll D6+$faces }");
             var expectedScript = new Script
             {
                 Statements = new List<Statement>
@@ -176,7 +176,7 @@ namespace DiceScript.Test.TestCases
         {
             var parser = new Parser();
             var libast = parser.ParseLibrary(@"
-            function signledice($faces) {
+            macro signledice($faces) {
                 var $res <- roll D6+$faces;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
@@ -242,12 +242,12 @@ namespace DiceScript.Test.TestCases
         {
             var parser = new Parser();
             var libast = parser.ParseLibrary(@"
-            function signledice($faces) {
+            macro signledice($faces) {
                 var $res <- roll D6+$faces;
                 match $res ((<4, ""head""), (default, ""tails""))
             }
 
-            function multipledice($bonus) {
+            macro multipledice($bonus) {
                 roll 2D8+$bonus;
             }
             ");
@@ -342,11 +342,11 @@ namespace DiceScript.Test.TestCases
         {
             var parser = new Parser();
             var libast = parser.ParseLibrary(@"
-            function multipledice($faces, $bonus) {
+            macro multipledice($faces, $bonus) {
                 roll 2D$faces+$bonus;
             }
 
-            function specialized($bonus) <- apply multipledice(4, $bonus)
+            macro specialized($bonus) <- apply multipledice(4, $bonus)
             ");
             var expectedScript1 = new Script
             {

@@ -22,7 +22,7 @@ namespace DiceScript.Implementation
         {
             if (!Functions.ContainsKey(name))
             {
-                throw new InvalidOperationException($"unknown function: {name}");
+                throw new InvalidOperationException($"unknown macro: {name}");
             }
             var func = Functions[name];
             foreach (var arg in func.Spec.Arguments)

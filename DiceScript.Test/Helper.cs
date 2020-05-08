@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using DiceScript.Contracts;
 using DiceScript.Implementation.SyntaxTree;
@@ -41,10 +42,13 @@ namespace DiceScript.Test
             return ToAst(new DiceExpression { Dices = exp });
         }
 
-        public static Script ToAst(Expression exp)
+        public static Script ToAst(params Expression[] exps)
         {
-            var statement = new ExpressionStatement { Expression = exp };
-            return new Script { Statements = new List<Statement> { statement } };
+            var statements = exps
+                .Select(exp => new ExpressionStatement { Expression = exp })
+                .Cast<Statement>()
+                .ToList();
+            return new Script { Statements = statements };
         }
 
         public static void CompareObjects(object a, object b)

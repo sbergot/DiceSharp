@@ -34,7 +34,7 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return String("function ")
+                return String("macro ")
                     .Then(SkipWhitespaces)
                     .Then(Map(
                         (name, args, appliedName, scalars) => new PartialApplicationDeclaration
@@ -63,7 +63,7 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return String("function ")
+                return String("macro ")
                     .Then(SkipWhitespaces)
                     .Then(Map(
                         (name, args, script) => new FunctionImplementation

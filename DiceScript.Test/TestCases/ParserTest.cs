@@ -35,6 +35,13 @@ namespace DiceScript.Test.TestCases
             ParsingSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(CalcTestData))]
+        internal void CalcCase(TestVector test)
+        {
+            ParsingSuccess(test);
+        }
+
         private static void ParsingSuccess(TestVector test)
         {
             var parser = new Parser();

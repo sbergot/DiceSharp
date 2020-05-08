@@ -36,6 +36,13 @@ namespace DiceScript.Test.TestCases
             CompileSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(CalcTestData))]
+        internal void CalcCase(TestVector test)
+        {
+            CompileSuccess(test);
+        }
+
         internal void CompileSuccess(TestVector test)
         {
             var compiler = new Compiler();
