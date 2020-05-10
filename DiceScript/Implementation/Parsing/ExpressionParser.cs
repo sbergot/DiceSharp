@@ -10,7 +10,8 @@ namespace DiceScript.Implementation.Parsing
 
         public static Parser<char, Expression> AnyExpression => OneOf(
             ArithmeticParser.ArithmeticExpression.Cast<Expression>(),
-            ComplexDice.Cast<Expression>());
+            ComplexDice.Cast<Expression>(),
+            AggregationExpr.Cast<Expression>());
 
         public static Parser<char, DiceExpression> ComplexDice
         {
@@ -75,5 +76,47 @@ namespace DiceScript.Implementation.Parsing
 
             return result;
         }
+
+        private static Parser<char, AggregationExpression> AggregationExpr
+        {
+            get
+            {
+                return String("aggregate ")
+                    .Then(SkipWhitespaces)
+                    .Then(Map((variable, options) =>
+                    {
+                        var result = new AggregationExpression
+                        {
+                            Variable = new VariableScalar { VariableName = variable },
+                        };
+                        foreach (var option in options.Options)
+                        {
+                            if (option is FilterOption filter)
+                            {
+                                result.Filter = filter;
+                            }
+
+                            if (option is RankingOption ranking)
+                            {
+                                result.Ranking = ranking;
+                            }
+
+                            if (option is AggregateOption aggregate)
+                            {
+                                result.Aggregation = aggregate.Type;
+                            }
+
+                            if (option is ExplodingOption)
+                            {
+                                result.Exploding = true;
+                            }
+                        }
+                        return result;
+                    },
+                    BaseParser.Variable.Before(SkipWhitespaces),
+                    OptionParser.OptionGroup));
+            }
+        }
+
     }
 }

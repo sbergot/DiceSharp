@@ -7,13 +7,13 @@ namespace DiceScript.Implementation
 {
     internal class VariableContainer
     {
-        private Dictionary<string, int> Variables { get; set; } = new Dictionary<string, int>();
+        private Dictionary<string, object> Variables { get; set; } = new Dictionary<string, object>();
 
         public VariableContainer()
         {
         }
 
-        public VariableContainer(Dictionary<string, int> init)
+        public VariableContainer(Dictionary<string, object> init)
         {
             Variables = init;
         }
@@ -29,17 +29,27 @@ namespace DiceScript.Implementation
 
             if (scalar is VariableScalar variable)
             {
-                if (!Variables.ContainsKey(variable.VariableName))
-                {
-                    throw new InvalidScriptException($"Variable not found: {variable.VariableName}");
-                }
-                return Variables[variable.VariableName];
+                return GetVariableValue<int>(variable);
             }
 
             throw new InvalidOperationException($"Unknown scalar type: {scalar.GetType()}");
         }
 
-        public void SetVariable(string name, int value)
+        public T GetVariableValue<T>(VariableScalar variable)
+        {
+            if (!Variables.ContainsKey(variable.VariableName))
+            {
+                throw new InvalidScriptException($"Variable not found: {variable.VariableName}");
+            }
+            var value = Variables[variable.VariableName];
+            if (value.GetType() != typeof(T))
+            {
+                throw new InvalidScriptException($"Incorrect type. Expected {typeof(T)} but got {value.GetType()}");
+            }
+            return (T)value;
+        }
+
+        public void SetVariable<T>(string name, T value)
         {
             if (Variables.ContainsKey(name))
             {

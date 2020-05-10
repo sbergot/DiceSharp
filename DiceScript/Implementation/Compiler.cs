@@ -20,7 +20,7 @@ namespace DiceScript.Implementation
                         Spec = new FunctionSpec { Name = impl.Name, Arguments = impl.Arguments },
                         Run = (diceroller, args) =>
                         {
-                            var variables = new VariableContainer(args);
+                            var variables = new VariableContainer(args.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value));
                             var ctx = new RunContext { Variables = variables, DiceRoller = diceroller };
                             return impl.Script.Statements.Select(script => RunStatement(script, ctx)).ToList();
                         }
@@ -41,7 +41,7 @@ namespace DiceScript.Implementation
                         Spec = new FunctionSpec { Name = partial.Name, Arguments = partial.Arguments },
                         Run = (diceroller, args) =>
                         {
-                            var outvariables = new VariableContainer(args);
+                            var outvariables = new VariableContainer(args.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value));
                             var innerArgs = new Dictionary<string, int>();
                             for (var idx = 0; idx < appliedFunc.Spec.Arguments.Count; idx++)
                             {
@@ -77,7 +77,10 @@ namespace DiceScript.Implementation
             if (statement is AssignementStatement assignStmt)
             {
                 var roll = RunExpression(assignStmt.Expression, ctx);
-                ctx.Variables.SetVariable(assignStmt.VariableName, roll.Result);
+                object value = assignStmt.Type == AssignementType.Number
+                    ? (object)roll.Result
+                    : roll;
+                ctx.Variables.SetVariable(assignStmt.VariableName, value);
                 return roll;
             }
 
@@ -115,7 +118,24 @@ namespace DiceScript.Implementation
                 return RunCalcExpression(calcexpr, ctx);
             }
 
+            if (expr is AggregationExpression aggregation)
+            {
+                return RunAggregationExpression(aggregation, ctx);
+            }
+
             throw new InvalidOperationException($"Uknown expression type: {expr.GetType()}");
+        }
+
+        private static ValueResult RunAggregationExpression(AggregationExpression expr, RunContext ctx)
+        {
+            var dice = ctx.Variables.GetVariableValue<RollResult>(expr.Variable);
+            var filteredDices = FilterDices(
+                dice.Dices,
+                expr.Filter ?? new FilterOption { Type = FilterType.None },
+                expr.Ranking ?? new RankingOption { Type = RankingType.None },
+                ctx.Variables);
+            var result = ComputeResult(filteredDices, expr.Aggregation);
+            return new ValueResult { Result = result };
         }
 
         private static ValueResult RunCalcExpression(CalcExpression expr, RunContext ctx)

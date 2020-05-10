@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using DiceScript.Contracts;
+using DiceScript.Implementation;
 using DiceScript.Implementation.SyntaxTree;
 using Xunit;
 
@@ -9,13 +10,14 @@ namespace DiceScript.Test
 {
     internal static class Helpers
     {
-        public static Script AssignStmt(string varName, DiceDeclaration exp)
+        public static Script AssignStmt(string varName, DiceDeclaration exp, AssignementType type = AssignementType.Number)
         {
             return new Script
             {
                 Statements = new List<Statement>
                 {
                     new AssignementStatement {
+                        Type = type,
                         VariableName = varName,
                         Expression = new DiceExpression { Dices = exp }
                     }

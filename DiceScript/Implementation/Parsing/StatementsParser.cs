@@ -6,6 +6,7 @@ using static Pidgin.Parser;
 using static DiceScript.Implementation.Parsing.ExpressionParser;
 
 using DiceScript.Implementation.SyntaxTree;
+using System.Collections.Generic;
 
 namespace DiceScript.Implementation.Parsing
 {
@@ -39,14 +40,30 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return Try(String("int "))
-                    .Then(SkipWhitespaces)
-                    .Then(Map(
-                    (name, _, expr) => new AssignementStatement { VariableName = name, Expression = expr },
+                return Map(
+                    (type, name, _, expr) => new AssignementStatement
+                    {
+                        Type = type,
+                        VariableName = name,
+                        Expression = expr
+                    },
+                    AssignementTypeParser.Before(Char(' ').Then(SkipWhitespaces)),
                     BaseParser.Variable,
                     SkipWhitespaces.Then(String("<-").Then(SkipWhitespaces)),
-                    AnyExpression
-                    ));
+                    AnyExpression);
+            }
+        }
+
+        private static Parser<char, AssignementType> AssignementTypeParser
+        {
+            get
+            {
+                var types = new Dictionary<string, AssignementType>
+                {
+                    { "int", AssignementType.Number },
+                    { "dice", AssignementType.Dice },
+                };
+                return OneOf(types.Keys.Select(String)).Select(s => types[s]);
             }
         }
 

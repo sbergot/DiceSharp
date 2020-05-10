@@ -43,6 +43,13 @@ namespace DiceScript.Test.TestCases
             RunSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(AggregationTestData))]
+        internal void DiceVarCase(TestVector test)
+        {
+            RunSuccess(test);
+        }
+
         private static void RunSuccess(TestVector test)
         {
             var builder = new Builder(new Limitations { MaxRollNbr = 1000, MaxProgramSize = 1000 });

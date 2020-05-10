@@ -43,6 +43,13 @@ namespace DiceScript.Test.TestCases
             CompileSuccess(test);
         }
 
+        [Theory]
+        [ClassData(typeof(AggregationTestData))]
+        internal void DiceVarCase(TestVector test)
+        {
+            CompileSuccess(test);
+        }
+
         internal void CompileSuccess(TestVector test)
         {
             var compiler = new Compiler();
