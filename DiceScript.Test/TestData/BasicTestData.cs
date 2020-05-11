@@ -161,8 +161,6 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 3 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Plus }
                 }),
                 new List<Result> {
@@ -188,8 +186,6 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 3 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Filter = null,
                     SumBonus = new SumBonusDeclaration { Scalar = new ConstantScalar { Value = 2 }, Sign = SignType.Minus }
                 }),
                 new List<Result> {

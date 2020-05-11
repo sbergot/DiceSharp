@@ -22,9 +22,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 1 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 7 } },
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 7 } },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -44,9 +48,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 1 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Ranking = new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 7 } },
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 7 } },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -66,9 +74,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 1 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Filter = null,
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new AggregateOption { Type = AggregationType.Sum },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -88,9 +100,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 1 }
                     },
-                    Aggregation = AggregationType.Count,
-                    Filter = null,
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new AggregateOption { Type = AggregationType.Count },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -110,9 +126,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 1 }
                     },
-                    Aggregation = AggregationType.Min,
-                    Filter = null,
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new AggregateOption { Type = AggregationType.Min },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -132,9 +152,14 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 3 }
                     },
-                    Aggregation = AggregationType.Count,
-                    Filter = new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 4 } },
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new FilterOption { Type = FilterType.Equal, Scalar = new ConstantScalar { Value = 4 } },
+                            new AggregateOption { Type = AggregationType.Count },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -159,9 +184,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 6 },
                         Number = new ConstantScalar { Value = 3 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Ranking = new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 1 } },
-                    SumBonus = null
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new RankingOption { Type = RankingType.Top, Scalar = new ConstantScalar { Value = 1 } },
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -186,8 +215,13 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 2 },
                         Number = new ConstantScalar { Value = 2 }
                     },
-                    Aggregation = AggregationType.Sum,
-                    Exploding = true
+                    Options = new OptionGroup
+                    {
+                        Options = new List<Option>
+                        {
+                            new ExplodingOption(),
+                        }
+                    },
                 }),
                 new List<Result> {
                     new RollResult
@@ -211,7 +245,6 @@ namespace DiceScript.Test.TestData
                         Faces = new ConstantScalar { Value = 2 },
                         Number = new ConstantScalar { Value = 2 }
                     },
-                    Aggregation = AggregationType.Sum,
                     Name = "my name!"
                 }),
                 new List<Result> {

@@ -48,7 +48,6 @@ namespace DiceScript.Test.TestData
                                     Faces = new ConstantScalar { Value = 6 },
                                     Number = new ConstantScalar { Value = 1 }
                                 },
-                                Aggregation = AggregationType.Sum
                             }
                         },
                         new RangeMappingStatement

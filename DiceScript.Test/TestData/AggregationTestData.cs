@@ -56,7 +56,13 @@ namespace DiceScript.Test.TestData
                             Expression = new AggregationExpression
                             {
                                 Variable = new VariableScalar { VariableName = "a" },
-                                Aggregation = AggregationType.Sum
+                                Options = new OptionGroup
+                                {
+                                    Options = new List<Option>
+                                    {
+                                        new AggregateOption { Type = AggregationType.Sum },
+                                    }
+                                },
                             }
                         }
                     }
@@ -91,7 +97,13 @@ namespace DiceScript.Test.TestData
                                     Faces = new ConstantScalar { Value = 6 },
                                     Number = new ConstantScalar { Value = 8 }
                                 },
-                                Exploding = true
+                                Options = new OptionGroup
+                                {
+                                    Options = new List<Option>
+                                    {
+                                        new ExplodingOption(),
+                                    }
+                                },
                             }
                         },
                         new AssignementStatement
@@ -100,12 +112,14 @@ namespace DiceScript.Test.TestData
                             Expression = new AggregationExpression
                             {
                                 Variable = new VariableScalar { VariableName = "a" },
-                                Aggregation = AggregationType.Count,
-                                Filter = new FilterOption
+                                Options = new OptionGroup
                                 {
-                                    Type = FilterType.Larger,
-                                    Scalar = new ConstantScalar { Value = 4 }
-                                }
+                                    Options = new List<Option>
+                                    {
+                                        new FilterOption { Type = FilterType.Larger, Scalar = new ConstantScalar { Value = 4 } },
+                                        new AggregateOption { Type = AggregationType.Count },
+                                    }
+                                },
                             }
                         },
                         new AssignementStatement
@@ -114,12 +128,14 @@ namespace DiceScript.Test.TestData
                             Expression = new AggregationExpression
                             {
                                 Variable = new VariableScalar { VariableName = "a" },
-                                Aggregation = AggregationType.Count,
-                                Filter = new FilterOption
+                                Options = new OptionGroup
                                 {
-                                    Type = FilterType.Smaller,
-                                    Scalar = new ConstantScalar { Value = 3 }
-                                }
+                                    Options = new List<Option>
+                                    {
+                                        new FilterOption { Type = FilterType.Smaller, Scalar = new ConstantScalar { Value = 3 } },
+                                        new AggregateOption { Type = AggregationType.Count },
+                                    }
+                                },
                             }
                         },
                         new ExpressionStatement

@@ -25,7 +25,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 6 },
                                 Number = new ConstantScalar { Value = 1 }
                             },
-                            Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
                                 Scalar = new VariableScalar { VariableName = "faces" },
@@ -68,7 +67,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 6 },
                                 Number = new ConstantScalar { Value = 1 }
                             },
-                            Aggregation = AggregationType.Sum,
                         }
                     }
                 }
@@ -107,7 +105,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 6 },
                                 Number = new ConstantScalar { Value = 1 }
                             },
-                            Aggregation = AggregationType.Sum,
                         }
                     }
                 }
@@ -146,7 +143,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 6 },
                                 Number = new ConstantScalar { Value = 1 }
                             },
-                            Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
                                 Scalar = new VariableScalar { VariableName = "faces" },
@@ -195,7 +191,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 6 },
                                 Number = new ConstantScalar { Value = 1 }
                             },
-                            Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
                                 Scalar = new VariableScalar { VariableName = "faces" },
@@ -265,7 +260,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 6 },
                                 Number = new ConstantScalar { Value = 1 }
                             },
-                            Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
                                 Scalar = new VariableScalar { VariableName = "faces" },
@@ -305,7 +299,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new ConstantScalar { Value = 8 },
                                 Number = new ConstantScalar { Value = 2 }
                             },
-                            Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
                                 Scalar = new VariableScalar { VariableName = "bonus" },
@@ -361,7 +354,6 @@ namespace DiceScript.Test.TestCases
                                 Faces = new VariableScalar { VariableName = "faces" },
                                 Number = new ConstantScalar { Value = 2 }
                             },
-                            Aggregation = AggregationType.Sum,
                             SumBonus = new SumBonusDeclaration
                             {
                                 Scalar = new VariableScalar { VariableName = "bonus" },

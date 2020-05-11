@@ -1,11 +1,6 @@
 # DiceScript
 
-- [ ] distinguish int variables & dice variables
-
-      * int stores a single result
-      * value dice stores a set of results
-
-- [ ] dice can be converted to int with a aggregate expression
+- [ ] refactor option group parsing
 - [ ] named calc expression
 - [ ] check statistical distributions of the dices
 

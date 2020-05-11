@@ -76,12 +76,14 @@ namespace DiceScript.Test.TestData
                                     Faces = new ConstantScalar { Value = 6 },
                                     Number = new ConstantScalar { Value = 2 }
                                 },
-                                Filter = new FilterOption
+                                Options = new OptionGroup
                                 {
-                                    Type = FilterType.Larger,
-                                    Scalar = new VariableScalar { VariableName = "a" }
+                                    Options = new List<Option>
+                                    {
+                                        new FilterOption { Type = FilterType.Larger, Scalar = new VariableScalar { VariableName = "a" } },
+                                        new AggregateOption { Type = AggregationType.Count },
+                                    }
                                 },
-                                Aggregation = AggregationType.Count
                             }
                         }
                     }

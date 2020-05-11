@@ -129,12 +129,13 @@ namespace DiceScript.Implementation
         private static ValueResult RunAggregationExpression(AggregationExpression expr, RunContext ctx)
         {
             var dice = ctx.Variables.GetVariableValue<RollResult>(expr.Variable);
+            var options = MergeOptions(expr.Options);
             var filteredDices = FilterDices(
                 dice.Dices,
-                expr.Filter ?? new FilterOption { Type = FilterType.None },
-                expr.Ranking ?? new RankingOption { Type = RankingType.None },
+                options.Filter ?? new FilterOption { Type = FilterType.None },
+                options.Ranking ?? new RankingOption { Type = RankingType.None },
                 ctx.Variables);
-            var result = ComputeResult(filteredDices, expr.Aggregation);
+            var result = ComputeResult(filteredDices, options.Aggregation);
             return new ValueResult { Result = result };
         }
 
@@ -155,6 +156,35 @@ namespace DiceScript.Implementation
             };
         }
 
+        private static DiceOptions MergeOptions(OptionGroup options)
+        {
+            var result = new DiceOptions();
+            if (options == null) { return result; }
+            foreach (var option in options.Options)
+            {
+                if (option is FilterOption filter)
+                {
+                    result.Filter = filter;
+                }
+
+                if (option is RankingOption ranking)
+                {
+                    result.Ranking = ranking;
+                }
+
+                if (option is AggregateOption aggregate)
+                {
+                    result.Aggregation = aggregate.Type;
+                }
+
+                if (option is ExplodingOption)
+                {
+                    result.Exploding = true;
+                }
+            }
+            return result;
+        }
+
         private static RollResult RunDiceExpression(DiceExpression expr, RunContext ctx)
         {
             var diceNbr = ctx.Variables.GetScalarValue(expr.Dices.Number);
@@ -163,16 +193,17 @@ namespace DiceScript.Implementation
                 throw new InvalidScriptException("Dice number must be positive");
             }
             var faceNbr = ctx.Variables.GetScalarValue(expr.Dices.Faces);
+            var options = MergeOptions(expr.Options);
             var dices = Enumerable.Range(0, diceNbr)
-                .Select(i => ctx.DiceRoller.Roll(faceNbr, expr.Exploding))
+                .Select(i => ctx.DiceRoller.Roll(faceNbr, options.Exploding))
                 .ToList();
 
             var filteredDices = FilterDices(
                 dices,
-                expr.Filter ?? new FilterOption { Type = FilterType.None },
-                expr.Ranking ?? new RankingOption { Type = RankingType.None },
+                options.Filter ?? new FilterOption { Type = FilterType.None },
+                options.Ranking ?? new RankingOption { Type = RankingType.None },
                 ctx.Variables);
-            var aggrType = expr.Aggregation;
+            var aggrType = options.Aggregation;
             var bonus = expr.SumBonus != null
                 ? ctx.Variables.GetScalarValue(expr.SumBonus.Scalar) * GetSignFactor(expr.SumBonus.Sign)
                 : 0;
@@ -183,7 +214,7 @@ namespace DiceScript.Implementation
                     Faces = faceNbr,
                     Number = diceNbr,
                     Bonus = bonus,
-                    Exploding = expr.Exploding,
+                    Exploding = options.Exploding,
                 },
                 Dices = filteredDices,
                 Result = ComputeResult(filteredDices, aggrType) + bonus,

@@ -39,39 +39,13 @@ namespace DiceScript.Implementation.Parsing
             var result = new DiceExpression
             {
                 Dices = diceExpr,
-                Aggregation = AggregationType.Sum,
+                Options = optionGroupExpr.GetValueOrDefault(),
                 Name = name.GetValueOrDefault()
             };
 
             if (sumBonus.HasValue)
             {
                 result.SumBonus = sumBonus.Value;
-            }
-
-            if (optionGroupExpr.HasValue)
-            {
-                foreach (var option in optionGroupExpr.Value.Options)
-                {
-                    if (option is FilterOption filter)
-                    {
-                        result.Filter = filter;
-                    }
-
-                    if (option is RankingOption ranking)
-                    {
-                        result.Ranking = ranking;
-                    }
-
-                    if (option is AggregateOption aggregate)
-                    {
-                        result.Aggregation = aggregate.Type;
-                    }
-
-                    if (option is ExplodingOption)
-                    {
-                        result.Exploding = true;
-                    }
-                }
             }
 
             return result;
@@ -88,29 +62,8 @@ namespace DiceScript.Implementation.Parsing
                         var result = new AggregationExpression
                         {
                             Variable = new VariableScalar { VariableName = variable },
+                            Options = options
                         };
-                        foreach (var option in options.Options)
-                        {
-                            if (option is FilterOption filter)
-                            {
-                                result.Filter = filter;
-                            }
-
-                            if (option is RankingOption ranking)
-                            {
-                                result.Ranking = ranking;
-                            }
-
-                            if (option is AggregateOption aggregate)
-                            {
-                                result.Aggregation = aggregate.Type;
-                            }
-
-                            if (option is ExplodingOption)
-                            {
-                                result.Exploding = true;
-                            }
-                        }
                         return result;
                     },
                     BaseParser.Variable.Before(SkipWhitespaces),
