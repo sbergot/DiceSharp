@@ -38,7 +38,7 @@ lowest dices.
 Roll 1 D8 and 2 D6 and add them together:
 
 ```
-var $x <- roll D8;
+int $x <- roll D8;
 roll 2D6+$x;
 ```
 
@@ -84,7 +84,7 @@ the function.
 
 ```
 function my_roll() {
-    $result <- roll 5D6(>2,count);
+    int $result <- roll 5D6(>2,count);
     match $result ((<3; "failure"), (default; "success"))
 }
 ```
@@ -93,3 +93,38 @@ A match statement takes a value and checks it against a series of filters. The
 quoted text associated with first filter that accepts the value is returned. The
 `default` keyword is a special filter only useable in a match statement. It
 accepts any value.
+
+## Calc expression
+
+You may sometimes want to perform small calculations in a script. You may use a
+calc expression for this:
+
+```
+int $a <- calc 1 + 2;
+calc "named calculation" $a * 2
+```
+
+Only a single operation may be performed on a given line. The available
+operations are `+`, `-` and `*`. The result may be assigned to an `int`. The
+calc expression may be named.
+
+## Dice variables and aggregation expressions
+
+Sometimes you want to implement more complexe rules on a dice roll. For exemple
+you want to count dice above 5 as successes and dice equal to 1 as failures. The
+result of your roll is successes minus failures. You need to count two different
+sets of dice. You can achieve this with dicescript thanks to dice variables and
+aggregation expressions:
+
+```
+dice $a<- roll 8D6 (exp);
+int $successes <- aggregate "successes" $a (>4, count);
+int $failures <- aggregate $a (<3, count);
+calc $successes - $failures
+```
+
+The `dice` keyword indicates that the set of dice is stored into `$a` instead of
+a single integer. The two following statements are aggregations. They use the
+same set of options than the dice expression.
+
+The aggregation expression may also be named.
