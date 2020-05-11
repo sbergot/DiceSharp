@@ -78,6 +78,52 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
+                "dice $a<-roll D6; aggregate \"aggregation name\" $a (sum)",
+                new Script
+                {
+                    Statements = new List<Statement>
+                    {
+                        new AssignementStatement
+                        {
+                            VariableName = "a",
+                            Type = AssignementType.Dice,
+                            Expression = new DiceExpression
+                            {
+                                Dices = new DiceDeclaration
+                                {
+                                    Faces = new ConstantScalar { Value = 6 },
+                                    Number = new ConstantScalar { Value = 1 }
+                                }
+                            }
+                        },
+                        new ExpressionStatement
+                        {
+                            Expression = new AggregationExpression
+                            {
+                                Variable = new VariableScalar { VariableName = "a" },
+                                Options = new OptionGroup
+                                {
+                                    Options = new List<Option>
+                                    {
+                                        new AggregateOption { Type = AggregationType.Sum },
+                                    }
+                                },
+                                Name = "aggregation name"
+                            }
+                        }
+                    }
+                },
+                new List<Result> {
+                    new RollResult
+                    {
+                        Description = new RollDescription { Faces = 6, Number = 1, Bonus = 0, Exploding = false },
+                        Dices = new List<Dice> { new Dice { Valid = true, Result = 5, Faces = 6 } },
+                        Result = 5,
+                    },
+                    new ValueResult { Result = 5, Name = "aggregation name" }
+                }
+            ),
+            (
                 @"dice $a<- roll 8D6 (exp);
                 int $successes <- aggregate $a (>4, count);
                 int $failures <- aggregate $a (<3, count);

@@ -55,19 +55,22 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return String("aggregate ")
-                    .Then(SkipWhitespaces)
-                    .Then(Map((variable, options) =>
+                var command = BaseParser.QuotedString
+                    .Optional()
+                    .Between(Try(String("aggregate ")).Then(SkipWhitespaces), SkipWhitespaces);
+
+                return Map((name, variable, options) =>
                     {
-                        var result = new AggregationExpression
+                        return new AggregationExpression
                         {
                             Variable = new VariableScalar { VariableName = variable },
-                            Options = options
+                            Options = options,
+                            Name = name.GetValueOrDefault(),
                         };
-                        return result;
                     },
+                    command,
                     BaseParser.Variable.Before(SkipWhitespaces),
-                    OptionParser.OptionGroup));
+                    OptionParser.OptionGroup);
             }
         }
 

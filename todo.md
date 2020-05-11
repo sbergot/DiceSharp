@@ -1,7 +1,7 @@
 # DiceScript
 
-- [ ] refactor option group parsing
-- [ ] named calc expression
+- [x] refactor option group parsing
+- [x] named calc expression
 - [ ] check statistical distributions of the dices
 
 # dicecafé

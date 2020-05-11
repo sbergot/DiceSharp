@@ -29,6 +29,23 @@ namespace DiceScript.Test.TestData
                 }
             ),
             (
+                "calc \"calc name\" 1 + 2",
+                Helpers.ToAst(new CalcExpression
+                {
+                    LeftValue = new ConstantScalar { Value = 1 },
+                    RightValue = new ConstantScalar { Value = 2 },
+                    Operator = SignType.Plus,
+                    Name = "calc name"
+                }),
+                new List<Result> {
+                    new ValueResult
+                    {
+                        Result = 3,
+                        Name = "calc name"
+                    }
+                }
+            ),
+            (
                 "calc 2 - 1",
                 Helpers.ToAst(new CalcExpression
                 {

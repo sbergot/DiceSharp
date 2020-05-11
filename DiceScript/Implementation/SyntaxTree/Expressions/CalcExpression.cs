@@ -5,5 +5,6 @@ namespace DiceScript.Implementation.SyntaxTree
         public Scalar LeftValue { get; set; }
         public Scalar RightValue { get; set; }
         public SignType Operator { get; set; }
+        public string Name { get; set; }
     }
 }

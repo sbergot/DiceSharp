@@ -136,7 +136,7 @@ namespace DiceScript.Implementation
                 options.Ranking ?? new RankingOption { Type = RankingType.None },
                 ctx.Variables);
             var result = ComputeResult(filteredDices, options.Aggregation);
-            return new ValueResult { Result = result };
+            return new ValueResult { Result = result, Name = expr.Name };
         }
 
         private static ValueResult RunCalcExpression(CalcExpression expr, RunContext ctx)
@@ -152,7 +152,8 @@ namespace DiceScript.Implementation
             };
             return new ValueResult
             {
-                Result = result
+                Result = result,
+                Name = expr.Name
             };
         }
 

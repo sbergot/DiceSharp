@@ -13,18 +13,22 @@ namespace DiceScript.Implementation.Parsing
         {
             get
             {
-                return Try(String("calc "))
-                    .Then(SkipWhitespaces)
-                    .Then(Map(
-                        (left, op, right) => new CalcExpression
+                var command = BaseParser.QuotedString
+                    .Optional()
+                    .Between(Try(String("calc ")).Then(SkipWhitespaces), SkipWhitespaces);
+
+                return Map(
+                        (name, left, op, right) => new CalcExpression
                         {
                             LeftValue = left,
                             RightValue = right,
-                            Operator = op
+                            Operator = op,
+                            Name = name.GetValueOrDefault(),
                         },
+                        command,
                         BaseParser.Scalar,
                         Operation,
-                        BaseParser.Scalar));
+                        BaseParser.Scalar);
             }
         }
         public static Parser<char, SignType> Operation
