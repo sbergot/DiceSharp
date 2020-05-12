@@ -11,20 +11,28 @@ interface RollDescription {
   exploding: boolean;
 }
 
-interface RollResult {
-  description: RollDescription;
-  dices: Dice[];
+interface ValueResult {
   result: number;
   name: string;
+}
+
+interface RollResult extends ValueResult {
+  description: RollDescription;
+  dices: Dice[];
 }
 
 interface PrintResult {
   value: string;
 }
 
-type Result = RollResult | PrintResult;
+interface DiceResult {
+  dices: Dice[];
+  name: string;
+}
 
-type ResultType = "Roll" | "Print";
+type Result = RollResult | PrintResult | ValueResult | DiceResult;
+
+type ResultType = "Roll" | "Print" | "Value" | "Dice";
 
 interface ResultGroup {
   user: User;
@@ -39,7 +47,9 @@ interface ResultModelG<TRes extends Result, TResType extends ResultType> {
 
 type TaggedResult =
   | ResultModelG<RollResult, "Roll">
-  | ResultModelG<PrintResult, "Print">;
+  | ResultModelG<PrintResult, "Print">
+  | ResultModelG<ValueResult, "Value">
+  | ResultModelG<DiceResult, "Dice">;
 
 interface FunctionSpec {
   name: string;

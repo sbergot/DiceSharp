@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useRoomContext } from "../room-context";
 
 interface ResultListProps {
   results: ResultGroup[];
@@ -22,15 +21,44 @@ export function ResultList({ results }: ResultListProps) {
 }
 
 function Result({ result }: { result: TaggedResult }) {
-  return result.resultType == "Roll" ? (
-    <RollResult result={result.result} />
-  ) : (
-    <PrintResult result={result.result} />
+  switch (result.resultType) {
+    case "Roll":
+      return <RollResult result={result.result} />;
+    case "Print":
+      return <PrintResult result={result.result} />;
+    case "Value":
+      return <ValueResult result={result.result} />;
+    case "Dice":
+      return <DiceResult result={result.result} />;
+  }
+}
+
+function ValueResult({ result }: { result: ValueResult }) {
+  if (result.name == null) {
+    return null;
+  }
+  return (
+    <div>
+      {result.name}: {result.result}
+    </div>
+  );
+}
+
+function DiceResult({ result }: { result: DiceResult }) {
+  const nameDisplay = result.name ? result.name + ": " : "";
+  const diceDisplay = result.dices.map((d) => {
+    return <span className="mr-2">{d.result}</span>;
+  });
+  return (
+    <div>
+      {nameDisplay}
+      {diceDisplay}
+    </div>
   );
 }
 
 function PrintResult({ result }: { result: PrintResult }) {
-  return <>{result.value}</>;
+  return <div>{result.value}</div>;
 }
 
 function RollResult({ result }: { result: RollResult }) {

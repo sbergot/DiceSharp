@@ -77,11 +77,21 @@ namespace DiceScript.Implementation
             if (statement is AssignementStatement assignStmt)
             {
                 var roll = RunExpression(assignStmt.Expression, ctx);
-                object value = assignStmt.Type == AssignementType.Number
-                    ? (object)roll.Result
-                    : roll;
-                ctx.Variables.SetVariable(assignStmt.VariableName, value);
-                return roll;
+                if (assignStmt.Type == AssignementType.Number)
+                {
+                    ctx.Variables.SetVariable(assignStmt.VariableName, roll.Result);
+                    return roll;
+                }
+                else
+                {
+                    var rollResult = roll as RollResult;
+                    if (rollResult == null)
+                    {
+                        throw new InvalidScriptException("trying to save dice without a dice expression");
+                    }
+                    ctx.Variables.SetVariable(assignStmt.VariableName, roll);
+                    return new DiceResult { Dices = rollResult.Dices, Name = rollResult.Name };
+                }
             }
 
             if (statement is RangeMappingStatement rangeStmt)

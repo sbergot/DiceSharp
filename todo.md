@@ -6,7 +6,10 @@
 
 # dicecafé
 
-- [ ] dice tester: script on the left, run button below, results on the right
+- [ ] improve result display
+      don't show result when the dices are stored
+      show aggreg results
+      show calc
 - [ ] add elevator pitch on the landing page
 - [ ] add username & date on the result
 - [ ] post formatted results to discord using webhook

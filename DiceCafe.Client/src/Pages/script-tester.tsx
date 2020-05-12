@@ -7,8 +7,8 @@ import { post } from "../http";
 const defaultScript = `dice $a<- roll 8D6 (exp);
 int $successes <- aggregate $a (>4, count);
 int $failures <- aggregate $a (<3, count);
-calc $successes - $failures
-`;
+int $result <- calc $successes - $failures;
+match $result ((<0, "failure"), (<3, "success"), (default, "critical success"));`;
 
 export function ScriptTester() {
   const [libraryScript, setLibrayScript] = React.useState(defaultScript);

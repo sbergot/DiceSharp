@@ -107,7 +107,7 @@ namespace DiceCafe.WebApp.Controllers
             var taggedResults = results.Select(r => new TaggedResult
             {
                 Result = r,
-                ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
+                ResultType = GetResultType(r),
             }).ToList();
             var resultGroup = new ResultGroup
             {
@@ -116,6 +116,31 @@ namespace DiceCafe.WebApp.Controllers
                 User = SessionManager.GetCurrentUser()
             };
             return resultGroup;
+        }
+
+        private static ResultType GetResultType(Result r)
+        {
+            if (r is RollResult)
+            {
+                return ResultType.Roll;
+            }
+
+            if (r is PrintResult)
+            {
+                return ResultType.Print;
+            }
+
+            if (r is ValueResult)
+            {
+                return ResultType.Value;
+            }
+
+            if (r is DiceResult)
+            {
+                return ResultType.Dice;
+            }
+
+            throw new InvalidOperationException();
         }
 
         [HttpPost]
