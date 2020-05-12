@@ -1,7 +1,10 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: {
+    room: "./src/room-index.tsx",
+    "script-tester": "./src/script-tester-index.tsx",
+  },
 
   output: {
     path: path.resolve(__dirname, "..", "DiceCafe.WebApp", "wwwroot", "dist"),

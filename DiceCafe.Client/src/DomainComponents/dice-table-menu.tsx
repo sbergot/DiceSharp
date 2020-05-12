@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { Link } from "../../UI/Components/Link";
-import { Button } from "../../UI/Components/Button";
-import { Modal } from "../../UI/Components/Modal";
-import { HashLink } from "../../UI/Components/HashLink";
-import { useRoomContext } from "../../room-context";
+import { Link } from "../UI/Components/Link";
+import { Button } from "../UI/Components/Button";
+import { Modal } from "../UI/Components/Modal";
+import { HashLink } from "../UI/Components/HashLink";
+import { useRoomContext } from "../room-context";
 
-export function Menu() {
+export function DiceTableMenu() {
   const { room, isCreator, urls } = useRoomContext();
   const { joinUrl, quitUrl } = urls;
   const [joinModalOpened, setJoinModalOpened] = React.useState(false);

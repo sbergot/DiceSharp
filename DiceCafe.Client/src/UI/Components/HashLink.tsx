@@ -9,11 +9,7 @@ interface LinkProps extends ClassProp {
 }
 
 export function HashLink({ href, label, className, type }: LinkProps) {
-  const classes = [
-    "inline-block font-bold py-2 px-4 rounded focus:outline-none",
-    getButtonLikeColors(type),
-    className || "",
-  ].join(" ");
+  const classes = ["btn", getButtonLikeColors(type), className || ""].join(" ");
   return (
     <Link className={classes} to={href}>
       {label}

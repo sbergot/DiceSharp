@@ -2,14 +2,11 @@ import * as React from "react";
 import { render } from "react-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import { App } from "./app";
-import { connect } from "./room-context";
+import { ScriptTester } from "./Pages/script-tester";
 
 async function main() {
   toast.configure();
-  await connect();
-  render(<App />, document.getElementById("root"));
+  render(<ScriptTester />, document.getElementById("root"));
 }
 
 main();

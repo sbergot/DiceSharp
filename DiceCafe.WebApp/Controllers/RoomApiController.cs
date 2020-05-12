@@ -12,6 +12,7 @@ using DiceCafe.WebApp.Users.Contract;
 using DiceCafe.WebApp.ViewModels;
 using DiceScript.Contracts;
 using DiceCafe.WebApp.Rooms;
+using System.Collections.Generic;
 
 namespace DiceCafe.WebApp.Controllers
 {
@@ -38,7 +39,7 @@ namespace DiceCafe.WebApp.Controllers
 
         [HttpPost]
         [Route("api/room/{roomId}/[action]")]
-        async public Task<IActionResult> Library(string roomId, [FromBody]string library)
+        async public Task<IActionResult> Library(string roomId, [FromBody] string library)
         {
             var normalisedRoomId = roomId.ToUpperInvariant();
             if (!RoomRepository.Exists(normalisedRoomId))
@@ -85,29 +86,51 @@ namespace DiceCafe.WebApp.Controllers
             {
                 if (room.Library == null)
                 {
-                    return BadRequest();
+                    return base.BadRequest();
                 }
 
                 if (!room.Library.GetFunctionList().Any(f => f.Name == fcall.Name))
                 {
-                    return NotFound("Function not found");
+                    return base.NotFound("Function not found");
                 }
 
                 var results = room.Library.Call(fcall.Name, fcall.Arguments);
-                var taggedResults = results.Select(r => new TaggedResult
-                {
-                    Result = r,
-                    ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
-                }).ToList();
-                room.State.Results.Add(new ResultGroup
-                {
-                    Results = taggedResults,
-                    Created = DateTime.UtcNow,
-                    User = SessionManager.GetCurrentUser()
-                });
+                ResultGroup resultGroup = GroupResults(results);
+                room.State.Results.Add(resultGroup);
                 await RoomHub.Update(room);
-                return Ok();
+                return base.Ok();
             });
+        }
+
+        private ResultGroup GroupResults(IList<Result> results)
+        {
+            var taggedResults = results.Select(r => new TaggedResult
+            {
+                Result = r,
+                ResultType = r is RollResult ? ResultType.Roll : ResultType.Print,
+            }).ToList();
+            var resultGroup = new ResultGroup
+            {
+                Results = taggedResults,
+                Created = DateTime.UtcNow,
+                User = SessionManager.GetCurrentUser()
+            };
+            return resultGroup;
+        }
+
+        [HttpPost]
+        [Route("api/[action]")]
+        public IActionResult RunScript([FromBody] string script)
+        {
+            var limitations = new DiceScript.Contracts.Limitations
+            {
+                MaxProgramSize = 500,
+                MaxRollNbr = 100
+            };
+            var builder = new DiceScript.Builder(limitations);
+            var runner = builder.BuildScript(script);
+            var results = runner();
+            return Json(GroupResults(results));
         }
     }
 }

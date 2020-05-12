@@ -5,6 +5,7 @@ import { DiceTable } from "./Pages/dice-table";
 import { Admin } from "./Pages/admin";
 import { RoomContextListener } from "./room-context";
 import { PersonnalScript } from "./Pages/personnal-scripts";
+import { ScriptTester } from "./Pages/script-tester";
 
 export function App() {
   return (
@@ -16,6 +17,9 @@ export function App() {
           </Route>
           <Route path="/personnal-scripts">
             <PersonnalScript />
+          </Route>
+          <Route path="/script-tester">
+            <ScriptTester />
           </Route>
           <Route>
             <DiceTable />
