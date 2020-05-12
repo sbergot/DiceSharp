@@ -114,24 +114,24 @@ int $successes <- aggregate "successes" $a (>4, count);
 calc "critical factor" $a * 2
 ```
 
-## Functions
+## Macros
 
-It is possible to define function with the following syntax:
+It is possible to define a macro with the following syntax:
 
 ```
-function my_roll($x) {
+macro my_roll($x) {
     roll 2D6+$x;
 }
 ```
 
-A function name follows the same rules as the variables (letters, digits,
-underscores). A function can also be defined by invoking another one using a
+A macro name follows the same rules as the variables (letters, digits,
+underscores). A macro can also be defined by invoking another one using a
 specific `apply` syntax:
 
 ```
-function multipledice($faces, $bonus) {
+macro multipledice($faces, $bonus) {
     roll 2D$faces+$bonus;
 }
 
-function specialized($bonus) <- apply multipledice(4, $bonus)
+macro specialized($bonus) <- apply multipledice(4, $bonus)
 ```
