@@ -90,7 +90,12 @@ namespace DiceScript.Implementation
                         throw new InvalidScriptException("trying to save dice without a dice expression");
                     }
                     ctx.Variables.SetVariable(assignStmt.VariableName, roll);
-                    return new DiceResult { Dices = rollResult.Dices, Name = rollResult.Name };
+                    return new DiceResult
+                    {
+                        Dices = rollResult.Dices,
+                        Name = rollResult.Name,
+                        Description = rollResult.Description
+                    };
                 }
             }
 

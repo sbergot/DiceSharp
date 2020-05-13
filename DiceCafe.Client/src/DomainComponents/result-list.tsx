@@ -49,10 +49,11 @@ function DiceResult({ result }: { result: DiceResult }) {
   const diceDisplay = result.dices.map((d) => {
     return <span className="mr-2">{d.result}</span>;
   });
+  const rollDescription = formatDescription(result.description);
   return (
     <div>
       {nameDisplay}
-      {diceDisplay}
+      {rollDescription} &#8594; {diceDisplay}
     </div>
   );
 }

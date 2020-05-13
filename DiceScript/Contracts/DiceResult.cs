@@ -6,5 +6,6 @@ namespace DiceScript.Contracts
     {
         public string Name { get; set; }
         public List<Dice> Dices { get; set; }
+        public RollDescription Description { get; set; }
     }
 }

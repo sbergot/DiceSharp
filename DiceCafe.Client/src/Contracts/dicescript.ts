@@ -28,6 +28,7 @@ interface PrintResult {
 interface DiceResult {
   dices: Dice[];
   name: string;
+  description: RollDescription;
 }
 
 type Result = RollResult | PrintResult | ValueResult | DiceResult;

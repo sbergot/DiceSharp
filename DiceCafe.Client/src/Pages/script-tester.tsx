@@ -22,7 +22,7 @@ export function ScriptTester() {
 
   return (
     <>
-      <div className="flex mt-4">
+      <div className="relative flex mt-4">
         <div className="">
           <textarea
             className="mt-4 input-box"
