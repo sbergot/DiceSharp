@@ -9,8 +9,11 @@ async function main() {
   const fulldoc = template
     .toString()
     .replace("*content*", md)
-    .replace("*title*", "documentation");
-  await fs.writeFile("../DiceCafe.WebApp/wwwroot/documentation.html", fulldoc);
+    .replace("*title*", "dicescript reference");
+  await fs.writeFile(
+    "../DiceCafe.WebApp/wwwroot/dicescript_reference.html",
+    fulldoc
+  );
 }
 
 main();

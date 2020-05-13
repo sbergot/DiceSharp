@@ -1,8 +1,4 @@
-# DiceScript
-
-A small dice scripting language.
-
-## Basic dice commands
+# Basic dice commands
 
 Roll 1 D6: `roll D6` or `roll 1D6`  
 Roll 2 D10: `roll 2D10`  
@@ -12,7 +8,7 @@ Roll 3 explosives D8: `roll 3D8(exp)`
 
 An exploding dices is rerolled when it lands one its maximum value.
 
-## Filtering, ranking and aggregating
+# Filtering, ranking and aggregating
 
 Roll 3 D6 and keep the ones above 4: `roll 3D6(>4)`  
 Roll 3 D6 and count the ones above 4: `roll 3D6(>4,count)`
@@ -25,7 +21,7 @@ The default aggregation is `sum`.
 Roll 4 D6 and keep the highest one: `roll 4D6(top1)`. Use `bot` to keep the
 lowest dices.
 
-## Variables
+# Variables
 
 Roll 1 D8 and 2 D6 and add them together:
 
@@ -46,7 +42,7 @@ must be used to separate the variable from the rest of the dice declaration:
 
 Variables can also be used in options such as filters and rankings: `roll 5D6(>$x)`.
 
-## Match statements
+# Match statements
 
 You can write a match statement to introduce an interpretation of a given
 results. Let's say that you are rolling 5D6. If you get at least 2 dice above 2
@@ -63,7 +59,7 @@ quoted text associated with first filter that accepts the value is returned. The
 `default` keyword is a special filter only useable in a match statement. It
 accepts any value.
 
-## Calc expression
+# Calc expression
 
 You may sometimes want to perform small calculations in a script. You may use a
 calc expression for this:
@@ -77,7 +73,7 @@ Only a single operation may be performed on a given line. The available
 operations are `+`, `-` and `*`. The result may be assigned to an `int`. The
 calc expression may be named.
 
-## Dice variables and aggregation expressions
+# Dice variables and aggregation expressions
 
 Sometimes you want to implement more complexe rules on a dice roll. For exemple
 you want to count dice above 5 as successes and dice equal to 1 as failures. The
@@ -98,7 +94,7 @@ same set of options than the dice expression.
 
 The aggregation expression may also be named.
 
-## Named expressions
+# Named expressions
 
 A roll can be named using a quoted string. This allows you to add information
 about the roll.
@@ -114,7 +110,7 @@ int $successes <- aggregate "successes" $a (>4, count);
 calc "critical factor" $a * 2
 ```
 
-## Macros
+# Macros
 
 It is possible to define a macro with the following syntax:
 

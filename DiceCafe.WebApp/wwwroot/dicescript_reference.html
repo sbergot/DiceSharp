@@ -4,22 +4,20 @@
   <head>
     <meta charset="utf-8" />
 
-    <title>documentation</title>
+    <title>dicescript reference</title>
 
     <link rel="stylesheet" href="css/doc.css" />
   </head>
 
   <body>
-    <h1 id="dicescript">DiceScript</h1>
-<p>A small dice scripting language.</p>
-<h2 id="basicdicecommands">Basic dice commands</h2>
+    <h1 id="basicdicecommands">Basic dice commands</h1>
 <p>Roll 1 D6: <code>roll D6</code> or <code>roll 1D6</code><br />
 Roll 2 D10: <code>roll 2D10</code><br />
 Roll 2 D6 and add 3: <code>roll 2D6+3</code><br />
 Roll 2 D6 and substract 2: <code>roll 2D6-2</code><br />
 Roll 3 explosives D8: <code>roll 3D8(exp)</code></p>
 <p>An exploding dices is rerolled when it lands one its maximum value.</p>
-<h2 id="filteringrankingandaggregating">Filtering, ranking and aggregating</h2>
+<h1 id="filteringrankingandaggregating">Filtering, ranking and aggregating</h1>
 <p>Roll 3 D6 and keep the ones above 4: <code>roll 3D6(&gt;4)</code><br />
 Roll 3 D6 and count the ones above 4: <code>roll 3D6(&gt;4,count)</code></p>
 <p><code>&gt;4</code> is a filter. Other filters are <code>&lt;</code> and <code>=</code>.</p>
@@ -27,7 +25,7 @@ Roll 3 D6 and count the ones above 4: <code>roll 3D6(&gt;4,count)</code></p>
 The default aggregation is <code>sum</code>.</p>
 <p>Roll 4 D6 and keep the highest one: <code>roll 4D6(top1)</code>. Use <code>bot</code> to keep the
 lowest dices.</p>
-<h2 id="variables">Variables</h2>
+<h1 id="variables">Variables</h1>
 <p>Roll 1 D8 and 2 D6 and add them together:</p>
 <pre><code>int $x &lt;- roll D8;
 roll 2D6+$x;
@@ -40,7 +38,7 @@ keywords indicate that the variable stores an integer.</p>
 must be used to separate the variable from the rest of the dice declaration:
 <code>roll $x$D6</code>.</p>
 <p>Variables can also be used in options such as filters and rankings: <code>roll 5D6(&gt;$x)</code>.</p>
-<h2 id="matchstatements">Match statements</h2>
+<h1 id="matchstatements">Match statements</h1>
 <p>You can write a match statement to introduce an interpretation of a given
 results. Let's say that you are rolling 5D6. If you get at least 2 dice above 2
 then it is considered as a success. You want to include this interpretation in
@@ -52,7 +50,7 @@ match $result ((&lt;3; "failure"), (default; "success"))
 quoted text associated with first filter that accepts the value is returned. The
 <code>default</code> keyword is a special filter only useable in a match statement. It
 accepts any value.</p>
-<h2 id="calcexpression">Calc expression</h2>
+<h1 id="calcexpression">Calc expression</h1>
 <p>You may sometimes want to perform small calculations in a script. You may use a
 calc expression for this:</p>
 <pre><code>int $a &lt;- calc 1 + 2;
@@ -61,7 +59,7 @@ calc $a * 2
 <p>Only a single operation may be performed on a given line. The available
 operations are <code>+</code>, <code>-</code> and <code>*</code>. The result may be assigned to an <code>int</code>. The
 calc expression may be named.</p>
-<h2 id="dicevariablesandaggregationexpressions">Dice variables and aggregation expressions</h2>
+<h1 id="dicevariablesandaggregationexpressions">Dice variables and aggregation expressions</h1>
 <p>Sometimes you want to implement more complexe rules on a dice roll. For exemple
 you want to count dice above 5 as successes and dice equal to 1 as failures. The
 result of your roll is successes minus failures. You need to count two different
@@ -76,7 +74,7 @@ calc $successes - $failures
 a single integer. The two following statements are aggregations. They use the
 same set of options than the dice expression.</p>
 <p>The aggregation expression may also be named.</p>
-<h2 id="namedexpressions">Named expressions</h2>
+<h1 id="namedexpressions">Named expressions</h1>
 <p>A roll can be named using a quoted string. This allows you to add information
 about the roll.</p>
 <pre><code>roll "damage roll" 2D10
@@ -85,7 +83,7 @@ about the roll.</p>
 <pre><code>int $successes &lt;- aggregate "successes" $a (&gt;4, count);
 calc "critical factor" $a * 2
 </code></pre>
-<h2 id="macros">Macros</h2>
+<h1 id="macros">Macros</h1>
 <p>It is possible to define a macro with the following syntax:</p>
 <pre><code>macro my_roll($x) {
     roll 2D6+$x;

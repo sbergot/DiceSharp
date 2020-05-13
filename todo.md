@@ -9,6 +9,10 @@
 - [ ] add elevator pitch on the landing page
 - [ ] add username & date on the result
 - [ ] post formatted results to discord using webhook
+
+- [ ] host online
+- [ ] post on reddit
+
 - [ ] result ease in animation
 - [ ] study name and design identity
 - [ ] personnal functions & room functions

@@ -1,0 +1,14 @@
+{
+  "name": "dicecafe-misc",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "build:css": "tailwindcss build ./client.pcss -o ../DiceCafe.WebApp/wwwroot/css/client.css",
+    "build:css:doc": "tailwindcss build ./doc.pcss -o ../DiceCafe.WebApp/wwwroot/css/doc.css"
+  },
+  "dependencies": {
+    "showdown": "^1.9.1",
+    "tailwindcss": "^1.4.5"
+  }
+}
