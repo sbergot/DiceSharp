@@ -22,21 +22,21 @@ export function ScriptTester() {
 
   return (
     <>
-      <div className="relative flex mt-4">
+      <div className="relative flex mt-4 py-4">
         <div className="">
           <textarea
             className="mt-4 input-box"
             cols={80}
-            rows={20}
+            rows={10}
             value={libraryScript}
             onChange={(e) => setLibrayScript(e.target.value)}
           />
         </div>
-        <div className="absolute right-0 bottom-0 p-8 pr-20 max-h-screen h-full max-w-md w-full">
+        <div className="absolute right-0 bottom-0 py-4 max-h-screen h-full max-w-sm w-full overflow-hidden">
           <ResultList results={results} />
         </div>
       </div>
-      <Button label="run" onclick={runScripts} />
+      <Button label="run" onclick={runScripts} className="mt-2" />
     </>
   );
 }

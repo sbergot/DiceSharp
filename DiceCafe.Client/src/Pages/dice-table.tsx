@@ -17,7 +17,7 @@ export function DiceTable() {
         <UserList />
         <FunctionList />
       </div>
-      <div className="absolute right-0 bottom-0 p-8 pr-20 max-h-screen h-full max-w-md w-full">
+      <div className="absolute right-0 bottom-0 p-8 pr-20 overflow-hidden max-h-screen h-full max-w-md w-full">
         <ResultList results={results} />
       </div>
     </>

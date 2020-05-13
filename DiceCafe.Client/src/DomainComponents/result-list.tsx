@@ -6,7 +6,7 @@ interface ResultListProps {
 
 export function ResultList({ results }: ResultListProps) {
   return (
-    <ul className="h-full max-h-full w-full flex flex-col justify-end overflow-hidden p-4">
+    <ul className="h-full max-h-full w-full flex flex-col justify-end">
       {Object.values(results).map((f) => {
         return (
           <li className="mt-4 px-2 py-1 rounded-md bg-gray-200 shadow-md">
