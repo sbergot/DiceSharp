@@ -13,6 +13,7 @@ namespace DiceCafe.WebApp.Rooms.Contracts
         public string Id { get; }
         public User Creator { get; set; }
         public string LibraryScript { get; set; }
+        public string DiscordWebHook { get; set; }
         public IList<User> Users { get; } = new List<User>();
         public List<ResultGroup> Results { get; set; } = new List<ResultGroup>();
         public IReadOnlyCollection<FunctionSpec> Functions { get; set; } = new List<FunctionSpec>();

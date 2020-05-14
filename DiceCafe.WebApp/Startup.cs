@@ -13,6 +13,7 @@ using DiceCafe.WebApp.Rooms.Contracts;
 using DiceCafe.WebApp.Rooms;
 using DiceCafe.WebApp.Users;
 using DiceCafe.WebApp.Users.Contract;
+using System.Net.Http;
 
 namespace DiceCafe.WebApp
 {
@@ -65,6 +66,8 @@ namespace DiceCafe.WebApp
             services.AddHttpContextAccessor();
             services.AddSingleton<ISessionManager, SessionManager>();
             services.AddSingleton<IRoomRepository, RoomRepository>();
+            services.AddSingleton<IResultPublisher, ResultPublisher>();
+            services.AddSingleton<HttpClient>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -10,8 +10,11 @@ import { useLocalStorage } from "../localstorage";
 
 export function Admin() {
   const { room, urls } = useRoomContext();
-  const { setLibrary } = urls;
+  const { setConfiguration } = urls;
   const [libraryScript, setLibraryScript] = React.useState(room.libraryScript);
+  const [discordWebHook, setDiscordWebHook] = React.useState(
+    room.discordWebHook
+  );
   const [loadScriptModalActive, setLoadScriptModalActive] = React.useState(
     false
   );
@@ -27,8 +30,11 @@ export function Admin() {
     Record<string, string>
   >("dicecafe.localScripts", {});
 
-  async function saveLibrary() {
-    const response = await post(setLibrary, libraryScript);
+  async function saveConfiguration() {
+    const response = await post(setConfiguration, {
+      libraryScript,
+      discordWebHook,
+    });
     if (response.status == 200) {
       toast("Room updated successfully", { type: toast.TYPE.SUCCESS });
     } else {
@@ -140,9 +146,9 @@ export function Admin() {
       <div className="flex">
         <HashLink href="/" label="Back" className="mr-2" type="link" />
         <Button
-          label="Update Room Script"
+          label="Update Room Configuration"
           className="mr-2"
-          onclick={saveLibrary}
+          onclick={saveConfiguration}
           type="primary"
         />
         <Button
@@ -164,13 +170,22 @@ export function Admin() {
           type="danger"
         />
       </div>
-      <textarea
-        className="mt-4 input-box"
-        cols={80}
-        rows={20}
-        value={libraryScript}
-        onChange={(e) => setLibraryScript(e.target.value)}
-      />
+      <div className="mt-4">
+        <input
+          className="input-box"
+          value={discordWebHook}
+          onChange={(e) => setDiscordWebHook(e.target.value)}
+        />
+      </div>
+      <div>
+        <textarea
+          className="mt-4 input-box"
+          cols={80}
+          rows={20}
+          value={libraryScript}
+          onChange={(e) => setLibraryScript(e.target.value)}
+        />
+      </div>
     </div>
   );
 }

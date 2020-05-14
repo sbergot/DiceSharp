@@ -4,8 +4,6 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { DiceTable } from "./Pages/dice-table";
 import { Admin } from "./Pages/admin";
 import { RoomContextListener } from "./room-context";
-import { PersonnalScript } from "./Pages/personnal-scripts";
-import { ScriptTester } from "./Pages/script-tester";
 
 export function App() {
   return (
@@ -14,12 +12,6 @@ export function App() {
         <Switch>
           <Route path="/admin">
             <Admin />
-          </Route>
-          <Route path="/personnal-scripts">
-            <PersonnalScript />
-          </Route>
-          <Route path="/script-tester">
-            <ScriptTester />
           </Route>
           <Route>
             <DiceTable />

@@ -23,23 +23,26 @@ namespace DiceCafe.WebApp.Controllers
         private IRoomRepository RoomRepository { get; }
         private IHubContext<RoomHub> RoomHub { get; }
         private ISessionManager SessionManager { get; }
+        private IResultPublisher ResultPublisher { get; }
         private static Random Random { get; } = new Random();
 
         public RoomApiController(
             ILogger<RoomController> logger,
             IRoomRepository roomRepository,
             IHubContext<RoomHub> roomHub,
-            ISessionManager sessionManager)
+            ISessionManager sessionManager,
+            IResultPublisher resultPublisher)
         {
             Logger = logger;
             RoomRepository = roomRepository;
             RoomHub = roomHub;
             SessionManager = sessionManager;
+            ResultPublisher = resultPublisher;
         }
 
         [HttpPost]
         [Route("api/room/{roomId}/[action]")]
-        async public Task<IActionResult> Library(string roomId, [FromBody] string library)
+        async public Task<IActionResult> Configuration(string roomId, [FromBody] RoomConfigurationViewModel roomConfiguration)
         {
             var normalisedRoomId = roomId.ToUpperInvariant();
             if (!RoomRepository.Exists(normalisedRoomId))
@@ -61,9 +64,10 @@ namespace DiceCafe.WebApp.Controllers
                     MaxRollNbr = 100
                 };
                 var builder = new DiceScript.Builder(limitations);
-                room.Library = builder.BuildLib(library);
+                room.Library = builder.BuildLib(roomConfiguration.LibraryScript);
                 room.State.Functions = room.Library.GetFunctionList();
-                room.State.LibraryScript = library;
+                room.State.LibraryScript = roomConfiguration.LibraryScript;
+                room.State.DiscordWebHook = roomConfiguration.DiscordWebHook;
                 await RoomHub.Update(room);
             });
 
@@ -96,8 +100,7 @@ namespace DiceCafe.WebApp.Controllers
 
                 var results = room.Library.Call(fcall.Name, fcall.Arguments);
                 ResultGroup resultGroup = GroupResults(results);
-                room.State.Results.Add(resultGroup);
-                await RoomHub.Update(room);
+                await ResultPublisher.Publish(room, resultGroup);
                 return base.Ok();
             });
         }

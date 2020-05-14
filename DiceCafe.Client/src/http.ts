@@ -18,7 +18,7 @@ export function createUrls(roomId: string): RoomUrls {
   return {
     joinUrl: `${prefix}/join`,
     quitUrl: `${prefix}/quit `,
-    setLibrary: `${apiprefix}/library`,
+    setConfiguration: `${apiprefix}/configuration`,
     callFunction: `${apiprefix}/run`,
   };
 }

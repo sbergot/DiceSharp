@@ -10,6 +10,7 @@ interface Room {
   creator: User;
   users: User[];
   libraryScript: string;
+  discordWebHook: string;
   results: ResultGroup[];
   functions: FunctionSpec[];
 }
@@ -22,6 +23,6 @@ interface User {
 interface RoomUrls {
   joinUrl: string;
   quitUrl: string;
-  setLibrary: string;
+  setConfiguration: string;
   callFunction: string;
 }
