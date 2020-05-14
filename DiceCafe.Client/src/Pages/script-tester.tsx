@@ -21,8 +21,14 @@ export function ScriptTester() {
   }
 
   return (
-    <>
-      <div className="relative flex mt-4 py-4">
+    <div className="mt-4">
+      <p>
+        Dice Café is a dice room platform. You can use it to manage all your
+        dice rolls in an online rpg session. It uses DiceScript, a simple
+        language for dice roll scripting.
+      </p>
+      <h1 className="text-3xl font-bold">Try it live!</h1>
+      <div className="flex justify-start items-stretch pb-4 overflow-hidden">
         <div className="">
           <textarea
             className="mt-4 input-box"
@@ -32,11 +38,23 @@ export function ScriptTester() {
             onChange={(e) => setLibrayScript(e.target.value)}
           />
         </div>
-        <div className="absolute right-0 bottom-0 py-4 max-h-screen h-full max-w-sm w-full overflow-hidden">
-          <ResultList results={results} />
+        <div className="relative max-w-sm w-full ml-4">
+          <div className="absolute right-0 bottom-0 h-full w-full">
+            <ResultList results={results} />
+          </div>
         </div>
       </div>
-      <Button label="run" onclick={runScripts} className="mt-2" />
-    </>
+      <Button label="run script" onclick={runScripts} className="mt-2" />
+      <p className="mt-4">
+        For more information on DiceScript, please check the{" "}
+        <a
+          href="/dicescript_reference.html"
+          target="_blank"
+          className="btn-link"
+        >
+          documentation
+        </a>
+      </p>
+    </div>
   );
 }

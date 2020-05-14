@@ -4,12 +4,20 @@ interface ResultListProps {
   results: ResultGroup[];
 }
 
+function formatDate(date: Date): string {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+}
+
 export function ResultList({ results }: ResultListProps) {
   return (
     <ul className="h-full max-h-full w-full flex flex-col justify-end">
       {Object.values(results).map((f) => {
+        const datestr = formatDate(new Date(f.created));
         return (
-          <li className="mt-4 px-2 py-1 rounded-md bg-gray-200 shadow-md">
+          <li className="mt-4 p-2 rounded-md bg-gray-200 shadow-md">
+            <div className="text-xs flex justify-between">
+              <div>{datestr}</div> <div>{f.user.name}</div>
+            </div>
             {f.results.map((r) => (
               <Result result={r} />
             ))}

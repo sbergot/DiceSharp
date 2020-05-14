@@ -6,8 +6,8 @@
 
 # dicecafé
 
-- [ ] add elevator pitch on the landing page
-- [ ] add username & date on the result
+- [x] add elevator pitch on the landing page
+- [x] add username & date on the result
 - [ ] post formatted results to discord using webhook
 
 - [ ] host online

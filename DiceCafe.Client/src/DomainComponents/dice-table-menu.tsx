@@ -27,12 +27,6 @@ export function DiceTableMenu() {
           type="link"
         />
       ) : null}
-      <HashLink
-        href="/personnal-scripts"
-        label="Personnal scripts"
-        className="mr-2"
-        type="link"
-      />
 
       <Modal active={joinModalOpened}>
         <p>
