@@ -10,15 +10,24 @@ export function FunctionList() {
   const { callFunction } = urls;
 
   return (
-    <ul>
-      {Object.values(functions).map((f) => {
-        return (
-          <li className="mt-4">
-            <FunctionCall spec={f} callFunction={callFunction} />
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      {Object.keys(functions).length == 0 ? (
+        <div>
+          No macro defined. Please go to the room administration to define a
+          library.
+        </div>
+      ) : (
+        <ul>
+          {Object.values(functions).map((f) => {
+            return (
+              <li className="mt-4">
+                <FunctionCall spec={f} callFunction={callFunction} />
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </>
   );
 }
 

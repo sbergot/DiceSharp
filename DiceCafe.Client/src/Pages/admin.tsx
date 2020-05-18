@@ -12,9 +12,11 @@ export function Admin() {
   const { room, urls } = useRoomContext();
   const { setConfiguration } = urls;
   const [libraryScript, setLibraryScript] = React.useState(room.libraryScript);
+  const isLibrarySaved = libraryScript === room.libraryScript;
   const [discordWebHook, setDiscordWebHook] = React.useState(
     room.discordWebHook
   );
+  const isWebHookSaved = discordWebHook === room.discordWebHook;
   const [loadScriptModalActive, setLoadScriptModalActive] = React.useState(
     false
   );
@@ -73,13 +75,14 @@ export function Admin() {
     <div>
       <Modal active={loadScriptModalActive}>
         Select a local script to load
-        <ul className="flex flex-wrap">
+        <ul className="flex flex-wrap mt-2">
           {Object.keys(localScripts).map((k) => (
             <li>
               <Button
                 label={k}
                 onclick={() => loadLocalScript(k)}
                 className="mr-2 inline-block"
+                type="primary"
               />
             </li>
           ))}
@@ -91,15 +94,16 @@ export function Admin() {
         />
       </Modal>
       <Modal active={deleteScriptModalActive}>
-        Select a local script to delete. Warning! This operation cannot be
-        undone.
-        <ul className="flex flex-wrap">
+        Select a local script to delete.
+        <p className="font-bold">Warning! This operation cannot be undone.</p>
+        <ul className="flex flex-wrap mt-2">
           {Object.keys(localScripts).map((k) => (
             <li>
               <Button
                 label={k}
                 onclick={() => removeLocalScript(k)}
                 className="mr-2 inline-block"
+                type="danger"
               />
             </li>
           ))}
@@ -112,13 +116,14 @@ export function Admin() {
       </Modal>
       <Modal active={saveScriptModalActive}>
         <p>Pick an existing script to overwrite...</p>
-        <ul className="flex flex-wrap">
+        <ul className="flex flex-wrap mt-2">
           {Object.keys(localScripts).map((k) => (
             <li>
               <Button
                 label={k}
                 onclick={() => saveLocalScript(k)}
                 className="mr-2 inline-block"
+                type="primary"
               />
             </li>
           ))}
@@ -171,15 +176,33 @@ export function Admin() {
         />
       </div>
       <div className="mt-4">
+        <label htmlFor="discordwebhook" className="block text-lg">
+          Discord Webhook
+          {isWebHookSaved ? (
+            <span className="capicon ml-2">&#xe636;</span>
+          ) : (
+            <span className="ml-2 text-gray-600">(not saved)</span>
+          )}
+        </label>
         <input
-          className="input-box"
+          id="discordwebhook"
+          className="input-box text-xs max-w-4xl w-full"
           value={discordWebHook}
           onChange={(e) => setDiscordWebHook(e.target.value)}
         />
       </div>
-      <div>
+      <div className="mt-4">
+        <label htmlFor="roommacros" className="block text-lg">
+          Room macros
+          {isLibrarySaved ? (
+            <span className="capicon ml-2">&#xe636;</span>
+          ) : (
+            <span className="ml-2 text-gray-600">(not saved)</span>
+          )}
+        </label>
         <textarea
-          className="mt-4 input-box"
+          id="roommacros"
+          className="input-box"
           cols={80}
           rows={20}
           value={libraryScript}

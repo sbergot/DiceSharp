@@ -58,15 +58,18 @@ namespace DiceCafe.WebApp.Controllers
 
             await RoomHelpers.WithRoomLock(room, async () =>
             {
-                var limitations = new DiceScript.Contracts.Limitations
+                if (!string.IsNullOrEmpty(roomConfiguration.LibraryScript))
                 {
-                    MaxProgramSize = 500,
-                    MaxRollNbr = 100
-                };
-                var builder = new DiceScript.Builder(limitations);
-                room.Library = builder.BuildLib(roomConfiguration.LibraryScript);
-                room.State.Functions = room.Library.GetFunctionList();
-                room.State.LibraryScript = roomConfiguration.LibraryScript;
+                    var limitations = new DiceScript.Contracts.Limitations
+                    {
+                        MaxProgramSize = 2000,
+                        MaxRollNbr = 100
+                    };
+                    var builder = new DiceScript.Builder(limitations);
+                    room.Library = builder.BuildLib(roomConfiguration.LibraryScript);
+                    room.State.Functions = room.Library.GetFunctionList();
+                    room.State.LibraryScript = roomConfiguration.LibraryScript;
+                }
                 room.State.DiscordWebHook = roomConfiguration.DiscordWebHook;
                 await RoomHub.Update(room);
             });

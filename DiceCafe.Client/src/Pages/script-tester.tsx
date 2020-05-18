@@ -21,19 +21,63 @@ export function ScriptTester() {
   }
 
   return (
-    <div className="mt-4">
-      <p>
-        Dice Café is a dice room platform. You can use it to manage all your
-        dice rolls in an online rpg session. It uses DiceScript, a simple
-        language for dice roll scripting.
+    <div className="mt-2">
+      <div className="flex">
+        <div className="text-sm max-w-md mr-8">
+          <h1 className="text-2xl font-bold mt-4">What is Dice Café?</h1>
+          <p>
+            Dice Café is a dice room platform. You can use it to manage all your
+            dice rolls in an online rpg session. It uses DiceScript, a simple
+            language for dice roll scripting.
+          </p>
+          <p>
+            A DM needs a few minutes to write scripts for a system. During the
+            game players can click on buttons to trigger rolls. The results are
+            shared with every player in the room.
+          </p>
+        </div>
+        <div className="text-sm max-w-lg">
+          <h1 className="text-2xl font-bold mt-4">How to use</h1>
+          <ol className="list-decimal list-inside">
+            <li>First you need to create a room.</li>
+            <li>
+              Write macros for your room. Each macro contains a script an
+              optionally some parameters.
+            </li>
+            <li>
+              Invite players to the room by sharing the link or the room code.
+            </li>
+            <li>
+              Each macro will appear as a button. Clicking on the button will
+              run the script. The result of the roll will be displayed for all
+              member present in the rooms.
+            </li>
+            <li>
+              Optionally provide a discord webhook in the room administration.
+              If you do so the results will also be published on the discord
+              room.
+            </li>
+          </ol>
+        </div>
+      </div>
+      <h1 className="text-2xl font-bold mt-2">Try it live!</h1>
+      <p className="text-sm">
+        You can test your script with the form below. For more information on
+        DiceScript, please check the{" "}
+        <a
+          href="/dicescript_reference.html"
+          target="_blank"
+          className="btn-link"
+        >
+          documentation
+        </a>
       </p>
-      <h1 className="text-3xl font-bold">Try it live!</h1>
       <div className="flex justify-start items-stretch pb-4 overflow-hidden">
         <div className="">
           <textarea
             className="mt-4 input-box"
             cols={80}
-            rows={10}
+            rows={8}
             value={libraryScript}
             onChange={(e) => setLibrayScript(e.target.value)}
           />
@@ -44,17 +88,8 @@ export function ScriptTester() {
           </div>
         </div>
       </div>
-      <Button label="run script" onclick={runScripts} className="mt-2" />
-      <p className="mt-4">
-        For more information on DiceScript, please check the{" "}
-        <a
-          href="/dicescript_reference.html"
-          target="_blank"
-          className="btn-link"
-        >
-          documentation
-        </a>
-      </p>
+      <Button label="run script" onclick={runScripts} />
+      <p className="mt-4"></p>
     </div>
   );
 }
